@@ -110,6 +110,32 @@ npm start
 
 `npm start` serves the built SPA and API together on port `8787`.
 
+### Deploy to Vercel
+
+The repo is ready for Vercel: the SPA is built by Vite and the Express API runs as one function through [`api/index.js`](api/index.js). [`vercel.json`](vercel.json) wires the build, function and SPA fallback.
+
+1. Push the repository to GitHub, GitLab, or Bitbucket.
+2. Import it at [vercel.com/new](https://vercel.com/new). Keep the root directory as `.`; Vercel reads `vercel.json` (Vite, `npm run build`, `dist`).
+3. Add optional environment variables in **Settings → Environment Variables**:
+   - `CORS_ORIGIN` only if another origin will call the API.
+   - `OTAKUDESU_API_BASE` / `OTAKUDESU_SITEMAP_URL` only if the provider moves.
+   - Do **not** set `VITE_API_BASE_URL`; the browser uses the same-origin `/api/v1`.
+4. Deploy. The API is available at `https://your-project.vercel.app/api/v1`, OpenAPI at `/api/v1/openapi.json`, and the UI at `/`.
+
+With the CLI:
+
+```bash
+npx vercel --prod
+```
+
+To reproduce the Vercel environment locally (functions + SPA rewrites):
+
+```bash
+npx vercel dev --local
+```
+
+**Vercel storage caveat:** the archive library is a single local JSON profile. On Vercel it is written to `/tmp/reognime-library.json`, seeded with the six demo entries on each fresh function instance. It resets on a cold start or redeploy. For a persistent personal library, point `LIBRARY_FILE` at a writable persistent volume or move `LibraryStore` to a database/KV; alternatively host the Express API on a persistent service and set `VITE_API_BASE_URL` to it. The in-memory upstream cache also resets with the function instance.
+
 ### A fresh archive list
 
 The archive ships with six demo entries. To begin empty, remove `server/data/library.json` and restart the server; it recreates the file as an empty library. Streaming usage is stateless and is not stored in the library.
@@ -198,7 +224,7 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 | `PORT` | `8787` | Express port |
 | `HOST` | `0.0.0.0` | Bind address |
 | `CORS_ORIGIN` | reflect request origin | Comma-separated allowed origins |
-| `LIBRARY_FILE` | `server/data/library.json` | Archive library file |
+| `LIBRARY_FILE` | `server/data/library.json` (`/tmp/reognime-library.json` on Vercel) | Archive library file |
 | `VITE_API_BASE_URL` | `/api/v1` | Frontend API base |
 | `OTAKUDESU_API_BASE` | `https://www.sankavollerei.web.id/anime` | Public Otakudesu provider base |
 | `OTAKUDESU_SITEMAP_URL` | `https://otakudesu.or.at/series-sitemap.xml` | Artwork repair sitemap |
@@ -207,6 +233,8 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 
 ```
 .
+├── api/
+│   └── index.js             # single Vercel Function wrapping the Express app
 ├── client/
 │   └── src/
 │       ├── components/      # layout, Otaku cards/posters, command search, downloads, library dialog
@@ -226,13 +254,14 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 │   ├── data/anime.json      # local AniList archive catalog
 │   └── data/library.json    # archive library
 ├── public/media/            # local archive artwork
+├── vercel.json              # Vercel build, function and SPA routing
 └── docs/                    # screenshots
 ```
 
 ## Tests
 
 ```bash
-npm test        # 12 API integration + provider normalization/caching tests
+npm test        # 13 API, provider, and Vercel-adapter tests
 npm run typecheck
 npm run build
 ```

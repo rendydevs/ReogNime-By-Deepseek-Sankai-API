@@ -121,11 +121,14 @@ function progressLimit(anime) {
 export async function createApp({
   libraryFile = process.env.LIBRARY_FILE || path.join(ROOT, 'server', 'data', 'library.json'),
   rateLimitEnabled = process.env.NODE_ENV !== 'test',
+  trustProxy = Boolean(process.env.VERCEL),
   otakudesu = new OtakudesuService(),
 } = {}) {
   const library = await new LibraryStore(libraryFile).init();
   const app = express();
 
+  // The serverless entry sits behind Vercel's proxy; trust one hop for client IPs.
+  if (trustProxy) app.set('trust proxy', 1);
   app.disable('x-powered-by');
   // Artwork lives alongside the API so external clients can resolve relative
   // media paths from either the app origin or the API origin.
