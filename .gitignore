@@ -1,0 +1,9 @@
+node_modules
+.npm-cache
+dist
+*.log
+.DS_Store
+server/data/library.json.tmp
+.env
+.env.local
+.env.*.local

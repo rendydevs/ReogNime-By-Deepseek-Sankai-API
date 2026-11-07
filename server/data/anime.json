@@ -1,0 +1,3516 @@
+{
+  "meta": {
+    "source": "AniList",
+    "sourceUrl": "https://anilist.co",
+    "generatedAt": "2026-11-07T16:05:10.233Z",
+    "count": 45,
+    "note": "Demo catalog. Anime metadata and artwork belong to their respective rights holders."
+  },
+  "anime": [
+    {
+      "id": 154587,
+      "slug": "frieren-beyond-journeys-end",
+      "title": "Frieren: Beyond Journey’s End",
+      "originalTitle": "Sousou no Frieren",
+      "nativeTitle": "葬送のフリーレン",
+      "synopsis": "The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. But Frieren will long outlive the rest of her former party. How will she come to understand what life means to the people around her? Decades after their victory, the funeral of one her friends confronts Frieren with her own near immortality. Frieren sets out to fulfill the last wishes of her comrades and finds herself beginning a new adventure…\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/154587.webp",
+      "banner": "/media/banners/154587.webp",
+      "accent": "#bbf1a1",
+      "score": 91,
+      "meanScore": 91,
+      "popularity": 497143,
+      "favorites": 56891,
+      "episodes": 28,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2023,
+      "startDate": "2023-09-29",
+      "endDate": "2024-03-22",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Adventure",
+        "Drama",
+        "Fantasy"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": {
+        "id": "tR8YH0G67Rk",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 176754,
+          "name": "Frieren",
+          "role": "Main",
+          "image": "/media/characters/154587-176754.webp"
+        },
+        {
+          "id": 183965,
+          "name": "Fern",
+          "role": "Main",
+          "image": "/media/characters/154587-183965.webp"
+        },
+        {
+          "id": 184313,
+          "name": "Stark",
+          "role": "Main",
+          "image": "/media/characters/154587-184313.webp"
+        },
+        {
+          "id": 184311,
+          "name": "Himmel",
+          "role": "Supporting",
+          "image": "/media/characters/154587-184311.webp"
+        },
+        {
+          "id": 184310,
+          "name": "Heiter",
+          "role": "Supporting",
+          "image": "/media/characters/154587-184310.webp"
+        },
+        {
+          "id": 184312,
+          "name": "Eisen",
+          "role": "Supporting",
+          "image": "/media/characters/154587-184312.webp"
+        }
+      ]
+    },
+    {
+      "id": 161645,
+      "slug": "the-apothecary-diaries",
+      "title": "The Apothecary Diaries",
+      "originalTitle": "Kusuriya no Hitorigoto",
+      "nativeTitle": "薬屋のひとりごと",
+      "synopsis": "Maomao lived a peaceful life with her apothecary father. Until one day, she’s sold as a lowly servant to the emperor’s palace. But she wasn’t meant for a compliant life among royalty. So when imperial heirs fall ill, she decides to step in and find a cure! This catches the eye of Jinshi, a handsome palace official who promotes her. Now, she’s making a name for herself solving medical mysteries!\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/161645.webp",
+      "banner": "/media/banners/161645.webp",
+      "accent": "#f1865d",
+      "score": 88,
+      "meanScore": 88,
+      "popularity": 342892,
+      "favorites": 28268,
+      "episodes": 24,
+      "duration": 23,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "LIGHT_NOVEL",
+      "season": "FALL",
+      "seasonYear": 2023,
+      "startDate": "2023-10-22",
+      "endDate": "2024-03-24",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Mystery"
+      ],
+      "studios": [
+        "OLM",
+        "TOHO animation STUDIO"
+      ],
+      "trailer": {
+        "id": "oyHqh8ue4zw",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 126824,
+          "name": "Maomao",
+          "role": "Main",
+          "image": "/media/characters/161645-126824.webp"
+        },
+        {
+          "id": 127278,
+          "name": "Jinshi",
+          "role": "Main",
+          "image": "/media/characters/161645-127278.webp"
+        },
+        {
+          "id": 156767,
+          "name": "Gyokuyou",
+          "role": "Supporting",
+          "image": "/media/characters/161645-156767.webp"
+        },
+        {
+          "id": 156766,
+          "name": "Rifa",
+          "role": "Supporting",
+          "image": "/media/characters/161645-156766.webp"
+        },
+        {
+          "id": 156764,
+          "name": "Riishu",
+          "role": "Supporting",
+          "image": "/media/characters/161645-156764.webp"
+        },
+        {
+          "id": 156765,
+          "name": "Aaduo",
+          "role": "Supporting",
+          "image": "/media/characters/161645-156765.webp"
+        }
+      ]
+    },
+    {
+      "id": 195516,
+      "slug": "the-apothecary-diaries-season-3",
+      "title": "The Apothecary Diaries Season 3",
+      "originalTitle": "Kusuriya no Hitorigoto 3rd Season",
+      "nativeTitle": "薬屋のひとりごと 第3期",
+      "synopsis": "In the aftermath of the Shi Clan’s rebellion, things have finally settled down, and Maomao has returned to her old life as a pharmacist in the pleasure district.\n\nOne day, triggered by a breakfast served at the Verdigris House, Maomao senses an anomaly and begins investigating its true nature.\n\nMeanwhile, Jinshi, who has revealed his true identity as the Imperial brother and begun to face his heavy responsibilities, is deeply troubled by the final message left by Loulan: a warning of an impending \"disaster that will strike the nation.\"\n\nTo make matters worse, rumors of a mysterious shrine maiden who deceives the people begin to spread, casting a dark shadow over the country of Li once again.\n\nFrom the depths of the inner court to the city streets, and across foreign borders—the world grows wider, and the stakes even higher for Maomao and Jinshi.\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/195516.webp",
+      "banner": "/media/banners/195516.webp",
+      "accent": "#e4a128",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 110573,
+      "favorites": 2854,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "RELEASING",
+      "format": "TV",
+      "source": "LIGHT_NOVEL",
+      "season": "FALL",
+      "seasonYear": 2026,
+      "startDate": "2026-10-02",
+      "endDate": null,
+      "nextAiringEpisode": {
+        "episode": 7,
+        "airingAt": "2026-11-13T14:00:00.000Z"
+      },
+      "genres": [
+        "Drama",
+        "Mystery"
+      ],
+      "studios": [
+        "OLM"
+      ],
+      "trailer": {
+        "id": "YvNvvUeCztE",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 126824,
+          "name": "Maomao",
+          "role": "Main",
+          "image": "/media/characters/195516-126824.webp"
+        },
+        {
+          "id": 127278,
+          "name": "Jinshi",
+          "role": "Main",
+          "image": "/media/characters/195516-127278.webp"
+        },
+        {
+          "id": 232926,
+          "name": "Lakan",
+          "role": "Supporting",
+          "image": "/media/characters/195516-232926.webp"
+        },
+        {
+          "id": 244317,
+          "name": "Gaoshun",
+          "role": "Supporting",
+          "image": "/media/characters/195516-244317.webp"
+        },
+        {
+          "id": 244319,
+          "name": "Meimei",
+          "role": "Supporting",
+          "image": "/media/characters/195516-244319.webp"
+        },
+        {
+          "id": 274187,
+          "name": "Yarite Baba",
+          "role": "Supporting",
+          "image": "/media/characters/195516-274187.webp"
+        }
+      ]
+    },
+    {
+      "id": 120377,
+      "slug": "cyberpunk-edgerunners",
+      "title": "Cyberpunk: Edgerunners",
+      "originalTitle": "Cyberpunk: Edgerunners",
+      "nativeTitle": "サイバーパンク エッジランナーズ",
+      "synopsis": "Cyberpunk: Edgerunners tells a standalone, 10-episode story about a street kid trying to survive in a technology and body modification-obsessed city of the future. Having everything to lose, he chooses to stay alive by becoming an edgerunner—a mercenary outlaw also known as a cyberpunk.\n\n(Source: CD PROJEKT RED)\n\nNote: The first episode received a pre-screening at Anime Expo on July 2, 2022. The first 3 dubbed episodes were streamed on Twitch as part of a co-stream promotion on September 12, a day before the show’s premiere.",
+      "cover": "/media/covers/120377.webp",
+      "banner": "/media/banners/120377.webp",
+      "accent": "#78f150",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 408506,
+      "favorites": 31874,
+      "episodes": 10,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "ONA",
+      "source": "VIDEO_GAME",
+      "season": "SUMMER",
+      "seasonYear": 2022,
+      "startDate": "2022-09-13",
+      "endDate": "2022-09-13",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Psychological",
+        "Sci-Fi"
+      ],
+      "studios": [
+        "TRIGGER"
+      ],
+      "trailer": {
+        "id": "ax5YUmkWf_Y",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 284158,
+          "name": "David Martinez",
+          "role": "Main",
+          "image": "/media/characters/120377-284158.webp"
+        },
+        {
+          "id": 284157,
+          "name": "Lucy",
+          "role": "Main",
+          "image": "/media/characters/120377-284157.webp"
+        },
+        {
+          "id": 284159,
+          "name": "Maine",
+          "role": "Supporting",
+          "image": "/media/characters/120377-284159.webp"
+        },
+        {
+          "id": 284160,
+          "name": "Dorio",
+          "role": "Supporting",
+          "image": "/media/characters/120377-284160.webp"
+        },
+        {
+          "id": 284161,
+          "name": "Kiwi",
+          "role": "Supporting",
+          "image": "/media/characters/120377-284161.webp"
+        },
+        {
+          "id": 284162,
+          "name": "Pilar",
+          "role": "Supporting",
+          "image": "/media/characters/120377-284162.webp"
+        }
+      ]
+    },
+    {
+      "id": 195539,
+      "slug": "cyberpunk-edgerunners-2",
+      "title": "Cyberpunk: Edgerunners 2",
+      "originalTitle": "Cyberpunk: Edgerunners 2",
+      "nativeTitle": "サイバーパンク: エッジランナーズ2",
+      "synopsis": "Cyberpunk: Edgerunners 2 pulls you back into Night City, where lives become entangled to the extreme. Weak, a washed-up cyberpunk legend, is now forced to live without chrome as he searches for a sense of purpose in a world that’s passed him by. Meanwhile, the deadly nomad D sets out on a path to revenge that brings him close to corpo secrets never meant to be found. Across this ten-episode standalone series, uncover a story of family, obsession, legacy — and how your lens reflects the stories of the people around you..\n\nWhen the world is blinded by spectacle, what extremes do you have to go to make your story matter?\n\n(Source: Cyberpunk: Edgerunners 2 Official Site, Official Twitter)",
+      "cover": "/media/covers/195539.webp",
+      "banner": "/media/banners/195539.webp",
+      "accent": "#fe286b",
+      "score": 83,
+      "meanScore": 83,
+      "popularity": 119474,
+      "favorites": 4142,
+      "episodes": 10,
+      "duration": 28,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "ONA",
+      "source": "VIDEO_GAME",
+      "season": "FALL",
+      "seasonYear": 2026,
+      "startDate": "2026-10-20",
+      "endDate": "2026-10-20",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Sci-Fi"
+      ],
+      "studios": [
+        "TRIGGER"
+      ],
+      "trailer": {
+        "id": "AtJMSUpG9GQ",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 402555,
+          "name": "D",
+          "role": "Main",
+          "image": "/media/characters/195539-402555.webp"
+        },
+        {
+          "id": 402617,
+          "name": "Roman Carax",
+          "role": "Main",
+          "image": "/media/characters/195539-402617.webp"
+        },
+        {
+          "id": 402683,
+          "name": "Talia Yang",
+          "role": "Main",
+          "image": "/media/characters/195539-402683.webp"
+        },
+        {
+          "id": 402428,
+          "name": "Weak Kingsley",
+          "role": "Main",
+          "image": "/media/characters/195539-402428.webp"
+        },
+        {
+          "id": 410883,
+          "name": "Miguel",
+          "role": "Supporting",
+          "image": "/media/characters/195539-410883.webp"
+        },
+        {
+          "id": 410885,
+          "name": "Emily",
+          "role": "Supporting",
+          "image": "/media/characters/195539-410885.webp"
+        }
+      ]
+    },
+    {
+      "id": 16498,
+      "slug": "attack-on-titan",
+      "title": "Attack on Titan",
+      "originalTitle": "Shingeki no Kyojin",
+      "nativeTitle": "進撃の巨人",
+      "synopsis": "Several hundred years ago, humans were nearly exterminated by titans. Titans are typically several stories tall, seem to have no intelligence, devour human beings and, worst of all, seem to do it for the pleasure rather than as a food source. A small percentage of humanity survived by walling themselves in a city protected by extremely high walls, even taller than the biggest of titans.\n\n\r\nFlash forward to the present and the city has not seen a titan in over 100 years. Teenage boy Eren and his foster sister Mikasa witness something horrific as the city walls are destroyed by a colossal titan that appears out of thin air. As the smaller titans flood the city, the two kids watch in horror as their mother is eaten alive. Eren vows that he will murder every single titan and take revenge for all of mankind.\n\n\r\n(Source: MangaHelpers)",
+      "cover": "/media/covers/16498.webp",
+      "banner": "/media/banners/16498.webp",
+      "accent": "#f1a143",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 1076213,
+      "favorites": 80443,
+      "episodes": 25,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2013,
+      "startDate": "2013-04-07",
+      "endDate": "2013-09-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Fantasy",
+        "Mystery"
+      ],
+      "studios": [
+        "WIT STUDIO"
+      ],
+      "trailer": {
+        "id": "LHtdKWJdif4\t",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 40882,
+          "name": "Eren Yeager",
+          "role": "Main",
+          "image": "/media/characters/16498-40882.webp"
+        },
+        {
+          "id": 40881,
+          "name": "Mikasa Ackerman",
+          "role": "Main",
+          "image": "/media/characters/16498-40881.webp"
+        },
+        {
+          "id": 46494,
+          "name": "Armin Arlert",
+          "role": "Main",
+          "image": "/media/characters/16498-46494.webp"
+        },
+        {
+          "id": 45627,
+          "name": "Levi",
+          "role": "Supporting",
+          "image": "/media/characters/16498-45627.webp"
+        },
+        {
+          "id": 45887,
+          "name": "Sasha Blouse",
+          "role": "Supporting",
+          "image": "/media/characters/16498-45887.webp"
+        },
+        {
+          "id": 46484,
+          "name": "Reiner Braun",
+          "role": "Supporting",
+          "image": "/media/characters/16498-46484.webp"
+        }
+      ]
+    },
+    {
+      "id": 5114,
+      "slug": "fullmetal-alchemist-brotherhood",
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "originalTitle": "Hagane no Renkinjutsushi: FULLMETAL ALCHEMIST",
+      "nativeTitle": "鋼の錬金術師 FULLMETAL ALCHEMIST",
+      "synopsis": "\"In order for something to be obtained, something of equal value must be lost.\"\n\nAlchemy is bound by this Law of Equivalent Exchange—something the young brothers Edward and Alphonse Elric only realize after attempting human transmutation: the one forbidden act of alchemy. They pay a terrible price for their transgression—Edward loses his left leg, Alphonse his physical body. It is only by the desperate sacrifice of Edward's right arm that he is able to affix Alphonse's soul to a suit of armor. Devastated and alone, it is the hope that they would both eventually return to their original bodies that gives Edward the inspiration to obtain metal limbs called \"automail\" and become a state alchemist, the Fullmetal Alchemist.\n\nThree years of searching later, the brothers seek the Philosopher's Stone, a mythical relic that allows an alchemist to overcome the Law of Equivalent Exchange. Even with military allies Colonel Roy Mustang, Lieutenant Riza Hawkeye, and Lieutenant Colonel Maes Hughes on their side, the brothers find themselves caught up in a nationwide conspiracy that leads them not only to the true nature of the elusive Philosopher's Stone, but their country's murky history as well. In between finding a serial killer and racing against time, Edward and Alphonse must ask themselves if what they are doing will make them human again... or take away their humanity.\n\n(Source: MAL Rewrite)",
+      "cover": "/media/covers/5114.webp",
+      "banner": "/media/banners/5114.webp",
+      "accent": "#e4c993",
+      "score": 90,
+      "meanScore": 90,
+      "popularity": 742690,
+      "favorites": 69304,
+      "episodes": 64,
+      "duration": 25,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2009,
+      "startDate": "2009-04-05",
+      "endDate": "2010-07-04",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama",
+        "Fantasy"
+      ],
+      "studios": [
+        "bones"
+      ],
+      "trailer": {
+        "id": "1ac3_YdSSy0",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 11,
+          "name": "Edward Elric",
+          "role": "Main",
+          "image": "/media/characters/5114-11.webp"
+        },
+        {
+          "id": 12,
+          "name": "Alphonse Elric",
+          "role": "Main",
+          "image": "/media/characters/5114-12.webp"
+        },
+        {
+          "id": 63,
+          "name": "Winry Rockbell",
+          "role": "Supporting",
+          "image": "/media/characters/5114-63.webp"
+        },
+        {
+          "id": 65,
+          "name": "Pinako Rockbell",
+          "role": "Supporting",
+          "image": "/media/characters/5114-65.webp"
+        },
+        {
+          "id": 66,
+          "name": "Scar",
+          "role": "Supporting",
+          "image": "/media/characters/5114-66.webp"
+        },
+        {
+          "id": 67,
+          "name": "Izumi Curtis",
+          "role": "Supporting",
+          "image": "/media/characters/5114-67.webp"
+        }
+      ]
+    },
+    {
+      "id": 11061,
+      "slug": "hunter-x-hunter-2011",
+      "title": "Hunter x Hunter (2011)",
+      "originalTitle": "HUNTER×HUNTER (2011)",
+      "nativeTitle": "HUNTER×HUNTER (2011)",
+      "synopsis": "A Hunter is one who travels the world doing all sorts of dangerous tasks. From capturing criminals to searching deep within uncharted lands for any lost treasures. Gon is a young boy whose father disappeared long ago, being a Hunter. He believes if he could also follow his father's path, he could one day reunite with him.\n\nAfter becoming 12, Gon leaves his home and takes on the task of entering the Hunter exam, notorious for its low success rate and high probability of death to become an official Hunter. He befriends the revenge-driven Kurapika, the doctor-to-be Leorio and the rebellious ex-assassin Killua in the exam, with their friendship prevailing throughout the many trials and threats they come upon taking on the dangerous career of a Hunter.",
+      "cover": "/media/covers/11061.webp",
+      "banner": "/media/banners/11061.webp",
+      "accent": "#f1d65d",
+      "score": 89,
+      "meanScore": 89,
+      "popularity": 856106,
+      "favorites": 91428,
+      "episodes": 148,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2011,
+      "startDate": "2011-10-02",
+      "endDate": "2014-09-24",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": {
+        "id": "d6kBeJjTGnY",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 30,
+          "name": "Gon Freecss",
+          "role": "Main",
+          "image": "/media/characters/11061-30.webp"
+        },
+        {
+          "id": 27,
+          "name": "Killua Zoldyck",
+          "role": "Main",
+          "image": "/media/characters/11061-27.webp"
+        },
+        {
+          "id": 28,
+          "name": "Kurapika",
+          "role": "Main",
+          "image": "/media/characters/11061-28.webp"
+        },
+        {
+          "id": 29,
+          "name": "Leorio Paradinight",
+          "role": "Main",
+          "image": "/media/characters/11061-29.webp"
+        },
+        {
+          "id": 31,
+          "name": "Hisoka Morow",
+          "role": "Main",
+          "image": "/media/characters/11061-31.webp"
+        },
+        {
+          "id": 26,
+          "name": "Ging Freecss",
+          "role": "Supporting",
+          "image": "/media/characters/11061-26.webp"
+        }
+      ]
+    },
+    {
+      "id": 1535,
+      "slug": "death-note",
+      "title": "Death Note",
+      "originalTitle": "DEATH NOTE",
+      "nativeTitle": "DEATH NOTE",
+      "synopsis": "Light Yagami is a genius high school student who is about to learn about life through a book of death. When a bored shinigami, a God of Death, named Ryuk drops a black notepad called a Death Note, Light receives power over life and death with the stroke of a pen. Determined to use this dark gift for the best, Light sets out to rid the world of evil… namely, the people he believes to be evil. Should anyone hold such power?\n\nThe consequences of Light’s actions will set the world ablaze.\n\n(Source: VIZ Media)",
+      "cover": "/media/covers/1535.webp",
+      "banner": "/media/banners/1535.webp",
+      "accent": "#d8d3c7",
+      "score": 84,
+      "meanScore": 84,
+      "popularity": 980752,
+      "favorites": 62924,
+      "episodes": 37,
+      "duration": 23,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2006,
+      "startDate": "2006-10-04",
+      "endDate": "2007-06-27",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Mystery",
+        "Psychological",
+        "Supernatural",
+        "Thriller"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": {
+        "id": "NlJZ-YgAt-c",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 71,
+          "name": "L Lawliet",
+          "role": "Main",
+          "image": "/media/characters/1535-71.webp"
+        },
+        {
+          "id": 75,
+          "name": "Ryuk",
+          "role": "Main",
+          "image": "/media/characters/1535-75.webp"
+        },
+        {
+          "id": 80,
+          "name": "Light Yagami",
+          "role": "Main",
+          "image": "/media/characters/1535-80.webp"
+        },
+        {
+          "id": 463,
+          "name": "Mihael Keehl",
+          "role": "Main",
+          "image": "/media/characters/1535-463.webp"
+        },
+        {
+          "id": 464,
+          "name": "Nate River",
+          "role": "Main",
+          "image": "/media/characters/1535-464.webp"
+        },
+        {
+          "id": 835,
+          "name": "Misa Amane",
+          "role": "Main",
+          "image": "/media/characters/1535-835.webp"
+        }
+      ]
+    },
+    {
+      "id": 9253,
+      "slug": "steins-gate",
+      "title": "Steins;Gate",
+      "originalTitle": "Steins;Gate",
+      "nativeTitle": "シュタインズ・ゲート",
+      "synopsis": "Self-proclaimed mad scientist Okabe Rintarou lives in a small room in Akihabara, where he invents \"future gadgets\" with fellow lab members Shiina Mayuri, his air-headed childhood friend, and Hashida Itaru, an otaku hacker. The three pass the time by tinkering with their latest creation, a \"Phone Microwave\" that can be controlled through text messages.\n\nThe lab members soon face a string of mysterious incidents that lead to a game-changing discovery: the Phone Microwave can send emails to the past and thus alter history. Adapted from the critically acclaimed visual novel by 5pb. and Nitroplus, Steins;Gate takes Okabe to the depths of scientific theory and human despair as he faces the dire consequences of changing the past.",
+      "cover": "/media/covers/9253.webp",
+      "banner": "/media/banners/9253.webp",
+      "accent": "#ffd6ae",
+      "score": 89,
+      "meanScore": 89,
+      "popularity": 605873,
+      "favorites": 54275,
+      "episodes": 24,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "VISUAL_NOVEL",
+      "season": "SPRING",
+      "seasonYear": 2011,
+      "startDate": "2011-04-06",
+      "endDate": "2011-09-14",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Psychological",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "studios": [
+        "WHITE FOX"
+      ],
+      "trailer": {
+        "id": "27OZc-ku6is",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 35252,
+          "name": "Rintarou Okabe",
+          "role": "Main",
+          "image": "/media/characters/9253-35252.webp"
+        },
+        {
+          "id": 34470,
+          "name": "Kurisu Makise",
+          "role": "Main",
+          "image": "/media/characters/9253-34470.webp"
+        },
+        {
+          "id": 35253,
+          "name": "Mayuri Shiina",
+          "role": "Main",
+          "image": "/media/characters/9253-35253.webp"
+        },
+        {
+          "id": 35258,
+          "name": "Itaru Hashida",
+          "role": "Main",
+          "image": "/media/characters/9253-35258.webp"
+        },
+        {
+          "id": 35255,
+          "name": "Suzuha Amane",
+          "role": "Main",
+          "image": "/media/characters/9253-35255.webp"
+        },
+        {
+          "id": 30919,
+          "name": "Luka Urushibara",
+          "role": "Supporting",
+          "image": "/media/characters/9253-30919.webp"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "slug": "cowboy-bebop",
+      "title": "Cowboy Bebop",
+      "originalTitle": "Cowboy Bebop",
+      "nativeTitle": "カウボーイビバップ",
+      "synopsis": "Enter a world in the distant future, where Bounty Hunters roam the solar system. Spike and Jet, bounty hunting partners, set out on journeys in an ever struggling effort to win bounty rewards to survive.\n\nWhile traveling, they meet up with other very interesting people. Could Faye, the beautiful and ridiculously poor gambler, Edward, the computer genius, and Ein, the engineered dog be a good addition to the group?",
+      "cover": "/media/covers/1.webp",
+      "banner": "/media/banners/1.webp",
+      "accent": "#f16b50",
+      "score": 86,
+      "meanScore": 86,
+      "popularity": 475672,
+      "favorites": 32523,
+      "episodes": 26,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "ORIGINAL",
+      "season": "SPRING",
+      "seasonYear": 1998,
+      "startDate": "1998-04-03",
+      "endDate": "1999-04-24",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama",
+        "Sci-Fi"
+      ],
+      "studios": [
+        "Sunrise"
+      ],
+      "trailer": {
+        "id": "OhNwckCLzis",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 1,
+          "name": "Spike Spiegel",
+          "role": "Main",
+          "image": "/media/characters/1-1.webp"
+        },
+        {
+          "id": 2,
+          "name": "Faye Valentine",
+          "role": "Main",
+          "image": "/media/characters/1-2.webp"
+        },
+        {
+          "id": 3,
+          "name": "Jet Black",
+          "role": "Main",
+          "image": "/media/characters/1-3.webp"
+        },
+        {
+          "id": 16,
+          "name": "Edward Wong Hau Pepelu Tivrusky IV",
+          "role": "Main",
+          "image": "/media/characters/1-16.webp"
+        },
+        {
+          "id": 4,
+          "name": "Ein",
+          "role": "Supporting",
+          "image": "/media/characters/1-4.webp"
+        },
+        {
+          "id": 2734,
+          "name": "Vicious",
+          "role": "Supporting",
+          "image": "/media/characters/1-2734.webp"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "slug": "neon-genesis-evangelion",
+      "title": "Neon Genesis Evangelion",
+      "originalTitle": "Shin Seiki Evangelion",
+      "nativeTitle": "新世紀エヴァンゲリオン",
+      "synopsis": "In the year 2015, the Angels, huge, tremendously powerful, alien war machines, appear in Tokyo for the second time. The only hope for Mankind's survival lies in the Evangelion, a humanoid fighting machine developed by NERV, a special United Nations agency. Capable of withstanding anything the Angels can dish out, the Evangelion's one drawback lies in the limited number of people able to pilot them. Only a handful of teenagers, all born fourteen years ago, nine months after the Angels first appeared, are able to interface with the Evangelion. One such teenager is Shinji Ikari, whose father heads the NERV team that developed and maintains the Evangelion. Thrust into a maelstrom of battle and events that he does not understand, Shinji is forced to plumb the depths of his own inner resources for the courage and strength to not only fight, but to survive, or risk losing everything.\n\n(Source: AniDB)\n\n Note: Later releases include edited versions of Episodes 21-24 called the \"Director's Cut\" with some visual editing and adding extra scenes that previously appeared in the theatrical recap 'Death'.",
+      "cover": "/media/covers/30.webp",
+      "banner": "/media/banners/30.webp",
+      "accent": "#f17843",
+      "score": 83,
+      "meanScore": 83,
+      "popularity": 504928,
+      "favorites": 43736,
+      "episodes": 26,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "ORIGINAL",
+      "season": "FALL",
+      "seasonYear": 1995,
+      "startDate": "1995-10-03",
+      "endDate": "1996-03-27",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Mecha",
+        "Mystery",
+        "Psychological",
+        "Sci-Fi"
+      ],
+      "studios": [
+        "GAINAX",
+        "Tatsunoko Production"
+      ],
+      "trailer": {
+        "id": "kOH2_8MkgZY",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 89,
+          "name": "Shinji Ikari",
+          "role": "Main",
+          "image": "/media/characters/30-89.webp"
+        },
+        {
+          "id": 1259,
+          "name": "Misato Katsuragi",
+          "role": "Main",
+          "image": "/media/characters/30-1259.webp"
+        },
+        {
+          "id": 86,
+          "name": "Rei Ayanami",
+          "role": "Main",
+          "image": "/media/characters/30-86.webp"
+        },
+        {
+          "id": 94,
+          "name": "Asuka Langley Souryuu",
+          "role": "Main",
+          "image": "/media/characters/30-94.webp"
+        },
+        {
+          "id": 1250,
+          "name": "Kensuke Aida",
+          "role": "Supporting",
+          "image": "/media/characters/30-1250.webp"
+        },
+        {
+          "id": 1251,
+          "name": "Ritsuko Akagi",
+          "role": "Supporting",
+          "image": "/media/characters/30-1251.webp"
+        }
+      ]
+    },
+    {
+      "id": 199,
+      "slug": "spirited-away",
+      "title": "Spirited Away",
+      "originalTitle": "Sen to Chihiro no Kamikakushi",
+      "nativeTitle": "千と千尋の神隠し",
+      "synopsis": "On the way to their new home, 10-year-old Chihiro Ogino's family stumbles upon a deserted theme park. Intrigued, the family investigates the park, though unbeknownst to them, it is secretly inhabited by spirits who sleep by day and appear at night. When Chihiro's mother and father eat food from a restaurant in the street, angry spirits turn them into pigs. Furthermore, a wide sea has appeared between the spirit world and the human one, trapping Chihiro, the sole human, in a land of spirits. Luckily for her though, a mysterious boy named Haku appears, claiming to know her from the past. Under his instructions, Chihiro secures a job in the bathhouse where Haku works. With only her courage and some new found friends to aid her, Chihiro embarks on a journey to turn her parents back to their original forms and return home.",
+      "cover": "/media/covers/199.webp",
+      "banner": "/media/banners/199.webp",
+      "accent": "#e45d5d",
+      "score": 86,
+      "meanScore": 86,
+      "popularity": 488910,
+      "favorites": 22851,
+      "episodes": 1,
+      "duration": 125,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "ORIGINAL",
+      "season": "SUMMER",
+      "seasonYear": 2001,
+      "startDate": "2001-07-20",
+      "endDate": "2001-07-20",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Adventure",
+        "Drama",
+        "Fantasy",
+        "Supernatural"
+      ],
+      "studios": [
+        "Studio Ghibli"
+      ],
+      "trailer": {
+        "id": "ByXuk9QqQkk",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 384,
+          "name": "Chihiro Ogino",
+          "role": "Main",
+          "image": "/media/characters/199-384.webp"
+        },
+        {
+          "id": 385,
+          "name": "Haku",
+          "role": "Main",
+          "image": "/media/characters/199-385.webp"
+        },
+        {
+          "id": 4716,
+          "name": "Yubaba",
+          "role": "Supporting",
+          "image": "/media/characters/199-4716.webp"
+        },
+        {
+          "id": 5465,
+          "name": "Rin",
+          "role": "Supporting",
+          "image": "/media/characters/199-5465.webp"
+        },
+        {
+          "id": 8298,
+          "name": "Kaonashi",
+          "role": "Supporting",
+          "image": "/media/characters/199-8298.webp"
+        },
+        {
+          "id": 8299,
+          "name": "Akio Ogino",
+          "role": "Supporting",
+          "image": "/media/characters/199-8299.webp"
+        }
+      ]
+    },
+    {
+      "id": 164,
+      "slug": "princess-mononoke",
+      "title": "Princess Mononoke",
+      "originalTitle": "Mononoke-hime",
+      "nativeTitle": "もののけ姫",
+      "synopsis": "A calm village residing in the mountains comes under attack from a demon-possessed boar one day.\n\nAshitaka, a young man and prince of the tribe, engages the creature in an attempt to save his village. During the battle, the boar bites him on the arm, leaving it blackened and cursed. Following his village's traditions, Ashitaka is exiled and becomes a wanderer, looking for a solution to the curse before it engulfs him.\n\nIron Town is a fortress under the leadership of Lady Eboshi. Through the clearing of the surrounding forests, Iron Town produces large amounts of Ironsand, used for gunpowder and other machinery. However, because of the forests destruction, nearby animal clans seek revenge led by a human girl of the Wolf clan called San.\n\nWhen Ashitaka comes to Iron Town, he discovers the area consumed in battle. Horrified, he attempts to create peace and befriend the Wolf Clan. However, after the forest's eradication and the ongoing war between Human and Beast, will the Spirit of the Forest be forgiving and accept Ashitaka's request to expel his curse?\n\n[Written by MAL Rewrite]",
+      "cover": "/media/covers/164.webp",
+      "banner": "/media/banners/164.webp",
+      "accent": "#d8d3c7",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 307430,
+      "favorites": 15018,
+      "episodes": 1,
+      "duration": 134,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "ORIGINAL",
+      "season": "SUMMER",
+      "seasonYear": 1997,
+      "startDate": "1997-07-12",
+      "endDate": "1997-07-12",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama",
+        "Fantasy"
+      ],
+      "studios": [
+        "Studio Ghibli"
+      ],
+      "trailer": {
+        "id": "4OiMOHRDs14",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 2727,
+          "name": "San",
+          "role": "Main",
+          "image": "/media/characters/164-2727.webp"
+        },
+        {
+          "id": 2802,
+          "name": "Ashitaka",
+          "role": "Main",
+          "image": "/media/characters/164-2802.webp"
+        },
+        {
+          "id": 4781,
+          "name": "Eboshi Gozen",
+          "role": "Supporting",
+          "image": "/media/characters/164-4781.webp"
+        },
+        {
+          "id": 6801,
+          "name": "Bou Jiko",
+          "role": "Supporting",
+          "image": "/media/characters/164-6801.webp"
+        },
+        {
+          "id": 9174,
+          "name": "Moro no Kimi",
+          "role": "Supporting",
+          "image": "/media/characters/164-9174.webp"
+        },
+        {
+          "id": 11360,
+          "name": "Toki",
+          "role": "Supporting",
+          "image": "/media/characters/164-11360.webp"
+        }
+      ]
+    },
+    {
+      "id": 20954,
+      "slug": "a-silent-voice",
+      "title": "A Silent Voice",
+      "originalTitle": "Koe no Katachi",
+      "nativeTitle": "聲の形",
+      "synopsis": "After transferring into a new school, a deaf girl, Shouko Nishimiya, is bullied by the popular Shouya Ishida. As Shouya continues to bully Shouko, the class turns its back on him. Shouko transfers and Shouya grows up as an outcast. Alone and depressed, the regretful Shouya finds Shouko to make amends.\n\n(Source: Eleven Arts)",
+      "cover": "/media/covers/20954.webp",
+      "banner": "/media/banners/20954.webp",
+      "accent": "#5dbbe4",
+      "score": 88,
+      "meanScore": 88,
+      "popularity": 731361,
+      "favorites": 57640,
+      "episodes": 1,
+      "duration": 130,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "MANGA",
+      "season": "SUMMER",
+      "seasonYear": 2016,
+      "startDate": "2016-09-17",
+      "endDate": "2016-09-17",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Romance",
+        "Slice of Life"
+      ],
+      "studios": [
+        "Kyoto Animation"
+      ],
+      "trailer": {
+        "id": "Sy4bPCuzfiQ",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 80243,
+          "name": "Shouko Nishimiya",
+          "role": "Main",
+          "image": "/media/characters/20954-80243.webp"
+        },
+        {
+          "id": 80491,
+          "name": "Shouya Ishida",
+          "role": "Main",
+          "image": "/media/characters/20954-80491.webp"
+        },
+        {
+          "id": 89335,
+          "name": "Yuzuru Nishimiya",
+          "role": "Supporting",
+          "image": "/media/characters/20954-89335.webp"
+        },
+        {
+          "id": 124026,
+          "name": "Naoka Ueno",
+          "role": "Supporting",
+          "image": "/media/characters/20954-124026.webp"
+        },
+        {
+          "id": 124030,
+          "name": "Miyako Ishida",
+          "role": "Supporting",
+          "image": "/media/characters/20954-124030.webp"
+        },
+        {
+          "id": 124031,
+          "name": "Maria Ishida",
+          "role": "Supporting",
+          "image": "/media/characters/20954-124031.webp"
+        }
+      ]
+    },
+    {
+      "id": 21519,
+      "slug": "your-name",
+      "title": "Your Name.",
+      "originalTitle": "Kimi no Na wa.",
+      "nativeTitle": "君の名は。",
+      "synopsis": "Mitsuha Miyamizu, a high school girl, yearns to live the life of a boy in the bustling city of Tokyo—a dream that stands in stark contrast to her present life in the countryside. Meanwhile in the city, Taki Tachibana lives a busy life as a high school student while juggling his part-time job and hopes for a future in architecture.\n\nOne day, Mitsuha awakens in a room that is not her own and suddenly finds herself living the dream life in Tokyo—but in Taki's body! Elsewhere, Taki finds himself living Mitsuha's life in the humble countryside. In pursuit of an answer to this strange phenomenon, they begin to search for one another.\n\nKimi no Na wa. revolves around Mitsuha and Taki's actions, which begin to have a dramatic impact on each other's lives, weaving them into a fabric held together by fate and circumstance.\n\n(Source: MAL Rewrite)",
+      "cover": "/media/covers/21519.webp",
+      "banner": "/media/banners/21519.webp",
+      "accent": "#0da1e4",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 727497,
+      "favorites": 43638,
+      "episodes": 1,
+      "duration": 107,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "ORIGINAL",
+      "season": "SUMMER",
+      "seasonYear": 2016,
+      "startDate": "2016-08-26",
+      "endDate": "2016-08-26",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Romance",
+        "Supernatural"
+      ],
+      "studios": [
+        "CoMix Wave"
+      ],
+      "trailer": {
+        "id": "k4xGqY5IDBE",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 121514,
+          "name": "Mitsuha Miyamizu",
+          "role": "Main",
+          "image": "/media/characters/21519-121514.webp"
+        },
+        {
+          "id": 121516,
+          "name": "Taki Tachibana",
+          "role": "Main",
+          "image": "/media/characters/21519-121516.webp"
+        },
+        {
+          "id": 121517,
+          "name": "Tsukasa Fujii",
+          "role": "Supporting",
+          "image": "/media/characters/21519-121517.webp"
+        },
+        {
+          "id": 121518,
+          "name": "Yotsuha Miyamizu",
+          "role": "Supporting",
+          "image": "/media/characters/21519-121518.webp"
+        },
+        {
+          "id": 121520,
+          "name": "Hitoha Miyamizu",
+          "role": "Supporting",
+          "image": "/media/characters/21519-121520.webp"
+        },
+        {
+          "id": 121521,
+          "name": "Sayaka Natori",
+          "role": "Supporting",
+          "image": "/media/characters/21519-121521.webp"
+        }
+      ]
+    },
+    {
+      "id": 106286,
+      "slug": "weathering-with-you",
+      "title": "Weathering With You",
+      "originalTitle": "Tenki no Ko",
+      "nativeTitle": "天気の子",
+      "synopsis": "High school student Hodaka leaves his home on an isolated island and moves to Tokyo, but he immediately becomes broke. He lives his days in isolation, but finally finds a job as a writer for a shady occult magazine. After he starts his job, the weather has been rainy day after day. In a corner of the crowded and busy city, Hodaka meets a young woman named Hina. Due to certain circumstances, Hina and her younger brother live together, but have a cheerful and sturdy life. Hina also has a certain power: the power to stop the rain and clear the sky.\n\n(Source: Anime News Network)",
+      "cover": "/media/covers/106286.webp",
+      "banner": "/media/banners/106286.webp",
+      "accent": "#5dbbe4",
+      "score": 81,
+      "meanScore": 81,
+      "popularity": 362567,
+      "favorites": 13133,
+      "episodes": 1,
+      "duration": 115,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "ORIGINAL",
+      "season": "SUMMER",
+      "seasonYear": 2019,
+      "startDate": "2019-07-19",
+      "endDate": "2019-07-19",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Romance",
+        "Slice of Life",
+        "Supernatural"
+      ],
+      "studios": [
+        "CoMix Wave"
+      ],
+      "trailer": {
+        "id": "Q6iK6DjV_iE",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 139709,
+          "name": "Hodaka Morishima",
+          "role": "Main",
+          "image": "/media/characters/106286-139709.webp"
+        },
+        {
+          "id": 139710,
+          "name": "Hina Amano",
+          "role": "Main",
+          "image": "/media/characters/106286-139710.webp"
+        },
+        {
+          "id": 139703,
+          "name": "Nagi Amano",
+          "role": "Supporting",
+          "image": "/media/characters/106286-139703.webp"
+        },
+        {
+          "id": 139704,
+          "name": "Fumi Tachibana",
+          "role": "Supporting",
+          "image": "/media/characters/106286-139704.webp"
+        },
+        {
+          "id": 139705,
+          "name": "Natsumi Suga",
+          "role": "Supporting",
+          "image": "/media/characters/106286-139705.webp"
+        },
+        {
+          "id": 139706,
+          "name": "Takai",
+          "role": "Supporting",
+          "image": "/media/characters/106286-139706.webp"
+        }
+      ]
+    },
+    {
+      "id": 142770,
+      "slug": "suzume",
+      "title": "Suzume",
+      "originalTitle": "Suzume no Tojimari",
+      "nativeTitle": "すずめの戸締まり",
+      "synopsis": "The story follows Suzume, a 17-year-old girl from a quiet Kyushu town who meets a young man looking for a door. They find a door within ruins in the mountain, and Suzume opens it. Soon, more doors begin to open around Japan, bringing disasters from the other side. The film depicts Suzume's liberation and growth, as she closes the doors that are causing disaster.\n\n(Source: Anime News Network)",
+      "cover": "/media/covers/142770.webp",
+      "banner": "/media/banners/142770.webp",
+      "accent": "#43bbe4",
+      "score": 81,
+      "meanScore": 81,
+      "popularity": 206486,
+      "favorites": 6862,
+      "episodes": 1,
+      "duration": 121,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "ORIGINAL",
+      "season": "FALL",
+      "seasonYear": 2022,
+      "startDate": "2022-11-11",
+      "endDate": "2022-11-11",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Adventure",
+        "Fantasy",
+        "Mystery",
+        "Supernatural"
+      ],
+      "studios": [
+        "CoMix Wave"
+      ],
+      "trailer": {
+        "id": "g0JMPkn7Wuo",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 259510,
+          "name": "Suzume Iwato",
+          "role": "Main",
+          "image": "/media/characters/142770-259510.webp"
+        },
+        {
+          "id": 284260,
+          "name": "Souta Munakata",
+          "role": "Main",
+          "image": "/media/characters/142770-284260.webp"
+        },
+        {
+          "id": 284261,
+          "name": "Daijin",
+          "role": "Supporting",
+          "image": "/media/characters/142770-284261.webp"
+        },
+        {
+          "id": 288384,
+          "name": "Tamaki Iwato",
+          "role": "Supporting",
+          "image": "/media/characters/142770-288384.webp"
+        },
+        {
+          "id": 288385,
+          "name": "Minoru Okabe",
+          "role": "Supporting",
+          "image": "/media/characters/142770-288385.webp"
+        },
+        {
+          "id": 288386,
+          "name": "Rumi Ninomiya",
+          "role": "Supporting",
+          "image": "/media/characters/142770-288386.webp"
+        }
+      ]
+    },
+    {
+      "id": 437,
+      "slug": "perfect-blue",
+      "title": "Perfect Blue",
+      "originalTitle": "PERFECT BLUE",
+      "nativeTitle": "PERFECT BLUE",
+      "synopsis": "Rising pop star Mima has quit singing to pursue a career as an actress and model, but her fans aren’t ready to see her go... Encouraged by her managers, Mima takes on a recurring role on a popular TV show, when suddenly her handlers and collaborators begin turning up murdered. Harboring feelings of guilt and haunted by visions of her former self, Mima’s reality and fantasy meld into a frenzied paranoia. As her stalker closes in, in person and online, the threat he poses is more real than even Mima knows, in this iconic psychological thriller that has frequently been hailed as one of the most important animated films of all time.\n\n(Source: Shout! Factory)\n\nNote: The film received an early premiere at the Fantasia Film Festival on August 5, 1997.",
+      "cover": "/media/covers/437.webp",
+      "banner": "/media/banners/437.webp",
+      "accent": "#1a356b",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 250268,
+      "favorites": 17007,
+      "episodes": 1,
+      "duration": 82,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "OTHER",
+      "season": "WINTER",
+      "seasonYear": 1998,
+      "startDate": "1998-02-28",
+      "endDate": "1998-02-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Horror",
+        "Psychological",
+        "Thriller"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": {
+        "id": "UXQraSkOOGs",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 4866,
+          "name": "Mima Kirigoe",
+          "role": "Main",
+          "image": "/media/characters/437-4866.webp"
+        },
+        {
+          "id": 6111,
+          "name": "Rumi Hidaka",
+          "role": "Supporting",
+          "image": "/media/characters/437-6111.webp"
+        },
+        {
+          "id": 14123,
+          "name": "Uchida",
+          "role": "Supporting",
+          "image": "/media/characters/437-14123.webp"
+        },
+        {
+          "id": 40478,
+          "name": "Rei",
+          "role": "Supporting",
+          "image": "/media/characters/437-40478.webp"
+        },
+        {
+          "id": 72181,
+          "name": "Murano",
+          "role": "Supporting",
+          "image": "/media/characters/437-72181.webp"
+        },
+        {
+          "id": 72183,
+          "name": "Tejima",
+          "role": "Supporting",
+          "image": "/media/characters/437-72183.webp"
+        }
+      ]
+    },
+    {
+      "id": 1943,
+      "slug": "paprika",
+      "title": "Paprika",
+      "originalTitle": "Paprika",
+      "nativeTitle": "パプリカ",
+      "synopsis": "Prepare to enter the realm of fantasy and imagination where reality and dreams collide in a kaleidoscopic mindscape of sheer visual genius. The magical tale centers on a revolutionary machine that allows scientists to enter and record a subject's dream. After being stolen, a fearless detective and brilliant therapist join forces to recover the device before it falls into the hands of a dream terrorist.\n\n(Source: Sony Pictures Home Entertainment)\n\nNote: The film received an early premiere at the 63rd Venice International Film Festival on September 2, 2006.",
+      "cover": "/media/covers/1943.webp",
+      "banner": "/media/banners/1943.webp",
+      "accent": "#e49328",
+      "score": 79,
+      "meanScore": 79,
+      "popularity": 159437,
+      "favorites": 4632,
+      "episodes": 1,
+      "duration": 90,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "OTHER",
+      "season": "FALL",
+      "seasonYear": 2006,
+      "startDate": "2006-11-25",
+      "endDate": "2006-11-25",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Fantasy",
+        "Mystery",
+        "Psychological",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": {
+        "id": "JRwJdwTRfIA",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 3797,
+          "name": "Paprika",
+          "role": "Main",
+          "image": "/media/characters/1943-3797.webp"
+        },
+        {
+          "id": 3798,
+          "name": "Atsuko Chiba",
+          "role": "Main",
+          "image": "/media/characters/1943-3798.webp"
+        },
+        {
+          "id": 3799,
+          "name": "Kousaku Tokita",
+          "role": "Main",
+          "image": "/media/characters/1943-3799.webp"
+        },
+        {
+          "id": 3801,
+          "name": "Toshimi Konakawa",
+          "role": "Main",
+          "image": "/media/characters/1943-3801.webp"
+        },
+        {
+          "id": 3800,
+          "name": "Toratarou Shima",
+          "role": "Supporting",
+          "image": "/media/characters/1943-3800.webp"
+        },
+        {
+          "id": 3802,
+          "name": "Seijirou Inui",
+          "role": "Supporting",
+          "image": "/media/characters/1943-3802.webp"
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "slug": "akira",
+      "title": "Akira",
+      "originalTitle": "AKIRA",
+      "nativeTitle": "AKIRA",
+      "synopsis": "It's the year 2019, thirty-one years have passed since the start of World War III. A top-secret child with amazing powers of the mind breaks free from custody and accidentally gets a motorcycle gang involved in the project. This incident triggers psychic powers within one of the gang members, Tetsuo, and he is taken by the army to be experimented on. His mind has been altered and is now on the path of war, seeking revenge on the society that once called him weak.\n\n(Source: FUNimation)",
+      "cover": "/media/covers/47.webp",
+      "banner": "/media/banners/47.webp",
+      "accent": "#e45d50",
+      "score": 79,
+      "meanScore": 79,
+      "popularity": 235910,
+      "favorites": 9037,
+      "episodes": 1,
+      "duration": 125,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "MANGA",
+      "season": "SUMMER",
+      "seasonYear": 1988,
+      "startDate": "1988-07-16",
+      "endDate": "1988-07-16",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Horror",
+        "Psychological",
+        "Sci-Fi",
+        "Supernatural"
+      ],
+      "studios": [
+        "Tokyo Movie Shinsha"
+      ],
+      "trailer": {
+        "id": "SyM8JyyUTjc",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 2588,
+          "name": "Shoutarou Kaneda",
+          "role": "Main",
+          "image": "/media/characters/47-2588.webp"
+        },
+        {
+          "id": 2589,
+          "name": "Tetsuo Shima",
+          "role": "Main",
+          "image": "/media/characters/47-2589.webp"
+        },
+        {
+          "id": 9875,
+          "name": "Kei",
+          "role": "Main",
+          "image": "/media/characters/47-9875.webp"
+        },
+        {
+          "id": 16288,
+          "name": "Shikishima Taisa",
+          "role": "Supporting",
+          "image": "/media/characters/47-16288.webp"
+        },
+        {
+          "id": 16289,
+          "name": "Kaori",
+          "role": "Supporting",
+          "image": "/media/characters/47-16289.webp"
+        },
+        {
+          "id": 18439,
+          "name": "Resistance Member",
+          "role": "Supporting",
+          "image": "/media/characters/47-18439.webp"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "slug": "ghost-in-the-shell",
+      "title": "Ghost in the Shell",
+      "originalTitle": "GHOST IN THE SHELL: Koukaku Kidoutai",
+      "nativeTitle": "GHOST IN THE SHELL / 攻殻機動隊",
+      "synopsis": "2029: A female cybernetic government agent, Major Motoko Kusanagi, and the Internal Bureau of Investigations are hot on the trail of “The Puppet Master,” a mysterious and threatening computer virus capable of infiltrating human hosts. Together with her fellow agents from Section 9, Kusanagi embarks on a high-tech race against time to capture the omnipresent entity.\n\n(Source: Lionsgate Films)",
+      "cover": "/media/covers/43.webp",
+      "banner": "/media/banners/43.webp",
+      "accent": "#d8d3c7",
+      "score": 80,
+      "meanScore": 80,
+      "popularity": 180410,
+      "favorites": 7374,
+      "episodes": 1,
+      "duration": 83,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 1995,
+      "startDate": "1995-11-18",
+      "endDate": "1995-11-18",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Psychological",
+        "Sci-Fi"
+      ],
+      "studios": [
+        "Production I.G"
+      ],
+      "trailer": {
+        "id": "8RF09G8Ymqg",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 1795,
+          "name": "Motoko Kusanagi",
+          "role": "Main",
+          "image": "/media/characters/43-1795.webp"
+        },
+        {
+          "id": 2653,
+          "name": "Batou",
+          "role": "Main",
+          "image": "/media/characters/43-2653.webp"
+        },
+        {
+          "id": 2654,
+          "name": "Togusa",
+          "role": "Main",
+          "image": "/media/characters/43-2654.webp"
+        },
+        {
+          "id": 2676,
+          "name": "Ishikawa",
+          "role": "Supporting",
+          "image": "/media/characters/43-2676.webp"
+        },
+        {
+          "id": 2677,
+          "name": "Daisuke Aramaki",
+          "role": "Supporting",
+          "image": "/media/characters/43-2677.webp"
+        },
+        {
+          "id": 18516,
+          "name": "Ningyoutsukai",
+          "role": "Supporting",
+          "image": "/media/characters/43-18516.webp"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "slug": "monster",
+      "title": "Monster",
+      "originalTitle": "MONSTER",
+      "nativeTitle": "MONSTER",
+      "synopsis": "Dr. Kenzo Tenma is a renowned Japanese brain surgeon working at a leading hospital in Germany. One night, Dr. Tenma risks his reputation and career to save the life of a critically wounded young boy over that of the town mayor who had been planning to support the hospital financially. A string of mysterious murders begin to occur soon after the operation, and Dr. Tenma emerges as the primary suspect despite no incriminating evidence.\n\nA doctor is taught to believe that all life is equal; however, when another series of murders occur in the surgeon's vicinity, Dr. Tenma's beliefs are shaken as his actions that night are shown to have much broader consequences than he could have imagined. Leaving behind his life as a surgeon he embarks on a journey across the country to unravel the mystery of the boy he saved.",
+      "cover": "/media/covers/19.webp",
+      "banner": "/media/banners/19.webp",
+      "accent": "#d8d3c7",
+      "score": 88,
+      "meanScore": 88,
+      "popularity": 350694,
+      "favorites": 24866,
+      "episodes": 74,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2004,
+      "startDate": "2004-04-07",
+      "endDate": "2005-09-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Horror",
+        "Mystery",
+        "Psychological",
+        "Thriller"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": null,
+      "characters": [
+        {
+          "id": 718,
+          "name": "Kenzou Tenma",
+          "role": "Main",
+          "image": "/media/characters/19-718.webp"
+        },
+        {
+          "id": 719,
+          "name": "Johan Liebert",
+          "role": "Main",
+          "image": "/media/characters/19-719.webp"
+        },
+        {
+          "id": 720,
+          "name": "Anna Liebert",
+          "role": "Main",
+          "image": "/media/characters/19-720.webp"
+        },
+        {
+          "id": 721,
+          "name": "Heinrich Runge",
+          "role": "Main",
+          "image": "/media/characters/19-721.webp"
+        },
+        {
+          "id": 6123,
+          "name": "Eva Heinemann",
+          "role": "Main",
+          "image": "/media/characters/19-6123.webp"
+        },
+        {
+          "id": 3096,
+          "name": "Wolfgang Grimmer",
+          "role": "Supporting",
+          "image": "/media/characters/19-3096.webp"
+        }
+      ]
+    },
+    {
+      "id": 101348,
+      "slug": "vinland-saga",
+      "title": "Vinland Saga",
+      "originalTitle": "VINLAND SAGA",
+      "nativeTitle": "ヴィンランド・サガ",
+      "synopsis": "Thorfinn is son to one of the Vikings' greatest warriors, but when his father is killed in battle by the mercenary leader Askeladd, he swears to have his revenge. Thorfinn joins Askeladd's band in order to challenge him to a duel, and ends up caught in the middle of a war for the crown of England.\n\n(Source: Kodansha USA)",
+      "cover": "/media/covers/101348.webp",
+      "banner": "/media/banners/101348.webp",
+      "accent": "#f16b5d",
+      "score": 87,
+      "meanScore": 87,
+      "popularity": 558908,
+      "favorites": 38181,
+      "episodes": 24,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SUMMER",
+      "seasonYear": 2019,
+      "startDate": "2019-07-08",
+      "endDate": "2019-12-30",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama"
+      ],
+      "studios": [
+        "WIT STUDIO"
+      ],
+      "trailer": {
+        "id": "5xqEp7R9SYM",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 10138,
+          "name": "Thorfinn Karlsefni",
+          "role": "Main",
+          "image": "/media/characters/101348-10138.webp"
+        },
+        {
+          "id": 13020,
+          "name": "Askeladd",
+          "role": "Main",
+          "image": "/media/characters/101348-13020.webp"
+        },
+        {
+          "id": 17438,
+          "name": "Canute Svenson",
+          "role": "Main",
+          "image": "/media/characters/101348-17438.webp"
+        },
+        {
+          "id": 13021,
+          "name": "Thors Snorresson",
+          "role": "Supporting",
+          "image": "/media/characters/101348-13021.webp"
+        },
+        {
+          "id": 17440,
+          "name": "Thorkell",
+          "role": "Supporting",
+          "image": "/media/characters/101348-17440.webp"
+        },
+        {
+          "id": 19485,
+          "name": "Bjorn",
+          "role": "Supporting",
+          "image": "/media/characters/101348-19485.webp"
+        }
+      ]
+    },
+    {
+      "id": 21507,
+      "slug": "mob-psycho-100",
+      "title": "Mob Psycho 100",
+      "originalTitle": "Mob Psycho 100",
+      "nativeTitle": "モブサイコ100",
+      "synopsis": "The story revolves around \"Mob,\" a boy who will explode if his emotional capacity reaches 100%. This boy with psychic powers earned his nickname \"Mob\" because he does not stand out among other people. He keeps his psychic powers bottled up so he can live normally, but if his emotional level reaches 100, something will overwhelm his entire body.\n\n(Source: Anime News Network)",
+      "cover": "/media/covers/21507.webp",
+      "banner": "/media/banners/21507.webp",
+      "accent": "#d65d1a",
+      "score": 84,
+      "meanScore": 84,
+      "popularity": 638057,
+      "favorites": 37443,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SUMMER",
+      "seasonYear": 2016,
+      "startDate": "2016-07-12",
+      "endDate": "2016-09-27",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Drama",
+        "Psychological",
+        "Slice of Life",
+        "Supernatural"
+      ],
+      "studios": [
+        "bones"
+      ],
+      "trailer": {
+        "id": "mV39saBlBLI",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 89616,
+          "name": "Shigeo Kageyama",
+          "role": "Main",
+          "image": "/media/characters/21507-89616.webp"
+        },
+        {
+          "id": 89334,
+          "name": "Arataka Reigen",
+          "role": "Main",
+          "image": "/media/characters/21507-89334.webp"
+        },
+        {
+          "id": 89617,
+          "name": "Ekubo",
+          "role": "Main",
+          "image": "/media/characters/21507-89617.webp"
+        },
+        {
+          "id": 89618,
+          "name": "Ritsu Kageyama",
+          "role": "Main",
+          "image": "/media/characters/21507-89618.webp"
+        },
+        {
+          "id": 89619,
+          "name": "Tenga Onigawara",
+          "role": "Supporting",
+          "image": "/media/characters/21507-89619.webp"
+        },
+        {
+          "id": 89620,
+          "name": "Tome Kurata",
+          "role": "Supporting",
+          "image": "/media/characters/21507-89620.webp"
+        }
+      ]
+    },
+    {
+      "id": 21087,
+      "slug": "one-punch-man",
+      "title": "One-Punch Man",
+      "originalTitle": "One Punch Man",
+      "nativeTitle": "ワンパンマン",
+      "synopsis": "Saitama has a rather peculiar hobby, being a superhero, but despite his heroic deeds and superhuman abilities, a shadow looms over his life. He's become much too powerful, to the point that every opponent ends up defeated with a single punch.\n\nThe lack of challenge has driven him into a state of apathy, as he watches his life pass by having lost all enthusiasm, at least until he's unwillingly thrust in the role of being a mentor to the young and revenge-driven Genos.",
+      "cover": "/media/covers/21087.webp",
+      "banner": "/media/banners/21087.webp",
+      "accent": "#e4ae5d",
+      "score": 82,
+      "meanScore": 82,
+      "popularity": 779319,
+      "favorites": 30852,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2015,
+      "startDate": "2015-10-05",
+      "endDate": "2015-12-21",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Sci-Fi",
+        "Supernatural"
+      ],
+      "studios": [
+        "MADHOUSE"
+      ],
+      "trailer": {
+        "id": "RzmFKUDOUgw",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 73935,
+          "name": "Saitama",
+          "role": "Main",
+          "image": "/media/characters/21087-73935.webp"
+        },
+        {
+          "id": 73979,
+          "name": "Genos",
+          "role": "Main",
+          "image": "/media/characters/21087-73979.webp"
+        },
+        {
+          "id": 74167,
+          "name": "Onsoku no Sonic",
+          "role": "Supporting",
+          "image": "/media/characters/21087-74167.webp"
+        },
+        {
+          "id": 81141,
+          "name": "Bang",
+          "role": "Supporting",
+          "image": "/media/characters/21087-81141.webp"
+        },
+        {
+          "id": 81929,
+          "name": "Tatsumaki",
+          "role": "Supporting",
+          "image": "/media/characters/21087-81929.webp"
+        },
+        {
+          "id": 75460,
+          "name": "Sneck",
+          "role": "Supporting",
+          "image": "/media/characters/21087-75460.webp"
+        }
+      ]
+    },
+    {
+      "id": 113415,
+      "slug": "jujutsu-kaisen",
+      "title": "JUJUTSU KAISEN",
+      "originalTitle": "Jujutsu Kaisen",
+      "nativeTitle": "呪術廻戦",
+      "synopsis": "A boy fights... for \"the right death.\"\n\nHardship, regret, shame: the negative feelings that humans feel become Curses that lurk in our everyday lives. The Curses run rampant throughout the world, capable of leading people to terrible misfortune and even death. What's more, the Curses can only be exorcised by another Curse.\n\nItadori Yuji is a boy with tremendous physical strength, though he lives a completely ordinary high school life. One day, to save a friend who has been attacked by Curses, he eats the finger of the Double-Faced Specter, taking the Curse into his own soul. From then on, he shares one body with the Double-Faced Specter. Guided by the most powerful of sorcerers, Gojou Satoru, Itadori is admitted to the Tokyo Metropolitan Technical High School of Sorcery, an organization that fights the Curses... and thus begins the heroic tale of a boy who became a Curse to exorcise a Curse, a life from which he could never turn back.\n\n(Source: Crunchyroll)\n\nNote: The first episode received an early web premiere on September 19th, 2020. The regular TV broadcast started on October 3rd, 2020.",
+      "cover": "/media/covers/113415.webp",
+      "banner": "/media/banners/113415.webp",
+      "accent": "#e45d5d",
+      "score": 84,
+      "meanScore": 84,
+      "popularity": 993915,
+      "favorites": 64718,
+      "episodes": 24,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2020,
+      "startDate": "2020-10-03",
+      "endDate": "2021-03-27",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Supernatural"
+      ],
+      "studios": [
+        "MAPPA"
+      ],
+      "trailer": {
+        "id": "RIyb52EMx8c",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 126635,
+          "name": "Megumi Fushiguro",
+          "role": "Main",
+          "image": "/media/characters/113415-126635.webp"
+        },
+        {
+          "id": 127212,
+          "name": "Yuuji Itadori",
+          "role": "Main",
+          "image": "/media/characters/113415-127212.webp"
+        },
+        {
+          "id": 127691,
+          "name": "Satoru Gojou",
+          "role": "Main",
+          "image": "/media/characters/113415-127691.webp"
+        },
+        {
+          "id": 133700,
+          "name": "Nobara Kugisaki",
+          "role": "Main",
+          "image": "/media/characters/113415-133700.webp"
+        },
+        {
+          "id": 133699,
+          "name": "Suguru Getou",
+          "role": "Supporting",
+          "image": "/media/characters/113415-133699.webp"
+        },
+        {
+          "id": 133701,
+          "name": "Sukuna",
+          "role": "Supporting",
+          "image": "/media/characters/113415-133701.webp"
+        }
+      ]
+    },
+    {
+      "id": 101922,
+      "slug": "demon-slayer-kimetsu-no-yaiba",
+      "title": "Demon Slayer: Kimetsu no Yaiba",
+      "originalTitle": "Kimetsu no Yaiba",
+      "nativeTitle": "鬼滅の刃",
+      "synopsis": "It is the Taisho Period in Japan. Tanjiro, a kindhearted boy who sells charcoal for a living, finds his family slaughtered by a demon. To make matters worse, his younger sister Nezuko, the sole survivor, has been transformed into a demon herself. Though devastated by this grim reality, Tanjiro resolves to become a “demon slayer” so that he can turn his sister back into a human, and kill the demon that massacred his family.\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/101922.webp",
+      "banner": "/media/banners/101922.webp",
+      "accent": "#f1c9ae",
+      "score": 82,
+      "meanScore": 82,
+      "popularity": 1012667,
+      "favorites": 54914,
+      "episodes": 26,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2019,
+      "startDate": "2019-04-06",
+      "endDate": "2019-09-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Drama",
+        "Fantasy",
+        "Supernatural"
+      ],
+      "studios": [
+        "ufotable"
+      ],
+      "trailer": {
+        "id": "6vMuWuWlW4I",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 126071,
+          "name": "Tanjirou Kamado",
+          "role": "Main",
+          "image": "/media/characters/101922-126071.webp"
+        },
+        {
+          "id": 127518,
+          "name": "Nezuko Kamado",
+          "role": "Main",
+          "image": "/media/characters/101922-127518.webp"
+        },
+        {
+          "id": 129130,
+          "name": "Inosuke Hashibira",
+          "role": "Main",
+          "image": "/media/characters/101922-129130.webp"
+        },
+        {
+          "id": 129131,
+          "name": "Zenitsu Agatsuma",
+          "role": "Main",
+          "image": "/media/characters/101922-129131.webp"
+        },
+        {
+          "id": 129132,
+          "name": "Muzan Kibutsuji",
+          "role": "Supporting",
+          "image": "/media/characters/101922-129132.webp"
+        },
+        {
+          "id": 129133,
+          "name": "Kyoujurou Rengoku",
+          "role": "Supporting",
+          "image": "/media/characters/101922-129133.webp"
+        }
+      ]
+    },
+    {
+      "id": 127230,
+      "slug": "chainsaw-man",
+      "title": "Chainsaw Man",
+      "originalTitle": "Chainsaw Man",
+      "nativeTitle": "チェンソーマン",
+      "synopsis": "Denji is a teenage boy living with a Chainsaw Devil named Pochita. Due to the debt his father left behind, he has been living a rock-bottom life while repaying his debt by harvesting devil corpses with Pochita.\n\nOne day, Denji is betrayed and killed. As his consciousness fades, he makes a contract with Pochita and gets revived as \"Chainsaw Man\" — a man with a devil's heart.\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/127230.webp",
+      "banner": "/media/banners/127230.webp",
+      "accent": "#6b1a1a",
+      "score": 83,
+      "meanScore": 83,
+      "popularity": 650697,
+      "favorites": 36577,
+      "episodes": 12,
+      "duration": 25,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2022,
+      "startDate": "2022-10-12",
+      "endDate": "2022-12-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Horror",
+        "Supernatural"
+      ],
+      "studios": [
+        "MAPPA"
+      ],
+      "trailer": {
+        "id": "v4yLeNt-kCU",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 130102,
+          "name": "Denji",
+          "role": "Main",
+          "image": "/media/characters/127230-130102.webp"
+        },
+        {
+          "id": 137079,
+          "name": "Power",
+          "role": "Main",
+          "image": "/media/characters/127230-137079.webp"
+        },
+        {
+          "id": 137080,
+          "name": "Makima",
+          "role": "Main",
+          "image": "/media/characters/127230-137080.webp"
+        },
+        {
+          "id": 137081,
+          "name": "Aki Hayakawa",
+          "role": "Main",
+          "image": "/media/characters/127230-137081.webp"
+        },
+        {
+          "id": 170266,
+          "name": "Pochita",
+          "role": "Supporting",
+          "image": "/media/characters/127230-170266.webp"
+        },
+        {
+          "id": 144596,
+          "name": "Himeno",
+          "role": "Supporting",
+          "image": "/media/characters/127230-144596.webp"
+        }
+      ]
+    },
+    {
+      "id": 171627,
+      "slug": "chainsaw-man-the-movie-reze-arc",
+      "title": "Chainsaw Man – The Movie: Reze Arc",
+      "originalTitle": "Chainsaw Man: Reze-hen",
+      "nativeTitle": "チェンソーマン レゼ篇",
+      "synopsis": "Denji became “Chainsaw Man”, a boy with a devil’s heart, and is now part of Special Division 4’s devil hunters. After a date with Makima, the woman of his dreams, Denji takes shelter from the rain. There he meets Reze, a girl who works in a café.\n\n(Source: MAPPA CHANNEL)",
+      "cover": "/media/covers/171627.webp",
+      "banner": "/media/banners/171627.webp",
+      "accent": "#e43550",
+      "score": 90,
+      "meanScore": 90,
+      "popularity": 252139,
+      "favorites": 19311,
+      "episodes": 1,
+      "duration": 100,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "MANGA",
+      "season": "SUMMER",
+      "seasonYear": 2025,
+      "startDate": "2025-09-19",
+      "endDate": "2025-09-19",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Drama",
+        "Horror",
+        "Romance",
+        "Supernatural"
+      ],
+      "studios": [
+        "MAPPA"
+      ],
+      "trailer": {
+        "id": "pv8A7eubPQQ",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 130102,
+          "name": "Denji",
+          "role": "Main",
+          "image": "/media/characters/171627-130102.webp"
+        },
+        {
+          "id": 148740,
+          "name": "Reze",
+          "role": "Main",
+          "image": "/media/characters/171627-148740.webp"
+        },
+        {
+          "id": 137080,
+          "name": "Makima",
+          "role": "Supporting",
+          "image": "/media/characters/171627-137080.webp"
+        },
+        {
+          "id": 157232,
+          "name": "Beam",
+          "role": "Supporting",
+          "image": "/media/characters/171627-157232.webp"
+        },
+        {
+          "id": 137081,
+          "name": "Aki Hayakawa",
+          "role": "Supporting",
+          "image": "/media/characters/171627-137081.webp"
+        },
+        {
+          "id": 152231,
+          "name": "Tenshi no Akuma",
+          "role": "Supporting",
+          "image": "/media/characters/171627-152231.webp"
+        }
+      ]
+    },
+    {
+      "id": 21827,
+      "slug": "violet-evergarden",
+      "title": "Violet Evergarden",
+      "originalTitle": "Violet Evergarden",
+      "nativeTitle": "ヴァイオレット・エヴァーガーデン",
+      "synopsis": "A certain point in time, in the continent of Telesis. The great war which divided the continent into North and South has ended after four years, and the people are welcoming a new generation. Violet Evergarden, a young girl formerly known as “the weapon”, has left the battlefield to start a new life at CH Postal Service. There, she is deeply moved by the work of “Auto Memories Dolls”, who carry people's thoughts and convert them into words. Violet begins her journey as an Auto Memories Doll, and comes face to face with various people's emotions and differing shapes of love. There are words Violet heard on the battlefield, which she cannot forget. These words were given to her by someone she holds dear, more than anyone else. She does not yet know their meaning but she searches to find it.\n\n(Source: Anime News Network)",
+      "cover": "/media/covers/21827.webp",
+      "banner": "/media/banners/21827.webp",
+      "accent": "#3586e4",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 556867,
+      "favorites": 37564,
+      "episodes": 13,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "LIGHT_NOVEL",
+      "season": "WINTER",
+      "seasonYear": 2018,
+      "startDate": "2018-01-11",
+      "endDate": "2018-04-05",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Fantasy",
+        "Slice of Life"
+      ],
+      "studios": [
+        "Kyoto Animation"
+      ],
+      "trailer": {
+        "id": "_grmduuECm4",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 90169,
+          "name": "Violet Evergarden",
+          "role": "Main",
+          "image": "/media/characters/21827-90169.webp"
+        },
+        {
+          "id": 124787,
+          "name": "Cattleya Baudelaire",
+          "role": "Supporting",
+          "image": "/media/characters/21827-124787.webp"
+        },
+        {
+          "id": 124788,
+          "name": "Benedict Blue",
+          "role": "Supporting",
+          "image": "/media/characters/21827-124788.webp"
+        },
+        {
+          "id": 124789,
+          "name": "Dietfried Bougainvillea",
+          "role": "Supporting",
+          "image": "/media/characters/21827-124789.webp"
+        },
+        {
+          "id": 124790,
+          "name": "Gilbert Bougainvillea",
+          "role": "Supporting",
+          "image": "/media/characters/21827-124790.webp"
+        },
+        {
+          "id": 124791,
+          "name": "Bridget",
+          "role": "Supporting",
+          "image": "/media/characters/21827-124791.webp"
+        }
+      ]
+    },
+    {
+      "id": 20665,
+      "slug": "your-lie-in-april",
+      "title": "Your lie in April",
+      "originalTitle": "Shigatsu wa Kimi no Uso",
+      "nativeTitle": "四月は君の嘘",
+      "synopsis": "Piano prodigy Arima Kousei dominated the competition and all child musicians knew his name. But after his mother, who was also his instructor, passed away, he had a mental breakdown while performing at a recital. This resulted in him no longer being able to hear the sound of his piano playing. Two years later, Kousei hasn’t touched the piano and views the world without any flair or color. He was content at living out his life with his good friends Tsubaki and Watari until, one day, a girl changed everything. Miyazono Kaori is a pretty, free spirited violinist whose playing style reflects her personality. Kaori helps Kousei return to the music world and show that it should be free and mold breaking unlike the structured and rigid style Kousei was used to.",
+      "cover": "/media/covers/20665.webp",
+      "banner": "/media/banners/20665.webp",
+      "accent": "#e4bb50",
+      "score": 84,
+      "meanScore": 84,
+      "popularity": 624056,
+      "favorites": 34525,
+      "episodes": 22,
+      "duration": 23,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2014,
+      "startDate": "2014-10-10",
+      "endDate": "2015-03-20",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Music",
+        "Romance",
+        "Slice of Life"
+      ],
+      "studios": [
+        "A-1 Pictures"
+      ],
+      "trailer": {
+        "id": "3aL0gDZtFbE",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 69411,
+          "name": "Kaori Miyazono",
+          "role": "Main",
+          "image": "/media/characters/20665-69411.webp"
+        },
+        {
+          "id": 69407,
+          "name": "Kousei Arima",
+          "role": "Main",
+          "image": "/media/characters/20665-69407.webp"
+        },
+        {
+          "id": 69405,
+          "name": "Ryouta Watari",
+          "role": "Main",
+          "image": "/media/characters/20665-69405.webp"
+        },
+        {
+          "id": 69409,
+          "name": "Tsubaki Sawabe",
+          "role": "Main",
+          "image": "/media/characters/20665-69409.webp"
+        },
+        {
+          "id": 81723,
+          "name": "Saitou",
+          "role": "Supporting",
+          "image": "/media/characters/20665-81723.webp"
+        },
+        {
+          "id": 81725,
+          "name": "Nao Kashiwagi",
+          "role": "Supporting",
+          "image": "/media/characters/20665-81725.webp"
+        }
+      ]
+    },
+    {
+      "id": 4181,
+      "slug": "clannad-after-story",
+      "title": "Clannad: After Story",
+      "originalTitle": "CLANNAD: After Story",
+      "nativeTitle": "ＣＬＡＮＮＡＤ ~After Story~ クラナド アフターストーリー",
+      "synopsis": "A few months have passed since Tomoya declared his love to Nagisa, and his life keeps moving forward as he continues to meet a variety of new people, expanding his world in the process. While Tomoya's world continues to expand, his and Nagisa's relationship is entering a new phase, and neither of them is quite sure where it will take them. Through his relationship with Nagisa, Tomoya begins to understand the meaning and importance of family.\n\nBut as Tomoya and Nagisa begin a family of their own, they are faced with many hardships along the way in Clannad: After Story\n\n(Source: Sentai Filmworks, edited)\n\nNote: Includes 2 un-numbered 'extra' and 'summary' episodes that aired at the end of the series.",
+      "cover": "/media/covers/4181.webp",
+      "banner": "/media/banners/4181.webp",
+      "accent": "#f1e450",
+      "score": 88,
+      "meanScore": 88,
+      "popularity": 227100,
+      "favorites": 16842,
+      "episodes": 24,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "VISUAL_NOVEL",
+      "season": "FALL",
+      "seasonYear": 2008,
+      "startDate": "2008-10-03",
+      "endDate": "2009-03-27",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Romance",
+        "Slice of Life",
+        "Supernatural"
+      ],
+      "studios": [
+        "Kyoto Animation"
+      ],
+      "trailer": {
+        "id": "IecYMqp1N4k",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 4606,
+          "name": "Tomoya Okazaki",
+          "role": "Main",
+          "image": "/media/characters/4181-4606.webp"
+        },
+        {
+          "id": 4604,
+          "name": "Nagisa Furukawa",
+          "role": "Main",
+          "image": "/media/characters/4181-4604.webp"
+        },
+        {
+          "id": 10342,
+          "name": "Ushio Okazaki",
+          "role": "Main",
+          "image": "/media/characters/4181-10342.webp"
+        },
+        {
+          "id": 4601,
+          "name": "Fuuko Ibuki",
+          "role": "Supporting",
+          "image": "/media/characters/4181-4601.webp"
+        },
+        {
+          "id": 4602,
+          "name": "Kotomi Ichinose",
+          "role": "Supporting",
+          "image": "/media/characters/4181-4602.webp"
+        },
+        {
+          "id": 4603,
+          "name": "Tomoyo Sakagami",
+          "role": "Supporting",
+          "image": "/media/characters/4181-4603.webp"
+        }
+      ]
+    },
+    {
+      "id": 125367,
+      "slug": "kaguya-sama-love-is-war-ultra-romantic",
+      "title": "Kaguya-sama: Love is War -Ultra Romantic-",
+      "originalTitle": "Kaguya-sama wa Kokurasetai: Ultra Romantic",
+      "nativeTitle": "かぐや様は告らせたい-ウルトラロマンティック-",
+      "synopsis": "The elite members of Shuchiin Academy's student council continue their competitive day-to-day antics. Council president Miyuki Shirogane clashes daily against vice-president Kaguya Shinomiya, each fighting tooth and nail to trick the other into confessing their romantic love. Kaguya struggles within the strict confines of her wealthy, uptight family, rebelling against her cold default demeanor as she warms to Shirogane and the rest of her friends.\n\nMeanwhile, council treasurer Yuu Ishigami suffers under the weight of his hopeless crush on Tsubame Koyasu, a popular upperclassman who helps to instill a new confidence in him. Miko Iino, the newest student council member, grows closer to the rule-breaking Ishigami while striving to overcome her own authoritarian moral code.\n\nAs love further blooms at Shuchiin Academy, the student council officers drag their outsider friends into increasingly comedic conflicts.\n\n(Source: MAL Rewrite)\n\nNote: The first episode had an advanced screening on April 2, in both New York & Los Angeles.",
+      "cover": "/media/covers/125367.webp",
+      "banner": "/media/banners/125367.webp",
+      "accent": "#d6f1a1",
+      "score": 89,
+      "meanScore": 89,
+      "popularity": 298161,
+      "favorites": 15773,
+      "episodes": 13,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2022,
+      "startDate": "2022-04-09",
+      "endDate": "2022-06-25",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Comedy",
+        "Psychological",
+        "Romance",
+        "Slice of Life"
+      ],
+      "studios": [
+        "A-1 Pictures"
+      ],
+      "trailer": {
+        "id": "RN4FFgHpAZo",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 120649,
+          "name": "Kaguya Shinomiya",
+          "role": "Main",
+          "image": "/media/characters/125367-120649.webp"
+        },
+        {
+          "id": 121101,
+          "name": "Miyuki Shirogane",
+          "role": "Main",
+          "image": "/media/characters/125367-121101.webp"
+        },
+        {
+          "id": 121102,
+          "name": "Yuu Ishigami",
+          "role": "Main",
+          "image": "/media/characters/125367-121102.webp"
+        },
+        {
+          "id": 121103,
+          "name": "Chika Fujiwara",
+          "role": "Main",
+          "image": "/media/characters/125367-121103.webp"
+        },
+        {
+          "id": 125886,
+          "name": "Miko Iino",
+          "role": "Main",
+          "image": "/media/characters/125367-125886.webp"
+        },
+        {
+          "id": 36309,
+          "name": "Narrator",
+          "role": "Supporting",
+          "image": "/media/characters/125367-36309.webp"
+        }
+      ]
+    },
+    {
+      "id": 124194,
+      "slug": "fruits-basket-the-final-season",
+      "title": "Fruits Basket The Final Season",
+      "originalTitle": "Fruits Basket: The Final",
+      "nativeTitle": "フルーツバスケットThe Final",
+      "synopsis": "After last season’s revelations, the Soma family moves forward, but the emotional chains that bind them are not easily broken. Unable to admit why she wants the cure, Tohru wrestles with the truth, aware that time is running out for someone close.\n\nAnd a secret still lurks that could break another’s heart. But hope is not lost—a clue to the curse is found. Could their imprisonment’s end be near?\n\n(Source: Funimation)\n\nNote: This season premiered on Funimation and AnimeLab on March 20, 2021. The Japanese broadcast started two weeks later on April 6, 2021.",
+      "cover": "/media/covers/124194.webp",
+      "banner": "/media/banners/124194.webp",
+      "accent": "#35bbf1",
+      "score": 89,
+      "meanScore": 89,
+      "popularity": 179604,
+      "favorites": 11405,
+      "episodes": 13,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2021,
+      "startDate": "2021-04-06",
+      "endDate": "2021-06-29",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Psychological",
+        "Romance",
+        "Slice of Life",
+        "Supernatural"
+      ],
+      "studios": [
+        "TMS Entertainment"
+      ],
+      "trailer": {
+        "id": "ci2XSskC_wA",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 206,
+          "name": "Shigure Souma",
+          "role": "Main",
+          "image": "/media/characters/124194-206.webp"
+        },
+        {
+          "id": 207,
+          "name": "Tooru Honda",
+          "role": "Main",
+          "image": "/media/characters/124194-207.webp"
+        },
+        {
+          "id": 208,
+          "name": "Yuki Souma",
+          "role": "Main",
+          "image": "/media/characters/124194-208.webp"
+        },
+        {
+          "id": 209,
+          "name": "Kyou Souma",
+          "role": "Main",
+          "image": "/media/characters/124194-209.webp"
+        },
+        {
+          "id": 374,
+          "name": "Akito Souma",
+          "role": "Main",
+          "image": "/media/characters/124194-374.webp"
+        },
+        {
+          "id": 366,
+          "name": "Kagura Souma",
+          "role": "Supporting",
+          "image": "/media/characters/124194-366.webp"
+        }
+      ]
+    },
+    {
+      "id": 98478,
+      "slug": "march-comes-in-like-a-lion-season-2",
+      "title": "March comes in like a lion Season 2",
+      "originalTitle": "3-gatsu no Lion 2nd Season",
+      "nativeTitle": "３月のライオン 第2シリーズ",
+      "synopsis": "Now in his second year of high school, Rei Kiriyama continues pushing through his struggles in the professional shogi world as well as his personal life. Surrounded by vibrant personalities at the shogi hall, the school club, and in the local community, his solitary shell slowly begins to crack. Among them are the three Kawamoto sisters—Akari, Hinata, and Momo—who forge an affectionate and familial bond with Rei. Through these ties, he realizes that everyone is burdened by their own emotional hardships and begins learning how to rely on others while supporting them in return.\n\nNonetheless, the life of a professional is not easy. Between tournaments, championships, and title matches, the pressure mounts as Rei advances through the ranks and encounters incredibly skilled opponents. As he manages his relationships with those who have grown close to him, the shogi player continues to search for the reason he plays the game that defines his career.",
+      "cover": "/media/covers/98478.webp",
+      "banner": "/media/banners/98478.webp",
+      "accent": "#ffc993",
+      "score": 89,
+      "meanScore": 89,
+      "popularity": 131389,
+      "favorites": 9420,
+      "episodes": 22,
+      "duration": 25,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2017,
+      "startDate": "2017-10-14",
+      "endDate": "2018-03-31",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "studios": [
+        "Shaft"
+      ],
+      "trailer": {
+        "id": "OfSaJb5OOPA",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 21044,
+          "name": "Rei Kiriyama",
+          "role": "Main",
+          "image": "/media/characters/98478-21044.webp"
+        },
+        {
+          "id": 24312,
+          "name": "Hinata Kawamoto",
+          "role": "Main",
+          "image": "/media/characters/98478-24312.webp"
+        },
+        {
+          "id": 24311,
+          "name": "Akari Kawamoto",
+          "role": "Main",
+          "image": "/media/characters/98478-24311.webp"
+        },
+        {
+          "id": 25275,
+          "name": "Momo Kawamoto",
+          "role": "Supporting",
+          "image": "/media/characters/98478-25275.webp"
+        },
+        {
+          "id": 31352,
+          "name": "Touji Souya",
+          "role": "Supporting",
+          "image": "/media/characters/98478-31352.webp"
+        },
+        {
+          "id": 70291,
+          "name": "Masachika Kouda",
+          "role": "Supporting",
+          "image": "/media/characters/98478-70291.webp"
+        }
+      ]
+    },
+    {
+      "id": 130003,
+      "slug": "bocchi-the-rock",
+      "title": "BOCCHI THE ROCK!",
+      "originalTitle": "Bocchi the Rock!",
+      "nativeTitle": "ぼっち・ざ・ろっく！",
+      "synopsis": "Hitori Gotou, “Bocchi-chan,” is a girl who’s so introverted and shy around people that she’d always start her conversations with “Ah...”\n\nDuring her middle school years, she started playing the guitar, wanting to join a band because she thought it could be an opportunity for even someone shy like her to also shine. But because she had no friends, she ended up practicing guitar for six hours every day all by herself. After becoming a skilled guitar player, she uploaded videos of herself playing the guitar to the internet under the name “Guitar Hero” and fantasized about performing at her school’s cultural festival concert. But not only could she not find any bandmates, before she knew it, she was in high school and still wasn’t able to make a single friend!\n\nShe was really close to becoming a shut-in, but one day, Nijika Ijichi, the drummer in Kessoku Band, reached out to her. And because of that, her everyday life started to change little by little...\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/130003.webp",
+      "banner": "/media/banners/130003.webp",
+      "accent": "#e4bb50",
+      "score": 87,
+      "meanScore": 87,
+      "popularity": 273110,
+      "favorites": 29712,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2022,
+      "startDate": "2022-10-09",
+      "endDate": "2022-12-25",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Comedy",
+        "Music",
+        "Slice of Life"
+      ],
+      "studios": [
+        "CloverWorks"
+      ],
+      "trailer": {
+        "id": "SyMMZF5zNW4",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 257562,
+          "name": "Hitori Gotou",
+          "role": "Main",
+          "image": "/media/characters/130003-257562.webp"
+        },
+        {
+          "id": 261674,
+          "name": "Nijika Ijichi",
+          "role": "Main",
+          "image": "/media/characters/130003-261674.webp"
+        },
+        {
+          "id": 264529,
+          "name": "Ryou Yamada",
+          "role": "Main",
+          "image": "/media/characters/130003-264529.webp"
+        },
+        {
+          "id": 266041,
+          "name": "Ikuyo Kita",
+          "role": "Main",
+          "image": "/media/characters/130003-266041.webp"
+        },
+        {
+          "id": 289054,
+          "name": "Seika Ijichi",
+          "role": "Supporting",
+          "image": "/media/characters/130003-289054.webp"
+        },
+        {
+          "id": 291639,
+          "name": "Kikuri Hiroi",
+          "role": "Supporting",
+          "image": "/media/characters/130003-291639.webp"
+        }
+      ]
+    },
+    {
+      "id": 140960,
+      "slug": "spy-x-family",
+      "title": "SPY x FAMILY",
+      "originalTitle": "SPY×FAMILY",
+      "nativeTitle": "SPY×FAMILY",
+      "synopsis": "Everyone has a part of themselves they cannot show to anyone else.\n\nAt a time when all nations of the world were involved in a fierce war of information happening behind closed doors, Ostania and Westalis had been in a state of cold war against one another for decades. The Westalis Intelligence Services' Eastern-Focused Division (WISE) sends their most talented spy, \"Twilight,\" on a top-secret mission to investigate the movements of Donovan Desmond, the chairman of Ostania's National Unity Party, who is threatening peace efforts between the two nations.\n\nThis mission is known as \"Operation Strix.\" It consists of \"putting together a family in one week in order to infiltrate social gatherings organized by the elite school that Desmond's son attends.\"\n\n\"Twilight\" takes on the identity of psychiatrist Loid Forger and starts looking for family members. But Anya, the daughter he adopts, turns out to have the ability to read people's minds, while his wife, Yor, is an assassin! With it being in each of their own interests to keep these facts hidden, they start living together while concealing their true identities from one another.\n\nWorld peace is now in the hands of this brand-new family as they embark on an adventure full of surprises.\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/140960.webp",
+      "banner": "/media/banners/140960.webp",
+      "accent": "#c9f1f1",
+      "score": 83,
+      "meanScore": 83,
+      "popularity": 582248,
+      "favorites": 26345,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2022,
+      "startDate": "2022-04-09",
+      "endDate": "2022-06-25",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Slice of Life",
+        "Supernatural"
+      ],
+      "studios": [
+        "CloverWorks",
+        "WIT STUDIO"
+      ],
+      "trailer": {
+        "id": "_VRxEEBa1XU",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 138101,
+          "name": "Loid Forger",
+          "role": "Main",
+          "image": "/media/characters/140960-138101.webp"
+        },
+        {
+          "id": 138102,
+          "name": "Yor Forger",
+          "role": "Main",
+          "image": "/media/characters/140960-138102.webp"
+        },
+        {
+          "id": 138100,
+          "name": "Anya Forger",
+          "role": "Main",
+          "image": "/media/characters/140960-138100.webp"
+        },
+        {
+          "id": 150423,
+          "name": "Becky Blackbell",
+          "role": "Supporting",
+          "image": "/media/characters/140960-150423.webp"
+        },
+        {
+          "id": 150424,
+          "name": "Damian Desmond",
+          "role": "Supporting",
+          "image": "/media/characters/140960-150424.webp"
+        },
+        {
+          "id": 150425,
+          "name": "Yuuri Briar",
+          "role": "Supporting",
+          "image": "/media/characters/140960-150425.webp"
+        }
+      ]
+    },
+    {
+      "id": 150672,
+      "slug": "oshi-no-ko",
+      "title": "OSHI NO KO",
+      "originalTitle": "[Oshi no Ko]",
+      "nativeTitle": "【推しの子】",
+      "synopsis": "When a pregnant young starlet appears in Gorou Amemiya’s countryside medical clinic, the doctor takes it upon himself to safely (and secretly) deliver Ai Hoshino’s child so she can make a scandal-free return to the stage. But no good deed goes unpunished, and on the eve of her delivery, he finds himself slain at the hands of Ai’s deluded stalker — and subsequently reborn as Ai’s child, Aquamarine Hoshino! The glitz and glamor of showbiz hide the dark underbelly of the entertainment industry, threatening to dull the shine of his favorite star. Can he help his new mother rise to the top of the charts? And what will he do when unthinkable disaster strikes?\n\n(Source: HIDIVE)\n\nNote: Episode 1【推しの子】Mother and Children was pre-screened in advance in Japanese theaters on March 17, 2023. The regular TV broadcast began on April 12, 2023. The first episode has an extended runtime of ~82 minutes.",
+      "cover": "/media/covers/150672.webp",
+      "banner": "/media/banners/150672.webp",
+      "accent": "#ff35c9",
+      "score": 84,
+      "meanScore": 84,
+      "popularity": 337278,
+      "favorites": 18966,
+      "episodes": 11,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2023,
+      "startDate": "2023-04-12",
+      "endDate": "2023-06-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Mystery",
+        "Psychological",
+        "Supernatural"
+      ],
+      "studios": [
+        "Doga Kobo"
+      ],
+      "trailer": {
+        "id": "gKWEUJ4r5do",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 183885,
+          "name": "Aquamarine Hoshino",
+          "role": "Main",
+          "image": "/media/characters/150672-183885.webp"
+        },
+        {
+          "id": 183884,
+          "name": "Ruby Hoshino",
+          "role": "Main",
+          "image": "/media/characters/150672-183884.webp"
+        },
+        {
+          "id": 188783,
+          "name": "Kana Arima",
+          "role": "Main",
+          "image": "/media/characters/150672-188783.webp"
+        },
+        {
+          "id": 203384,
+          "name": "Akane Kurokawa",
+          "role": "Supporting",
+          "image": "/media/characters/150672-203384.webp"
+        },
+        {
+          "id": 172759,
+          "name": "Ai Hoshino",
+          "role": "Supporting",
+          "image": "/media/characters/150672-172759.webp"
+        },
+        {
+          "id": 205434,
+          "name": "MEM-cho",
+          "role": "Supporting",
+          "image": "/media/characters/150672-205434.webp"
+        }
+      ]
+    },
+    {
+      "id": 171018,
+      "slug": "dan-da-dan",
+      "title": "DAN DA DAN",
+      "originalTitle": "Dandadan",
+      "nativeTitle": "ダンダダン",
+      "synopsis": "This is a story about Momo, a high school girl who comes from a family of spirit mediums, and her classmate Okarun, an occult fanatic. After Momo rescues Okarun from being bullied, they begin talking. However, an argument ensues between them since Momo believes in ghosts but denies aliens exist, and Okarun believes in aliens but denies ghosts exist.\n\nTo prove to each other what they believe in is real, Momo goes to an abandoned hospital where a UFO has been spotted and Okarun goes to a tunnel rumored to be haunted. To their surprise, they each encounter overwhelming paranormal activities that transcend comprehension. Amid these predicaments, Momo awakens her hidden power and Okarun gains the power of a curse to overcome these new dangers! Their fateful love begins as well!?\n\nThe story of the occult battle and adolescence starts!\n\n(Source: Crunchyroll)\n\nNotes:\n\n- Worldwide premiere of Episode 1 before the Japanese television premiere occurred at Anime Expo July 6, 2024.\n\n- Episodes 1-3 titled as DAN DA DAN: FIRST ENCOUNTER was pre-screened in advance in theaters on August 31, 2024 in Asia, September 7, 2024 in Europe and September 13, 2024 in North America. The regular TV broadcast began October 4, 2024.",
+      "cover": "/media/covers/171018.webp",
+      "banner": "/media/banners/171018.webp",
+      "accent": "#e47850",
+      "score": 83,
+      "meanScore": 83,
+      "popularity": 397849,
+      "favorites": 19486,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "FALL",
+      "seasonYear": 2024,
+      "startDate": "2024-10-04",
+      "endDate": "2024-12-20",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Comedy",
+        "Drama",
+        "Romance",
+        "Sci-Fi",
+        "Supernatural"
+      ],
+      "studios": [
+        "Science SARU"
+      ],
+      "trailer": {
+        "id": "rJo1MnsuxyY",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 222593,
+          "name": "Ken Takakura",
+          "role": "Main",
+          "image": "/media/characters/171018-222593.webp"
+        },
+        {
+          "id": 222594,
+          "name": "Momo Ayase",
+          "role": "Main",
+          "image": "/media/characters/171018-222594.webp"
+        },
+        {
+          "id": 234824,
+          "name": "Seiko Ayase",
+          "role": "Supporting",
+          "image": "/media/characters/171018-234824.webp"
+        },
+        {
+          "id": 245466,
+          "name": "Aira Shiratori",
+          "role": "Supporting",
+          "image": "/media/characters/171018-245466.webp"
+        },
+        {
+          "id": 258506,
+          "name": "Jin Enjouji",
+          "role": "Supporting",
+          "image": "/media/characters/171018-258506.webp"
+        },
+        {
+          "id": 239956,
+          "name": "Turbo Babaa",
+          "role": "Supporting",
+          "image": "/media/characters/171018-239956.webp"
+        }
+      ]
+    },
+    {
+      "id": 151807,
+      "slug": "solo-leveling",
+      "title": "Solo Leveling",
+      "originalTitle": "Ore dake Level Up na Ken",
+      "nativeTitle": "俺だけレベルアップな件",
+      "synopsis": "They say whatever doesn’t kill you makes you stronger, but that’s not the case for the world’s weakest hunter Seong Jin-U. After being brutally slaughtered by monsters in a high-ranking dungeon, Jin-U came back with the System, a program only he could see, that’s leveling him up in every way. Now, he’s inspired to discover the secrets behind his powers and the dungeon that spawned them.\n\n(Source: Crunchyroll)",
+      "cover": "/media/covers/151807.webp",
+      "banner": "/media/banners/151807.webp",
+      "accent": "#35bbf1",
+      "score": 80,
+      "meanScore": 80,
+      "popularity": 461209,
+      "favorites": 20963,
+      "episodes": 12,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "OTHER",
+      "season": "WINTER",
+      "seasonYear": 2024,
+      "startDate": "2024-01-07",
+      "endDate": "2024-03-31",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Action",
+        "Adventure",
+        "Fantasy"
+      ],
+      "studios": [
+        "A-1 Pictures"
+      ],
+      "trailer": {
+        "id": "HkIKAnwLZCw",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 129928,
+          "name": "Jin-U Seong",
+          "role": "Main",
+          "image": "/media/characters/151807-129928.webp"
+        },
+        {
+          "id": 136074,
+          "name": "Ju-Hui Lee",
+          "role": "Supporting",
+          "image": "/media/characters/151807-136074.webp"
+        },
+        {
+          "id": 136076,
+          "name": "Jin-Ho Yu",
+          "role": "Supporting",
+          "image": "/media/characters/151807-136076.webp"
+        },
+        {
+          "id": 138789,
+          "name": "Hae-In Cha",
+          "role": "Supporting",
+          "image": "/media/characters/151807-138789.webp"
+        },
+        {
+          "id": 136077,
+          "name": "Yun-Ho Baek",
+          "role": "Supporting",
+          "image": "/media/characters/151807-136077.webp"
+        },
+        {
+          "id": 136819,
+          "name": "Jin-Cheol U",
+          "role": "Supporting",
+          "image": "/media/characters/151807-136819.webp"
+        }
+      ]
+    },
+    {
+      "id": 153518,
+      "slug": "delicious-in-dungeon",
+      "title": "Delicious in Dungeon",
+      "originalTitle": "Dungeon Meshi",
+      "nativeTitle": "ダンジョン飯",
+      "synopsis": "When young adventurer Laios and his company are attacked and soundly thrashed by a dragon deep in a dungeon, the party loses all its money and provisions...and a member! They're eager to go back and save her, but there is just one problem: If they set out with no food or coin to speak of, they're sure to starve on the way! But Laios comes up with a brilliant idea: \"Let's eat the monsters!\" Slimes, basilisks, and even dragons...none are safe from the appetites of these dungeon-crawling gourmands!\n\n(Source: Yen Press)\n\nNote: A world premiere screening of Episode 1 was shown in the Studio TRIGGER panel at Anime Expo on July 1, 2023.",
+      "cover": "/media/covers/153518.webp",
+      "banner": "/media/banners/153518.webp",
+      "accent": "#e48650",
+      "score": 85,
+      "meanScore": 85,
+      "popularity": 232592,
+      "favorites": 14729,
+      "episodes": 24,
+      "duration": 25,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "WINTER",
+      "seasonYear": 2024,
+      "startDate": "2024-01-04",
+      "endDate": "2024-06-13",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Adventure",
+        "Comedy",
+        "Fantasy"
+      ],
+      "studios": [
+        "TRIGGER"
+      ],
+      "trailer": {
+        "id": "RtpYObV4c1Y",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 126818,
+          "name": "Laios Thorden",
+          "role": "Main",
+          "image": "/media/characters/153518-126818.webp"
+        },
+        {
+          "id": 127292,
+          "name": "Marcille Donato",
+          "role": "Main",
+          "image": "/media/characters/153518-127292.webp"
+        },
+        {
+          "id": 130509,
+          "name": "Chilchuck Tims",
+          "role": "Main",
+          "image": "/media/characters/153518-130509.webp"
+        },
+        {
+          "id": 127689,
+          "name": "Senshi",
+          "role": "Main",
+          "image": "/media/characters/153518-127689.webp"
+        },
+        {
+          "id": 130508,
+          "name": "Falin Thorden",
+          "role": "Supporting",
+          "image": "/media/characters/153518-130508.webp"
+        },
+        {
+          "id": 130507,
+          "name": "Izutsumi",
+          "role": "Supporting",
+          "image": "/media/characters/153518-130507.webp"
+        }
+      ]
+    },
+    {
+      "id": 20464,
+      "slug": "haikyu",
+      "title": "HAIKYU!!",
+      "originalTitle": "Haikyuu!!",
+      "nativeTitle": "ハイキュー!!",
+      "synopsis": "Inspired after watching a volleyball ace nicknamed \"Little Giant\" in action, small-statured Shouyou Hinata revives the volleyball club at his middle school. The newly-formed team even makes it to a tournament; however, their first match turns out to be their last when they are brutally squashed by the \"King of the Court,\" Tobio Kageyama. Hinata vows to surpass Kageyama, and so after graduating from middle school, he joins Karasuno High School's volleyball team—only to find that his sworn rival, Kageyama, is now his teammate.\n\nThanks to his short height, Hinata struggles to find his role on the team, even with his superior jumping power. Surprisingly, Kageyama has his own problems that only Hinata can help with, and learning to work together appears to be the only way for the team to be successful. Based on Haruichi Furudate's popular shounen manga of the same name, Haikyuu!! is an exhilarating and emotional sports comedy following two determined athletes as they attempt to patch a heated rivalry in order to make their high school volleyball team the best in Japan.\n\n[Written by MAL Rewrite]",
+      "cover": "/media/covers/20464.webp",
+      "banner": "/media/banners/20464.webp",
+      "accent": "#e48635",
+      "score": 83,
+      "meanScore": 83,
+      "popularity": 592590,
+      "favorites": 37057,
+      "episodes": 25,
+      "duration": 24,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2014,
+      "startDate": "2014-04-06",
+      "endDate": "2014-09-21",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Comedy",
+        "Drama",
+        "Sports"
+      ],
+      "studios": [
+        "Production I.G"
+      ],
+      "trailer": {
+        "id": "9kLRkH9zC5k",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 64769,
+          "name": "Shouyou Hinata",
+          "role": "Main",
+          "image": "/media/characters/20464-64769.webp"
+        },
+        {
+          "id": 64771,
+          "name": "Tobio Kageyama",
+          "role": "Main",
+          "image": "/media/characters/20464-64771.webp"
+        },
+        {
+          "id": 67321,
+          "name": "Koushi Sugawara",
+          "role": "Supporting",
+          "image": "/media/characters/20464-67321.webp"
+        },
+        {
+          "id": 67323,
+          "name": "Daichi Sawamura",
+          "role": "Supporting",
+          "image": "/media/characters/20464-67323.webp"
+        },
+        {
+          "id": 67325,
+          "name": "Ryuunosuke Tanaka",
+          "role": "Supporting",
+          "image": "/media/characters/20464-67325.webp"
+        },
+        {
+          "id": 67327,
+          "name": "Yuu Nishinoya",
+          "role": "Supporting",
+          "image": "/media/characters/20464-67327.webp"
+        }
+      ]
+    },
+    {
+      "id": 20607,
+      "slug": "ping-pong-the-animation",
+      "title": "Ping Pong the Animation",
+      "originalTitle": "Ping Pong THE ANIMATION",
+      "nativeTitle": "ピンポン THE ANIMATION",
+      "synopsis": "Tsukimoto Makoto (nicknamed Smile) is a quiet high-schooler who's been friends with the loud and energetic Hoshino Yukata (nicknamed Peko). They're both in the table tennis club and are very good at it, though Smile's personality prevents him from winning against Peko. The club teacher however notices Smile's talent and tries to make him gain some sportive tenacity.\n\n(Source: Anime News Network)",
+      "cover": "/media/covers/20607.webp",
+      "banner": "/media/banners/20607.webp",
+      "accent": "#e47843",
+      "score": 86,
+      "meanScore": 86,
+      "popularity": 126872,
+      "favorites": 9868,
+      "episodes": 11,
+      "duration": 23,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "TV",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2014,
+      "startDate": "2014-04-11",
+      "endDate": "2014-06-20",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Psychological",
+        "Sports"
+      ],
+      "studios": [
+        "Tatsunoko Production"
+      ],
+      "trailer": {
+        "id": "lmZVuMDlw-w",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 20325,
+          "name": "Makoto Tsukimoto",
+          "role": "Main",
+          "image": "/media/characters/20607-20325.webp"
+        },
+        {
+          "id": 20326,
+          "name": "Yutaka Hoshino",
+          "role": "Main",
+          "image": "/media/characters/20607-20326.webp"
+        },
+        {
+          "id": 20327,
+          "name": "Wenge Kong",
+          "role": "Supporting",
+          "image": "/media/characters/20607-20327.webp"
+        },
+        {
+          "id": 20361,
+          "name": "Ryuichi Kazama",
+          "role": "Supporting",
+          "image": "/media/characters/20607-20361.webp"
+        },
+        {
+          "id": 20362,
+          "name": "Manabu Sakuma",
+          "role": "Supporting",
+          "image": "/media/characters/20607-20362.webp"
+        },
+        {
+          "id": 20363,
+          "name": "Jou Koizumi",
+          "role": "Supporting",
+          "image": "/media/characters/20607-20363.webp"
+        }
+      ]
+    },
+    {
+      "id": 174788,
+      "slug": "look-back",
+      "title": "LOOK BACK",
+      "originalTitle": "Look Back",
+      "nativeTitle": "ルックバック",
+      "synopsis": "Ayumu Fujino is a fourth grader who draws a manga strip for the school newspaper. Her art makes her the star of the class, but one day she's told that Kyomoto, a student who refuses to come to school, would also like to submit a manga for the paper...\n\n(Source: MANGA Plus, edited)",
+      "cover": "/media/covers/174788.webp",
+      "banner": "/media/banners/174788.webp",
+      "accent": "#e4bb50",
+      "score": 86,
+      "meanScore": 86,
+      "popularity": 129358,
+      "favorites": 8859,
+      "episodes": 1,
+      "duration": 58,
+      "chapters": null,
+      "volumes": null,
+      "status": "FINISHED",
+      "format": "MOVIE",
+      "source": "MANGA",
+      "season": "SPRING",
+      "seasonYear": 2024,
+      "startDate": "2024-06-28",
+      "endDate": "2024-06-28",
+      "nextAiringEpisode": null,
+      "genres": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "studios": [
+        "Studio Durian"
+      ],
+      "trailer": {
+        "id": "H6HOnlTnVwc",
+        "site": "youtube"
+      },
+      "characters": [
+        {
+          "id": 286677,
+          "name": "Ayumu Fujino",
+          "role": "Main",
+          "image": "/media/characters/174788-286677.webp"
+        },
+        {
+          "id": 286932,
+          "name": "Kyomoto",
+          "role": "Main",
+          "image": "/media/characters/174788-286932.webp"
+        },
+        {
+          "id": 349099,
+          "name": "Tannin",
+          "role": "Supporting",
+          "image": "/media/characters/174788-349099.webp"
+        },
+        {
+          "id": 349133,
+          "name": "4-Koma no Josei",
+          "role": "Supporting",
+          "image": "/media/characters/174788-349133.webp"
+        },
+        {
+          "id": 349132,
+          "name": "4-Koma no Dansei",
+          "role": "Supporting",
+          "image": "/media/characters/174788-349132.webp"
+        },
+        {
+          "id": 349103,
+          "name": "Fujino no Ane",
+          "role": "Supporting",
+          "image": "/media/characters/174788-349103.webp"
+        }
+      ]
+    }
+  ]
+}
