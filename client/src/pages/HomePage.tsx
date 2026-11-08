@@ -2,12 +2,12 @@ import { ArrowRight, CalendarDays, ChevronRight, Compass, ListFilter, Play, Sear
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { OtakuCard } from '../components/OtakuCard';
+import { LandingAtmosphere } from '../components/LandingAtmosphere';
 import { OtakuPoster } from '../components/OtakuPoster';
 import { Reveal } from '../components/Reveal';
 import { TitleMarquee } from '../components/TitleMarquee';
 import { API_HEALTH_URL, api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
-import { mediaUrl } from '../lib/media';
 
 function HomeSkeleton() {
   return (
@@ -134,22 +134,7 @@ export function HomePage() {
 
   return (
     <div className="watch-page home-watch-page">
-      <div className="home-atmosphere" aria-hidden="true">
-        {features.slice(0, 4).map((anime, index) => (
-          <div
-            key={anime.slug}
-            className={`home-atmosphere-frame ${active === index ? 'is-active' : ''}`}
-            style={{ backgroundImage: `url("${mediaUrl(anime.banner || anime.poster)}")` }}
-          />
-        ))}
-        <div className="home-atmosphere-wash" />
-        <div className="home-atmosphere-brand">
-          <img src="/logo.png" alt="" />
-          <span>REOGNIME</span>
-          <i />
-          <span>SUB INDO · 2026</span>
-        </div>
-      </div>
+      <LandingAtmosphere />
       <header className="container watch-masthead home-watch-masthead">
         <div className="watch-masthead-bar">
           <p className="eyebrow"><span className="watch-live-dot" /> Streaming · Subtitle Indonesia</p>
