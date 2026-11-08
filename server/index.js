@@ -8,6 +8,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 const app = await createApp({
   libraryFile: process.env.LIBRARY_FILE || path.join(ROOT, 'server', 'data', 'library.json'),
+  messagesFile: process.env.MESSAGES_FILE || path.join(ROOT, 'server', 'data', 'messages.json'),
 });
 
 const server = app.listen(PORT, HOST, () => {

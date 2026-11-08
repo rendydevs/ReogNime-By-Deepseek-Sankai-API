@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { randomBytes, scryptSync } from 'node:crypto';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -6,6 +7,9 @@ import { after, before, test } from 'node:test';
 import { createApp } from './app.js';
 
 process.env.NODE_ENV = 'test';
+const testAdminPassword = randomBytes(18).toString('base64url');
+const testAdminSalt = randomBytes(16).toString('hex');
+process.env.ADMIN_PASSWORD_HASH = `${testAdminSalt}:${scryptSync(testAdminPassword, testAdminSalt, 64).toString('hex')}`;
 
 let server;
 let base;
@@ -15,6 +19,7 @@ before(async () => {
   tempDir = await mkdtemp(path.join(tmpdir(), 'reognime-test-'));
   const app = await createApp({
     libraryFile: path.join(tempDir, 'library.json'),
+    messagesFile: path.join(tempDir, 'messages.json'),
     rateLimitEnabled: false,
   });
   await new Promise((resolve) => {
@@ -122,6 +127,52 @@ test('detail, episodes, suggestions, genres, and random endpoints work', async (
   const missing = await get('/api/v1/anime/999999');
   assert.equal(missing.response.status, 404);
   assert.equal(missing.body.error.code, 'NOT_FOUND');
+});
+
+
+test('chat queue accepts a message and admin queue is protected', async () => {
+  const sent = await fetch(`${base}/api/v1/chat/messages`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'Video tidak bisa diputar di mobile.', page: '/watch/episode/vtfc-episode-6-sub-indo' }),
+  });
+  assert.equal(sent.status, 201);
+  const sentBody = await sent.json();
+  assert.ok(sentBody.data.id);
+
+  const denied = await fetch(`${base}/api/v1/admin/messages`);
+  assert.equal(denied.status, 401);
+  assert.equal((await denied.json()).error.code, 'ADMIN_UNAUTHORIZED');
+
+  const wrong = await fetch(`${base}/api/v1/admin/messages`, {
+    headers: { Authorization: `Basic ${Buffer.from('admin:wrong-password').toString('base64')}` },
+  });
+  assert.equal(wrong.status, 401);
+
+  const auth = `Basic ${Buffer.from(`admin:${testAdminPassword}`).toString('base64')}`;
+  const queue = await fetch(`${base}/api/v1/admin/messages`, { headers: { Authorization: auth } });
+  assert.equal(queue.status, 200);
+  const queueBody = await queue.json();
+  assert.equal(queueBody.data.length, 1);
+  assert.equal(queueBody.data[0].status, 'new');
+  assert.equal(queueBody.data[0].page, '/watch/episode/vtfc-episode-6-sub-indo');
+  assert.equal(queueBody.meta.stats.new, 1);
+
+  const patched = await fetch(`${base}/api/v1/admin/messages/${sentBody.data.id}`, {
+    method: 'PATCH',
+    headers: { Authorization: auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'resolved' }),
+  });
+  assert.equal(patched.status, 200);
+  assert.equal((await patched.json()).data.status, 'resolved');
+
+  const removed = await fetch(`${base}/api/v1/admin/messages/${sentBody.data.id}`, {
+    method: 'DELETE',
+    headers: { Authorization: auth },
+  });
+  assert.equal(removed.status, 204);
+  const empty = await fetch(`${base}/api/v1/admin/messages`, { headers: { Authorization: auth } });
+  assert.equal((await empty.json()).data.length, 0);
 });
 
 test('library CRUD persists and computes stats', async () => {

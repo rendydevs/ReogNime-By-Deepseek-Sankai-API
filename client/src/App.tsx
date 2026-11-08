@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { LibraryDialogProvider } from './components/LibraryDialog';
+import { AdminPage } from './pages/AdminPage';
 import { AllAnimePage } from './pages/AllAnimePage';
 import { AnimeDetailPage } from './pages/AnimeDetailPage';
 import { ApiPage } from './pages/ApiPage';
@@ -22,6 +23,7 @@ import { SeoManager } from './lib/seo';
 function PageviewTracker() {
   const location = useLocation();
   useEffect(() => {
+    if (location.pathname.startsWith('/admin')) return;
     // Let the page update its document title before GA4 records the view.
     const timer = window.setTimeout(trackPageview, 0);
     return () => window.clearTimeout(timer);
@@ -52,6 +54,7 @@ export function App() {
           <Route path="discover" element={<DiscoverPage />} />
           <Route path="anime/:id" element={<AnimeDetailPage />} />
           <Route path="library" element={<LibraryPage />} />
+          <Route path="admin" element={<AdminPage />} />
           <Route path="developers" element={<ApiPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

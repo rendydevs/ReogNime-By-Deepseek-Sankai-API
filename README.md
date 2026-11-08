@@ -247,9 +247,19 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 | `HOST` | `0.0.0.0` | Bind address |
 | `CORS_ORIGIN` | reflect request origin | Comma-separated allowed origins |
 | `LIBRARY_FILE` | `server/data/library.json` (`/tmp/reognime-library.json` on Vercel) | Archive library file |
+| `MESSAGES_FILE` | `server/data/messages.json` (`/tmp/reognime-messages.json` on Vercel) | Hidden admin message queue |
+| `ADMIN_PASSWORD_HASH` | built-in scrypt hash | Optional `salt:hash` override for `/admin` |
 | `VITE_API_BASE_URL` | `/api/v1` | Frontend API base |
 | `OTAKUDESU_API_BASE` | `https://www.sankavollerei.web.id/anime` | Public Otakudesu provider base |
 | `OTAKUDESU_SITEMAP_URL` | `https://otakudesu.or.at/series-sitemap.xml` | Artwork repair sitemap |
+
+## Admin message queue
+
+The hidden admin area lives at `/admin`; it is intentionally absent from navigation, `robots.txt`, and the sitemap. Sign-in uses HTTP Basic credentials verified server-side against a scrypt password hash, and the endpoints are rate-limited. There is no admin cookie/session: the password is held only in the admin tab's memory and re-entered after a refresh.
+
+Messages forwarded by NimeBot are stored server-side and can be filtered, marked read/resolved, or deleted. The queue also keeps the originating page path, but no IP address or contact data.
+
+> **Persistence note:** the default queue is a JSON file. On Vercel only `/tmp` is writable, so the queue is ephemeral across cold starts/instances. For a durable production queue, point `MESSAGES_FILE` at persistent storage or replace the store with a database. The admin UI shows a warning when it detects Vercel's ephemeral storage.
 
 ## Project structure
 

@@ -131,6 +131,11 @@ const ROUTE_META: Record<string, { title: string; description: string; noindex?:
     description: 'Daftar tontonan pribadi ReogNime.',
     noindex: true,
   },
+  '/admin': {
+    title: 'Admin — ReogNime',
+    description: 'Private message queue.',
+    noindex: true,
+  },
   '/developers': {
     title: 'API reference — ReogNime',
     description: 'Dokumentasi API ReogNime dan OpenAPI 3.1.',

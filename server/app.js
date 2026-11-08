@@ -21,8 +21,10 @@ import {
   parseGenres,
   toSummary,
 } from './lib/catalog.js';
+import { ADMIN_USERNAME, requireAdmin } from './lib/adminAuth.js';
 import { ApiError, notFound } from './lib/errors.js';
 import { LIBRARY_STATUSES, LibraryStore } from './lib/library.js';
+import { MESSAGE_STATUSES, MessageStore } from './lib/messages.js';
 import { getLibraryStats } from './lib/libraryStats.js';
 import { AniListArtwork } from './lib/anilistArtwork.js';
 import { OtakudesuService } from './lib/otakudesu.js';
@@ -76,6 +78,20 @@ const libraryCreateSchema = z.object({
   favorite: z.boolean().optional().default(false),
 });
 
+const chatMessageSchema = z.object({
+  message: z.string().trim().min(2).max(1000),
+  page: z.string().trim().max(200).optional().default('/'),
+});
+
+const adminMessageQuerySchema = z.object({
+  status: z.enum(['all', ...MESSAGE_STATUSES]).optional().default('all'),
+  limit: z.coerce.number().int().min(1).max(100).optional().default(100),
+});
+
+const adminMessagePatchSchema = z.object({
+  status: z.enum(MESSAGE_STATUSES),
+});
+
 const libraryPatchSchema = z
   .object({
     status: z.enum(LIBRARY_STATUSES).optional(),
@@ -121,11 +137,13 @@ function progressLimit(anime) {
 
 export async function createApp({
   libraryFile = process.env.LIBRARY_FILE || path.join(ROOT, 'server', 'data', 'library.json'),
+  messagesFile = process.env.MESSAGES_FILE || path.join(ROOT, 'server', 'data', 'messages.json'),
   rateLimitEnabled = process.env.NODE_ENV !== 'test',
   trustProxy = Boolean(process.env.VERCEL),
   otakudesu = new OtakudesuService({ anilistArtwork: new AniListArtwork() }),
 } = {}) {
   const library = await new LibraryStore(libraryFile).init();
+  const messages = await new MessageStore(messagesFile).init();
   const app = express();
 
   // The serverless entry sits behind Vercel's proxy; trust one hop for client IPs.
@@ -153,7 +171,7 @@ export async function createApp({
     cors({
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()) : true,
       methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Accept'],
+      allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
       maxAge: 86_400,
     }),
   );
@@ -185,6 +203,27 @@ export async function createApp({
       }),
     );
   }
+
+  const chatSendLimiter = rateLimitEnabled
+    ? rateLimit({
+        windowMs: 60_000,
+        limit: 5,
+        standardHeaders: 'draft-8',
+        legacyHeaders: false,
+        message: { error: { code: 'CHAT_RATE_LIMITED', message: 'Terlalu banyak pesan. Coba lagi sebentar lagi.' } },
+      })
+    : (req, res, next) => next();
+  const adminAttemptLimiter = rateLimitEnabled
+    ? rateLimit({
+        windowMs: 10 * 60_000,
+        limit: 10,
+        standardHeaders: 'draft-8',
+        legacyHeaders: false,
+        skipSuccessfulRequests: true,
+        message: { error: { code: 'ADMIN_RATE_LIMITED', message: 'Terlalu banyak percobaan admin. Coba lagi nanti.' } },
+      })
+    : (req, res, next) => next();
+  app.use('/api/v1/admin', adminAttemptLimiter, requireAdmin);
 
   app.get('/api/health', (req, res) => {
     res.json({
@@ -344,6 +383,50 @@ export async function createApp({
     res.status(204).end();
   });
 
+  app.post('/api/v1/chat/messages', chatSendLimiter, async (req, res) => {
+    const body = validate(chatMessageSchema, req.body);
+    const entry = await messages.add({
+      message: body.message,
+      page: body.page.startsWith('/') ? body.page : '/',
+    });
+    res.set('Cache-Control', 'no-store');
+    res.status(201).json({ data: { id: entry.id, createdAt: entry.createdAt } });
+  });
+
+  app.get('/api/v1/admin/session', (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: { username: ADMIN_USERNAME } });
+  });
+
+  app.get('/api/v1/admin/messages', (req, res) => {
+    const query = validate(adminMessageQuerySchema, req.query);
+    const entries = messages.list(query);
+    res.set('Cache-Control', 'no-store');
+    res.json({
+      data: entries,
+      meta: {
+        total: entries.length,
+        status: query.status,
+        stats: messages.stats(),
+        storage: process.env.VERCEL ? 'ephemeral' : 'file',
+      },
+    });
+  });
+
+  app.patch('/api/v1/admin/messages/:id', async (req, res) => {
+    const body = validate(adminMessagePatchSchema, req.body);
+    const entry = await messages.updateStatus(req.params.id, body.status);
+    if (!entry) throw notFound('Message not found.');
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: entry });
+  });
+
+  app.delete('/api/v1/admin/messages/:id', async (req, res) => {
+    const removed = await messages.remove(req.params.id);
+    if (!removed) throw notFound('Message not found.');
+    res.status(204).end();
+  });
+
   app.use('/api/v1/otakudesu', createOtakudesuRouter(otakudesu));
 
   app.get('/api/v1/meta', (req, res) => {
@@ -400,5 +483,6 @@ export async function createApp({
   });
 
   app.locals.library = library;
+  app.locals.messages = messages;
   return app;
 }

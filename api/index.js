@@ -4,7 +4,9 @@ import { fileURLToPath } from 'node:url';
 import { createApp } from '../server/app.js';
 
 const TMP_LIBRARY = '/tmp/reognime-library.json';
+const TMP_MESSAGES = '/tmp/reognime-messages.json';
 const libraryFile = process.env.LIBRARY_FILE || TMP_LIBRARY;
+const messagesFile = process.env.MESSAGES_FILE || TMP_MESSAGES;
 let appPromise;
 
 function normalizeRequestUrl(req) {
@@ -32,10 +34,23 @@ function seedLibrary() {
     });
 }
 
+function seedMessages() {
+  if (process.env.MESSAGES_FILE) return Promise.resolve();
+  return mkdir(path.dirname(TMP_MESSAGES), { recursive: true })
+    .then(() => access(TMP_MESSAGES))
+    .catch(async (error) => {
+      if (error.code !== 'ENOENT') throw error;
+      const seed = fileURLToPath(new URL('../server/data/messages.json', import.meta.url));
+      await copyFile(seed, TMP_MESSAGES).catch((copyError) => {
+        console.warn('Could not seed the message queue:', copyError.message);
+      });
+    });
+}
+
 async function getApp() {
   appPromise ??= (async () => {
-    await seedLibrary();
-    return createApp({ libraryFile, trustProxy: true });
+    await Promise.all([seedLibrary(), seedMessages()]);
+    return createApp({ libraryFile, messagesFile, trustProxy: true });
   })();
   return appPromise;
 }

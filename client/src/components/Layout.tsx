@@ -155,7 +155,7 @@ export function Layout() {
       </footer>
 
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
-      <ChatWidget />
+      {location.pathname !== '/admin' && <ChatWidget />}
     </div>
   );
 }
