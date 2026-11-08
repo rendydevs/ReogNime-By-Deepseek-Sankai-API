@@ -44,7 +44,7 @@ const STORAGE_KEY = 'reognime-chat-thread-v1';
 const OPEN_TTL = 7 * 24 * 60 * 60 * 1000;
 const RESOLVED_TTL = 3 * 24 * 60 * 60 * 1000;
 const POLL_MS = 15_000;
-const GREETING = 'Hai, aku NimeBot. Mau tanya soal anime, jadwal, atau My List? Kalau butuh bantuan lain, hubungkan aku ke admin ya.';
+const GREETING = 'Hai, aku NimeBot. Pilih topik cepat di bawah untuk jawaban singkat, atau tulis pesan dan langsung aku teruskan ke Admin ReogNime.';
 const CONNECT_TEXT = 'Halo admin, saya ingin terhubung dan menyampaikan keluhan.';
 const ESCALATION = 'Baik pesan anda dikirim ke admin mohon tunggu ya.';
 
@@ -366,6 +366,16 @@ export function ChatWidget() {
     }
     addBotMessage('user', text);
     setInput('');
+    // Free-form messages go straight to a human. The bot only answers the
+    // explicit quick topics above, so a complaint cannot collide with FAQ keywords.
+    void connectToAdmin(text);
+  };
+
+  const askBot = (value: string) => {
+    const text = value.trim();
+    if (!text || thread) return;
+    addBotMessage('user', text);
+    setInput('');
     const reply = replyFor(text);
     if (reply.escalate) {
       void connectToAdmin(text);
@@ -410,13 +420,15 @@ export function ChatWidget() {
         <section className={`chat-panel ${closing ? 'is-closing' : ''}`} role="dialog" aria-label="Chat dengan NimeBot dan Admin ReogNime">
           <header className="chat-header">
             <div className="chat-bot-profile">
-              <span className="chat-avatar chat-avatar-bot" aria-hidden="true"><Bot size={19} strokeWidth={1.8} /></span>
+              <span className={`chat-avatar ${thread ? 'chat-avatar-admin' : 'chat-avatar-bot'}`} aria-hidden="true">
+                {thread ? <UserRound size={19} strokeWidth={1.8} /> : <Bot size={19} strokeWidth={1.8} />}
+              </span>
               <span className="chat-profile-copy">
-                <strong>NimeBot</strong>
+                <strong>{thread ? 'Admin ReogNime' : 'NimeBot'}</strong>
                 <small>
                   {thread
-                    ? (threadResolved ? 'Selesai ditangani admin' : 'Admin terhubung')
-                    : typing === 'bot' ? 'sedang mengetik…' : 'Bot · online'}
+                    ? (threadResolved ? 'Percakapan selesai' : 'Admin terhubung')
+                    : typing === 'bot' ? 'sedang mengetik…' : 'Bot · topik cepat'}
                 </small>
               </span>
             </div>
@@ -508,7 +520,7 @@ export function ChatWidget() {
           {!thread && !hasUserBotMessage && !typing && (
             <div className="chat-quick">
               {QUICK_PROMPTS.map((item) => (
-                <button key={item.label} type="button" onClick={() => sendMessage(item.prompt)}>
+                <button key={item.label} type="button" onClick={() => askBot(item.prompt)}>
                   {item.label}
                 </button>
               ))}

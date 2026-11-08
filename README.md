@@ -259,6 +259,8 @@ The hidden admin workspace lives at `/admin`; it is intentionally absent from na
 
 Visitors can press **Hubungkan ke admin** in the chat widget. That creates a two-way thread with a random 256-bit browser token (only its hash is stored on the server). Admin replies, thread status, and resolved notices are delivered through the thread API; the visitor tab polls for new messages.
 
+The bot only answers the explicit quick-topic buttons. Any free-form message is forwarded straight to an admin thread, avoiding FAQ keyword collisions. Once a thread is open, the bot is silent; the visitor gets one system acknowledgement, **“Baik, tunggu ya. Pesan Anda akan diteruskan ke admin.”**, and the header switches to Admin ReogNime.
+
 Admin can reply, mark a thread resolved, reopen it, or delete it. A resolved thread appends the notice **“Pesan ini ditandai selesai oleh admin.”** The chat widget keeps the conversation in `localStorage` for 7 days while the thread is open (3 days after resolution), so a visitor can leave, come back, and find the reply. The queue stores the originating page path, but no IP address or contact data.
 
 > **Persistence note:** the default queue is a JSON file. On Vercel only `/tmp` is writable, so the queue is ephemeral across cold starts/instances. For a durable production queue, point `MESSAGES_FILE` at persistent storage or replace the store with a database. The admin UI shows a warning when it detects Vercel's ephemeral storage.

@@ -4,7 +4,7 @@ import path from 'node:path';
 
 export const THREAD_STATUSES = ['open', 'resolved'];
 const MAX_THREADS = 1000;
-const ACK_TEXT = 'Baik pesan anda dikirim ke admin mohon tunggu ya.';
+const ACK_TEXT = 'Baik, tunggu ya. Pesan Anda akan diteruskan ke admin.';
 const RESOLVED_TEXT = 'Pesan ini ditandai selesai oleh admin.';
 
 const hashToken = (token) => createHash('sha256').update(token).digest('hex');
