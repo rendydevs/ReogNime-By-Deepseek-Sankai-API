@@ -1,4 +1,5 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { LibraryDialogProvider } from './components/LibraryDialog';
 import { AllAnimePage } from './pages/AllAnimePage';
@@ -15,10 +16,22 @@ import { SearchPage } from './pages/SearchPage';
 import { WatchAnimePage } from './pages/WatchAnimePage';
 import { WatchEpisodePage } from './pages/WatchEpisodePage';
 import { WatchSchedulePage } from './pages/WatchSchedulePage';
+import { trackPageview } from './lib/analytics';
+
+function PageviewTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    // Let the page update its document title before GA4 records the view.
+    const timer = window.setTimeout(trackPageview, 0);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, location.search]);
+  return null;
+}
 
 export function App() {
   return (
     <LibraryDialogProvider>
+      <PageviewTracker />
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />

@@ -138,6 +138,26 @@ npx vercel dev --local
 
 **Vercel storage caveat:** the archive library is a single local JSON profile. On Vercel it is written to `/tmp/reognime-library.json`, seeded with the six demo entries on each fresh function instance. It resets on a cold start or redeploy. For a persistent personal library, point `LIBRARY_FILE` at a writable persistent volume or move `LibraryStore` to a database/KV; alternatively host the Express API on a persistent service and set `VITE_API_BASE_URL` to it. The in-memory upstream cache also resets with the function instance.
 
+### Analytics & monitoring
+
+Traffic tracking uses the public **Google Tag Manager** container `GTM-54X7Q2RH`, hardcoded in [`client/src/lib/analytics.ts`](client/src/lib/analytics.ts). No Vercel environment variable and no paid analytics plan is required.
+
+The app:
+- loads the GTM container in production;
+- pushes a `page_view` dataLayer event on every React Router navigation;
+- sends `page_title`, `page_location`, and `page_path`.
+
+To finish the GA4 reporting setup in GTM:
+
+1. Create/open the GA4 property and copy its **Measurement ID** (`G-XXXXXXXXXX`).
+2. In GTM, add a **GA4 Configuration** tag with that Measurement ID and an Initialization/All Pages trigger.
+3. Add three **Data Layer Variables**: `page_title`, `page_location`, `page_path`.
+4. Add a **GA4 Event** tag named `page_view`, with those three parameters, triggered by the **Custom Event** `page_view`.
+5. Submit and **Publish** the GTM container (saving alone is not enough).
+6. Open GA4 → **Realtime** and navigate the site.
+
+If the container already sends GA4 page views on All Pages, remove that duplicate page-view tag and use the custom `page_view` trigger instead; otherwise the first page may be counted twice. Vercel **Logs / Observability** remains the place to monitor API failures and function performance. GTM/GA4 is cookie-based and may require a consent notice; ad blockers can reduce reported traffic.
+
 ### A fresh archive list
 
 The archive ships with six demo entries. To begin empty, remove `server/data/library.json` and restart the server; it recreates the file as an empty library. Streaming usage is stateless and is not stored in the library.

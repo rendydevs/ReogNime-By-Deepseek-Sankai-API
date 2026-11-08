@@ -8,7 +8,10 @@ import { App } from './App';
 import { LibraryProvider } from './context/LibraryContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
+import { initAnalytics } from './lib/analytics';
 import './styles.css';
+
+initAnalytics();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

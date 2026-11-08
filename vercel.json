@@ -20,7 +20,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/:path((?!api/).*)",
+      "source": "/:path((?!api/|_vercel/).*)",
       "destination": "/index.html"
     }
   ]
