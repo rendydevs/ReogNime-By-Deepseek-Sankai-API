@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { OPENAPI_URL } from '../lib/api';
+import { ChatWidget } from './ChatWidget';
 import { CommandSearch } from './CommandSearch';
 import { Logo } from './Logo';
 
@@ -154,6 +155,7 @@ export function Layout() {
       </footer>
 
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <ChatWidget />
     </div>
   );
 }
