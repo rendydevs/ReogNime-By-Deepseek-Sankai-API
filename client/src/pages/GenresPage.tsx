@@ -15,7 +15,7 @@ function titleFromSlug(slug: string) {
 }
 
 export function GenresPage() {
-  useDocumentTitle('Genres');
+  useDocumentTitle('Genre Anime Sub Indo');
   const genres = useApi((signal) => api.otaku.genres(signal), []);
 
   return (
@@ -69,7 +69,7 @@ export function GenresPage() {
 export function GenrePage() {
   const { slug = '' } = useParams();
   const label = titleFromSlug(slug);
-  useDocumentTitle(`${label} anime`);
+  useDocumentTitle(`${label} Sub Indo`);
   const initial = useApi((signal) => api.otaku.genre(slug, 1, signal), [slug]);
   const { notify } = useToast();
   const [items, setItems] = useState<OtakuCardType[]>([]);

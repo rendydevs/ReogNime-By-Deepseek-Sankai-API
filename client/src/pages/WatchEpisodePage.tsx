@@ -13,6 +13,7 @@ import { Link, useParams } from 'react-router-dom';
 import { DownloadGroups } from '../components/DownloadGroups';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import type { OtakuEpisodeServer, OtakuEpisodePage as EpisodePayload } from '../types';
 
 interface FlatServer extends OtakuEpisodeServer {
@@ -74,7 +75,22 @@ export function WatchEpisodePage() {
   const [streamError, setStreamError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
-  useDocumentTitle(data?.title ?? 'Watch episode');
+  useDocumentTitle(data ? `${data.title} Sub Indo` : 'Nonton Episode Anime Sub Indo');
+  usePageSeo({
+    title: data ? `${data.title} — ReogNime` : 'Watch episode — ReogNime',
+    description: data
+      ? `${data.title} subtitle Indonesia. Pilih mirror video, unduh episode, dan lanjutkan ke episode berikutnya di ReogNime.`
+      : 'Nonton episode anime subtitle Indonesia di ReogNime.',
+    type: 'video.episode',
+    jsonLd: data
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'TVEpisode',
+          name: data.title,
+          inLanguage: 'id-ID',
+        }
+      : null,
+  });
 
   useEffect(() => {
     setSelected(data ? initialServer(data) : null);

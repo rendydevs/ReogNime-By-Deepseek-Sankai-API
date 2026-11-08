@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /library
+Disallow: /developers
+Disallow: /search?
+
+Sitemap: https://www.reognime.site/sitemap.xml

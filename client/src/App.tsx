@@ -17,6 +17,7 @@ import { WatchAnimePage } from './pages/WatchAnimePage';
 import { WatchEpisodePage } from './pages/WatchEpisodePage';
 import { WatchSchedulePage } from './pages/WatchSchedulePage';
 import { trackPageview } from './lib/analytics';
+import { SeoManager } from './lib/seo';
 
 function PageviewTracker() {
   const location = useLocation();
@@ -31,6 +32,7 @@ function PageviewTracker() {
 export function App() {
   return (
     <LibraryDialogProvider>
+      <SeoManager />
       <PageviewTracker />
       <Routes>
         <Route element={<Layout />}>

@@ -276,9 +276,56 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 │   ├── data/anime.json      # local AniList archive catalog
 │   └── data/library.json    # archive library
 ├── public/media/            # local archive artwork
+├── public/sitemap.xml       # generated SEO sitemap
+├── public/robots.txt        # crawl rules
+├── public/og-reognime.jpg   # social preview image
 ├── vercel.json              # Vercel build, function and SPA routing
 └── docs/                    # screenshots
 ```
+
+## SEO & Search Console
+
+The site ships with the technical SEO basics:
+
+- `public/robots.txt` allows public pages and points to the sitemap.
+- `public/sitemap.xml` contains the static pages, genres, and all current streaming series.
+- `client/index.html` has the canonical site description, Open Graph/Twitter cards, and `WebSite`/`Organization` JSON-LD.
+- Each SPA route updates its `<title>`, description, canonical URL, Open Graph URL/image, and robots directive. Anime pages add `TVSeries` JSON-LD; episode pages add `TVEpisode`.
+- `client/src/lib/seo.ts` is the single place for per-route and dynamic metadata.
+
+### Submit to Google
+
+1. Open [Google Search Console](https://search.google.com/search-console).
+2. Add a **Domain** property for `reognime.site` (this covers both apex and `www`).
+3. Google gives a DNS TXT record like `google-site-verification=...`. Add it in **Domainesia → DNS Management** as a `TXT` record with name `@`.
+4. Verify, then submit `https://www.reognime.site/sitemap.xml`.
+5. Use **URL Inspection** for `/`, `/ongoing`, and a few anime pages, then request indexing if they are not indexed.
+6. After a few days, check **Performance → Queries/Pages** to see which keywords already bring impressions. Improve titles/descriptions around those queries.
+
+Bing Webmaster Tools can import the site directly from Google Search Console.
+
+### Refresh the sitemap
+
+The sitemap is generated from the current provider catalog and committed as a static file, because Vercel Functions are blocked from fetching the provider:
+
+```bash
+npm run seo:sitemap
+```
+
+Run it when the catalog changes significantly, then commit `public/sitemap.xml`. It currently contains 1,946 URLs. The generator needs a network that can reach the Otakudesu API; your local Mac works.
+
+### What “muncul di kolom pencarian” means
+
+Google Autocomplete suggestions cannot be forced from a website. They follow query popularity and Google's own signals. Technical SEO gets pages indexed; to improve discoverability:
+
+- Keep adding unique synopsis/episode content and update ongoing pages regularly.
+- Use natural phrases such as “nonton anime sub indo”, “anime ongoing”, “jadwal anime”, and the actual anime title in titles/descriptions; avoid keyword stuffing.
+- Build internal links between genres, anime, episode lists, and related recommendations.
+- Share new pages on social media/forums and earn legitimate backlinks.
+- Use Search Console queries to target titles that already receive impressions.
+- Be patient: indexing can take days, and ranking/autocomplete takes weeks to months.
+
+The metadata is applied client-side because this is a Vite SPA. Google renders JavaScript, but for maximum control over social previews and non-JS crawlers, the next step would be prerendering/SSR of the HTML routes.
 
 ## Tests
 

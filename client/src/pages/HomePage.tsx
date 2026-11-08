@@ -60,7 +60,7 @@ function CatalogHead({
 }
 
 export function HomePage() {
-  useDocumentTitle('Nonton anime tanpa ribet');
+  useDocumentTitle('Nonton Anime Sub Indo Tanpa Ribet');
   const home = useApi((signal) => api.otaku.home(signal), []);
   const navigate = useNavigate();
   const [query, setQuery] = useState('');

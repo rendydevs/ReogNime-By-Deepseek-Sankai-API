@@ -200,7 +200,7 @@ export function AnimeDetailPage() {
   const { notify } = useToast();
   const [favoriteBusy, setFavoriteBusy] = useState(false);
   const anime = data?.data ?? null;
-  useDocumentTitle(anime?.title ?? 'Title');
+  useDocumentTitle(anime ? `${anime.title} Sub Indo` : 'Anime Sub Indo');
 
   if (loading) return <DetailSkeleton />;
 

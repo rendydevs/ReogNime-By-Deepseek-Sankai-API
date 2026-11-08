@@ -16,6 +16,7 @@ import { OtakuPoster } from '../components/OtakuPoster';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import type { OtakuBatch } from '../types';
 
 function WatchDetailSkeleton() {
@@ -50,7 +51,28 @@ export function WatchAnimePage() {
     setBatch(null);
   }, [slug]);
 
-  useDocumentTitle(anime?.title ?? 'Watch series');
+  useDocumentTitle(anime ? `${anime.title} Sub Indo` : 'Nonton Anime Sub Indo');
+  usePageSeo({
+    title: anime ? `${anime.title} Sub Indo — ReogNime` : 'Watch series — ReogNime',
+    description: anime
+      ? `Nonton ${anime.title} subtitle Indonesia di ReogNime. ${anime.synopsis.join(' ').slice(0, 150)}`
+      : 'Nonton anime subtitle Indonesia di ReogNime.',
+    image: anime?.banner || anime?.poster || null,
+    type: 'video.tv_show',
+    jsonLd: anime
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'TVSeries',
+          name: anime.title,
+          ...(anime.japanese ? { alternateName: anime.japanese } : {}),
+          description: anime.synopsis.join(' ').slice(0, 600),
+          image: anime.banner || anime.poster || undefined,
+          genre: anime.genres.map((genre) => genre.name),
+          ...(anime.episodes ? { numberOfEpisodes: anime.episodes } : {}),
+          inLanguage: 'id-ID',
+        }
+      : null,
+  });
 
   const episodes = useMemo(
     () => [...(anime?.episodeList ?? [])].sort((a, b) => (a.number ?? 0) - (b.number ?? 0)),

@@ -10,7 +10,7 @@ function groupId(index: number) {
 }
 
 export function AllAnimePage() {
-  useDocumentTitle('All anime A–Z');
+  useDocumentTitle('Semua Anime A–Z Sub Indo');
   const all = useApi((signal) => api.otaku.unlimited(signal), []);
   const [query, setQuery] = useState('');
 

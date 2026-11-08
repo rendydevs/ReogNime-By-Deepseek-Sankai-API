@@ -28,7 +28,7 @@ const COPY = {
 
 export function CatalogPage({ kind }: CatalogPageProps) {
   const copy = COPY[kind];
-  useDocumentTitle(kind === 'ongoing' ? 'Ongoing anime' : 'Completed anime');
+  useDocumentTitle(kind === 'ongoing' ? 'Anime Ongoing Sub Indo' : 'Anime Completed Sub Indo');
   const initial = useApi((signal) => api.otaku.list(kind, 1, signal), [kind]);
   const { notify } = useToast();
   const [items, setItems] = useState<OtakuCardType[]>([]);

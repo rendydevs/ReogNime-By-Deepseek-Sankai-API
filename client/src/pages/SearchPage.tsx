@@ -6,7 +6,7 @@ import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 
 export function SearchPage() {
-  useDocumentTitle('Search');
+  useDocumentTitle('Cari Anime Sub Indo');
   const [params, setParams] = useSearchParams();
   const q = params.get('q')?.trim() ?? '';
   const [query, setQuery] = useState(q);

@@ -12,7 +12,7 @@ function todayName() {
 }
 
 export function WatchSchedulePage() {
-  useDocumentTitle('Airing schedule');
+  useDocumentTitle('Jadwal Rilis Anime Sub Indo');
   const schedule = useApi((signal) => api.otaku.schedule(signal), []);
   const today = todayName();
 
