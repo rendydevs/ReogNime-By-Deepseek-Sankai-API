@@ -13803,3 +13803,213 @@ body {
     text-align: left;
   }
 }
+
+/* Landing-page anime atmosphere: slow crossfade + a quiet ReogNime watermark */
+.home-watch-page {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-atmosphere {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+  height: min(800px, 76vh);
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 66%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 66%, transparent 100%);
+}
+
+.home-atmosphere-frame {
+  position: absolute;
+  inset: -4%;
+  background-position: center 30%;
+  background-size: cover;
+  opacity: 0;
+  filter: saturate(0.82) contrast(0.92) blur(0.3px);
+  transform: scale(1.015);
+  transition: opacity 1.9s var(--ease-soft), transform 9s linear;
+}
+
+.home-atmosphere-frame.is-active {
+  opacity: 0.3;
+  transform: scale(1.055);
+}
+
+.home-atmosphere-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 88%, transparent) 30%, color-mix(in srgb, var(--bg) 38%, transparent) 66%, var(--bg) 100%),
+    linear-gradient(180deg, var(--bg) 0%, transparent 22%, transparent 58%, var(--bg) 100%);
+}
+
+.home-atmosphere-brand {
+  position: absolute;
+  top: clamp(88px, 11vh, 138px);
+  right: max(28px, 5vw);
+  display: flex;
+  width: clamp(160px, 18vw, 285px);
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-soft);
+  opacity: 0.42;
+  transform: rotate(-7deg);
+  animation: home-brand-drift 16s ease-in-out infinite alternate;
+}
+
+.home-atmosphere-brand img {
+  display: block;
+  width: clamp(48px, 5.4vw, 78px);
+  height: clamp(48px, 5.4vw, 78px);
+  border-radius: 22%;
+  filter: grayscale(0.2);
+}
+
+.home-atmosphere-brand span {
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+.home-atmosphere-brand i {
+  width: 18px;
+  height: 1px;
+  flex: 0 0 auto;
+  background: var(--line-strong);
+}
+
+.home-atmosphere-brand span:last-child {
+  color: var(--muted);
+  font-size: 7px;
+  letter-spacing: 0.11em;
+}
+
+[data-theme='dark'] .home-atmosphere-frame.is-active {
+  opacity: 0.34;
+}
+
+[data-theme='dark'] .home-atmosphere-wash {
+  background:
+    linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 90%, transparent) 28%, color-mix(in srgb, var(--bg) 30%, transparent) 64%, var(--bg) 100%),
+    linear-gradient(180deg, var(--bg) 0%, transparent 18%, transparent 54%, var(--bg) 100%);
+}
+
+[data-theme='dark'] .home-atmosphere-brand {
+  color: var(--cream);
+  opacity: 0.28;
+}
+
+[data-theme='dark'] .home-atmosphere-brand img {
+  filter: grayscale(0.2) brightness(1.5);
+}
+
+.home-watch-page > :not(.home-atmosphere) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes home-brand-drift {
+  from { transform: translate3d(0, 0, 0) rotate(-7deg); }
+  to { transform: translate3d(-10px, 7px, 0) rotate(-4.5deg); }
+}
+
+@media (max-width: 900px) {
+  .home-atmosphere {
+    height: min(650px, 72vh);
+  }
+
+  .home-atmosphere-frame.is-active {
+    opacity: 0.24;
+  }
+
+  [data-theme='dark'] .home-atmosphere-frame.is-active {
+    opacity: 0.28;
+  }
+
+  .home-atmosphere-brand {
+    top: 92px;
+    right: 22px;
+    width: 150px;
+    gap: 7px;
+  }
+
+  .home-atmosphere-brand img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .home-atmosphere-brand span {
+    font-size: 7px;
+  }
+
+  .home-atmosphere-brand i {
+    width: 10px;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-atmosphere {
+    height: min(560px, 68vh);
+  }
+
+  .home-atmosphere-frame.is-active {
+    opacity: 0.2;
+  }
+
+  [data-theme='dark'] .home-atmosphere-frame.is-active {
+    opacity: 0.24;
+  }
+
+  .home-atmosphere-wash {
+    background:
+      linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 78%, transparent) 48%, var(--bg) 100%),
+      linear-gradient(180deg, var(--bg) 0%, transparent 18%, transparent 54%, var(--bg) 100%);
+  }
+
+  [data-theme='dark'] .home-atmosphere-wash {
+    background:
+      linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 84%, transparent) 46%, var(--bg) 100%),
+      linear-gradient(180deg, var(--bg) 0%, transparent 16%, transparent 50%, var(--bg) 100%);
+  }
+
+  .home-atmosphere-brand {
+    top: 76px;
+    right: 17px;
+    width: 122px;
+    opacity: 0.25;
+  }
+
+  .home-atmosphere-brand img {
+    width: 29px;
+    height: 29px;
+  }
+
+  .home-atmosphere-brand span {
+    font-size: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  .home-atmosphere-brand span:last-child {
+    display: none;
+  }
+
+  .home-atmosphere-brand i {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-atmosphere-frame,
+  .home-atmosphere-brand {
+    animation: none;
+    transition: none;
+  }
+
+  .home-atmosphere-frame {
+    transform: none;
+  }
+}
