@@ -11741,3 +11741,213 @@ li {
   }
 
 }
+
+/* ---------- Light-theme readability pass ---------- */
+[data-theme='light'] {
+  --muted: #686158;
+  --muted-light: #7c7468;
+  --ink-soft: #332f29;
+}
+
+body {
+  font-size: 15.5px;
+  font-weight: 450;
+  line-height: 1.62;
+}
+
+.eyebrow,
+.section-index {
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+}
+
+.logo-tag {
+  color: var(--ink-soft);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+}
+
+.logo-kana {
+  color: var(--accent-deep);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.nav-link {
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  text-transform: none;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.search-trigger {
+  color: var(--ink-soft);
+  font-size: 11.5px;
+}
+
+.search-trigger kbd {
+  font-size: 9px;
+}
+
+.button {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.watch-search input,
+.home-search input,
+.search-page-field input {
+  font-size: 14px;
+}
+
+.watch-search-submit {
+  font-size: 11px;
+}
+
+.home-quick-links a {
+  font-size: 11px;
+}
+
+.home-quick-links a > span {
+  font-size: 8px;
+}
+
+.home-quick-links a small {
+  font-size: 8.5px;
+}
+
+.screening-meta span {
+  font-size: 9px;
+}
+
+.screening-lede {
+  color: rgba(251, 247, 238, 0.66);
+  font-size: 13.5px;
+}
+
+.screening-copy .eyebrow {
+  font-size: 10px;
+}
+
+.watch-section-head > p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.otaku-kicker {
+  font-size: 9px;
+}
+
+.otaku-card-copy h3 {
+  font-size: 14.5px;
+}
+
+.otaku-card-meta {
+  font-size: 9.5px;
+}
+
+.otaku-state {
+  font-size: 8px;
+}
+
+.home-browse-card p {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.65;
+}
+
+.watch-attribution {
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.7;
+}
+
+.player-server {
+  font-size: 9.5px;
+}
+
+.watch-detail-meta > span {
+  font-size: 9px;
+}
+
+.footer-heading {
+  font-size: 9px;
+}
+
+.footer-links a {
+  font-size: 12.5px;
+}
+
+.footer-source {
+  color: rgba(251, 247, 238, 0.55) !important;
+  font-size: 11px !important;
+}
+
+.footer-bottom {
+  font-size: 10px;
+}
+
+@media (max-width: 1024px) {
+  .nav-link {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 760px) {
+  .mobile-nav-link {
+    font-size: 18px;
+  }
+
+  .home-quick-links a {
+    font-size: 10.5px;
+  }
+
+  .footer-source {
+    font-size: 10.5px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-watch-masthead .watch-masthead-bar {
+    gap: 10px;
+    align-items: center;
+  }
+
+  .home-watch-masthead .watch-masthead-bar .eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .home-watch-masthead .watch-masthead-bar .text-link {
+    flex: none;
+    font-size: 9.5px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+}
+
+.home-watch-title-row > div > p {
+  color: var(--ink-soft);
+}
+
+@media (max-width: 380px) {
+  .home-watch-masthead .watch-masthead-bar .eyebrow {
+    font-size: 8.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .home-watch-masthead .watch-masthead-bar .text-link {
+    font-size: 9px;
+  }
+}
