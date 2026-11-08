@@ -37,28 +37,28 @@ export function AllAnimePage() {
     <div className="watch-page all-page">
       <header className="container catalog-masthead">
         <div className="watch-masthead-bar">
-          <p className="eyebrow"><span className="watch-live-dot" /> ReogNime / Complete catalog</p>
-          <Link to="/search" className="text-link">Search titles <ArrowRight size={14} /></Link>
+          <p className="eyebrow"><span className="watch-live-dot" /> ReogNime / Katalog lengkap</p>
+          <Link to="/search" className="text-link">Cari judul <ArrowRight size={14} /></Link>
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">The unlimited shelf</p>
-            <h1>Everything,<br /><em>A–Z.</em></h1>
+            <p className="section-index">Rak tanpa batas</p>
+            <h1>Semuanya,<br /><em>A–Z.</em></h1>
           </div>
           <div className="catalog-title-aside">
             <p>
-              The complete anime catalog — {total || '…'} titles, indexed and searchable locally
-              after a single cached request.
+              Katalog anime lengkap—{total || '…'} judul, terindeks dan bisa dicari
+              lokal setelah satu permintaan.
             </p>
             <div className="az-search">
               <Search size={15} />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Filter the A–Z shelf"
-                aria-label="Filter all anime titles"
+                placeholder="Saring rak A–Z"
+                aria-label="Saring semua judul anime"
               />
-              {query && <button onClick={() => setQuery('')} aria-label="Clear filter"><X size={14} /></button>}
+              {query && <button onClick={() => setQuery('')} aria-label="Bersihkan saringan"><X size={14} /></button>}
             </div>
           </div>
         </div>
@@ -75,20 +75,20 @@ export function AllAnimePage() {
         ) : all.error ? (
           <div className="inline-error">
             <p>{all.error}</p>
-            <button className="button button-primary" onClick={all.reload}>Try again</button>
+            <button className="button button-primary" onClick={all.reload}>Coba lagi</button>
           </div>
         ) : (
           <div className="all-layout">
-            <aside className="az-index" aria-label="Jump to letter">
-              <span className="az-index-label">Jump</span>
+            <aside className="az-index" aria-label="Lompat ke huruf">
+              <span className="az-index-label">Lompat</span>
               {groups.map((group, index) => (
                 <button key={group.letter} onClick={() => jump(index)}>{group.letter}</button>
               ))}
             </aside>
             <div className="az-content">
               <div className="az-summary">
-                <span>{query ? `${visibleTotal} matching titles` : `${total} titles`}</span>
-                <span>{groups.length} letters</span>
+                <span>{query ? `${visibleTotal} judul cocok` : `${total} judul`}</span>
+                <span>{groups.length} huruf</span>
               </div>
               {groups.length ? groups.map((group, index) => (
                 <section className="az-group" id={groupId(index)} key={group.letter}>
@@ -107,11 +107,11 @@ export function AllAnimePage() {
                 </section>
               )) : (
                 <div className="empty-state">
-                  <p className="empty-index">No match</p>
-                  <h2>No title starts there.</h2>
-                  <p>Try fewer letters.</p>
+                  <p className="empty-index">Tidak ada</p>
+                  <h2>Tidak ada judul dengan huruf itu.</h2>
+                  <p>Coba kata kunci yang lebih pendek.</p>
                   <div className="empty-actions">
-                    <button className="button button-primary" onClick={() => setQuery('')}>Clear filter</button>
+                    <button className="button button-primary" onClick={() => setQuery('')}>Bersihkan saringan</button>
                   </div>
                 </div>
               )}

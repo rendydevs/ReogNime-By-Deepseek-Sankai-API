@@ -13,22 +13,22 @@ interface CatalogPageProps {
 
 const COPY = {
   ongoing: {
-    eyebrow: 'ReogNime / Currently airing',
-    description: 'Every series currently on the weekly shelf, with Indonesian subtitles and fresh episodes.',
+    eyebrow: 'ReogNime / Sedang tayang',
+    description: 'Semua seri di rak mingguan, dengan subtitle Indonesia dan episode baru.',
     other: 'completed',
-    otherLabel: 'Completed anime',
+    otherLabel: 'Anime tamat',
   },
   completed: {
-    eyebrow: 'ReogNime / Completed',
-    description: 'Every completed series on the shelf — the ones you can start knowing there is an ending.',
+    eyebrow: 'ReogNime / Tamat',
+    description: 'Semua seri tamat di rak—yang bisa kamu mulai tanpa menunggu akhir.',
     other: 'ongoing',
-    otherLabel: 'Airing now',
+    otherLabel: 'Sedang tayang',
   },
 } as const;
 
 export function CatalogPage({ kind }: CatalogPageProps) {
   const copy = COPY[kind];
-  useDocumentTitle(kind === 'ongoing' ? 'Anime Ongoing Sub Indo' : 'Anime Completed Sub Indo');
+  useDocumentTitle(kind === 'ongoing' ? 'Anime Tayang Sub Indo' : 'Anime Tamat Sub Indo');
   const initial = useApi((signal) => api.otaku.list(kind, 1, signal), [kind]);
   const { notify } = useToast();
   const [items, setItems] = useState<OtakuCardType[]>([]);
@@ -51,7 +51,7 @@ export function CatalogPage({ kind }: CatalogPageProps) {
       setItems((current) => [...current, ...payload.data]);
       setMeta(payload.meta);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not load the next page.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memuat halaman berikutnya.', { tone: 'error' });
     } finally {
       setLoadingMore(false);
     }
@@ -66,24 +66,24 @@ export function CatalogPage({ kind }: CatalogPageProps) {
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">The whole shelf</p>
-            <h1>{kind === 'ongoing' ? <>Still <em>airing.</em></> : <>Finished, <em>waiting.</em></>}</h1>
+            <p className="section-index">Seluruh rak</p>
+            <h1>{kind === 'ongoing' ? <>Masih <em>tayang.</em></> : <>Tamat, <em>tanpa tunggu.</em></>}</h1>
           </div>
           <div className="catalog-title-aside">
             <p>{copy.description}</p>
-            <Link to="/search" className="catalog-search-link"><Search size={15} /> Search every title</Link>
+            <Link to="/search" className="catalog-search-link"><Search size={15} /> Cari semua judul</Link>
           </div>
         </div>
         <div className="catalog-toolbar">
           <div className="catalog-tabs">
-            <Link to="/ongoing" className={kind === 'ongoing' ? 'is-active' : ''}>Ongoing</Link>
-            <Link to="/completed" className={kind === 'completed' ? 'is-active' : ''}>Completed</Link>
+            <Link to="/ongoing" className={kind === 'ongoing' ? 'is-active' : ''}>Tayang</Link>
+            <Link to="/completed" className={kind === 'completed' ? 'is-active' : ''}>Tamat</Link>
             <Link to="/all">A–Z</Link>
           </div>
           <span className="catalog-count">
             {meta?.pagination
-              ? `Page ${meta.pagination.currentPage} of ${meta.pagination.totalPages} · ${items.length} loaded`
-              : 'Loading the shelf'}
+              ? `Halaman ${meta.pagination.currentPage} dari ${meta.pagination.totalPages} · ${items.length} tampil`
+              : 'Memuat rak'}
           </span>
         </div>
       </header>
@@ -102,7 +102,7 @@ export function CatalogPage({ kind }: CatalogPageProps) {
         ) : initial.error ? (
           <div className="inline-error">
             <p>{initial.error}</p>
-            <button className="button button-primary" onClick={initial.reload}>Try again</button>
+            <button className="button button-primary" onClick={initial.reload}>Coba lagi</button>
           </div>
         ) : (
           <>
@@ -113,15 +113,15 @@ export function CatalogPage({ kind }: CatalogPageProps) {
               <div className="load-more-wrap">
                 <button className="button button-outline" onClick={loadMore} disabled={loadingMore}>
                   {loadingMore ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                  {loadingMore ? 'Loading' : 'Load more titles'}
+                  {loadingMore ? 'Memuat' : 'Muat lebih banyak'}
                 </button>
               </div>
             )}
             {!items.length && (
               <div className="empty-state">
                 <p className="empty-index">No. 00</p>
-                <h2>Nothing on this shelf.</h2>
-                <p>The provider returned no titles right now. Try again in a moment.</p>
+                <h2>Belum ada di rak ini.</h2>
+                <p>Provider belum mengirim judul. Coba lagi sebentar.</p>
               </div>
             )}
           </>

@@ -104,7 +104,7 @@ const libraryPatchSchema = z
     notes: z.string().max(500).optional(),
     favorite: z.boolean().optional(),
   })
-  .refine((value) => Object.keys(value).length > 0, { message: 'Provide at least one field to update.' });
+  .refine((value) => Object.keys(value).length > 0, { message: 'Sertakan setidaknya satu kolom untuk diperbarui.' });
 
 function parseId(value) {
   const id = Number(value);
@@ -120,7 +120,7 @@ function validate(schema, input) {
     throw new ApiError(
       422,
       'VALIDATION_ERROR',
-      'Some request values are invalid.',
+      'Beberapa nilai permintaan tidak valid.',
       result.error.issues.map((issue) => ({ path: issue.path.join('.') || 'request', message: issue.message })),
     );
   }
@@ -203,7 +203,7 @@ export async function createApp({
         standardHeaders: 'draft-8',
         legacyHeaders: false,
         skip: (req) => req.path === '/health',
-        message: { error: { code: 'RATE_LIMITED', message: 'Too many requests. Please slow down.' } },
+        message: { error: { code: 'RATE_LIMITED', message: 'Terlalu banyak permintaan. Coba pelan-pelan.' } },
       }),
     );
   }
@@ -257,7 +257,7 @@ export async function createApp({
 
   app.get('/api/v1/anime/:id', (req, res) => {
     const anime = getAnimeDetail(parseId(req.params.id));
-    if (!anime) throw notFound('Anime not found.');
+    if (!anime) throw notFound('Anime tidak ditemukan.');
     res.set('Cache-Control', 'public, max-age=300');
     res.json({ data: anime });
   });
@@ -265,13 +265,13 @@ export async function createApp({
   app.get('/api/v1/anime/:id/episodes', (req, res) => {
     const query = validate(episodesQuerySchema, req.query);
     const result = getEpisodes(parseId(req.params.id), query);
-    if (!result) throw notFound('Anime not found.');
+    if (!result) throw notFound('Anime tidak ditemukan.');
     res.json(result);
   });
 
   app.get('/api/v1/anime/:id/related', (req, res) => {
     const id = parseId(req.params.id);
-    if (!getAnimeDetail(id)) throw notFound('Anime not found.');
+    if (!getAnimeDetail(id)) throw notFound('Anime tidak ditemukan.');
     res.json({ data: getRelated(id, 6) });
   });
 
@@ -332,7 +332,7 @@ export async function createApp({
   app.post('/api/v1/library', async (req, res) => {
     const body = validate(libraryCreateSchema, req.body);
     const anime = getAnimeDetail(body.animeId);
-    if (!anime) throw notFound('Anime not found. Use a valid catalog id.');
+    if (!anime) throw notFound('Anime tidak ditemukan. Gunakan id katalog yang valid.');
     if (body.progress !== undefined && body.progress > progressLimit(anime)) {
       throw new ApiError(422, 'INVALID_PROGRESS', `Progress cannot exceed ${progressLimit(anime)} episodes.`);
     }
@@ -419,7 +419,7 @@ export async function createApp({
     }
     const body = validate(threadMessageSchema, req.body);
     const result = await threads.addVisitorMessage(thread.id, body.message);
-    if (!result?.thread) throw notFound('Conversation not found.');
+    if (!result?.thread) throw notFound('Percakapan tidak ditemukan.');
     res.set('Cache-Control', 'no-store');
     res.json({ data: threads.publicView(result.thread) });
   });
@@ -446,7 +446,7 @@ export async function createApp({
 
   app.get('/api/v1/admin/threads/:id', (req, res) => {
     const thread = threads.get(req.params.id);
-    if (!thread) throw notFound('Conversation not found.');
+    if (!thread) throw notFound('Percakapan tidak ditemukan.');
     res.set('Cache-Control', 'no-store');
     res.json({ data: threads.publicView(thread) });
   });
@@ -454,7 +454,7 @@ export async function createApp({
   app.post('/api/v1/admin/threads/:id/messages', async (req, res) => {
     const body = validate(threadMessageSchema, req.body);
     const thread = await threads.addAdminMessage(req.params.id, body.message);
-    if (!thread) throw notFound('Conversation not found.');
+    if (!thread) throw notFound('Percakapan tidak ditemukan.');
     res.set('Cache-Control', 'no-store');
     res.json({ data: threads.publicView(thread) });
   });
@@ -462,14 +462,14 @@ export async function createApp({
   app.patch('/api/v1/admin/threads/:id', async (req, res) => {
     const body = validate(adminThreadPatchSchema, req.body);
     const thread = await threads.setStatus(req.params.id, body.status);
-    if (!thread) throw notFound('Conversation not found.');
+    if (!thread) throw notFound('Percakapan tidak ditemukan.');
     res.set('Cache-Control', 'no-store');
     res.json({ data: threads.publicView(thread) });
   });
 
   app.delete('/api/v1/admin/threads/:id', async (req, res) => {
     const removed = await threads.remove(req.params.id);
-    if (!removed) throw notFound('Conversation not found.');
+    if (!removed) throw notFound('Percakapan tidak ditemukan.');
     res.status(204).end();
   });
 
@@ -519,13 +519,13 @@ export async function createApp({
       });
     }
     if (error?.type === 'entity.parse.failed') {
-      return res.status(400).json({ error: { code: 'INVALID_JSON', message: 'Request body must be valid JSON.' } });
+      return res.status(400).json({ error: { code: 'INVALID_JSON', message: 'Body permintaan harus berupa JSON yang valid.' } });
     }
     if (error?.type === 'entity.too.large') {
-      return res.status(413).json({ error: { code: 'PAYLOAD_TOO_LARGE', message: 'Request body is too large.' } });
+      return res.status(413).json({ error: { code: 'PAYLOAD_TOO_LARGE', message: 'Body permintaan terlalu besar.' } });
     }
     console.error(error);
-    return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: 'Something went wrong on our side.' } });
+    return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: 'Terjadi kesalahan di sisi kami.' } });
   });
 
   app.locals.library = library;

@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { OtakuCard } from '../components/OtakuCard';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
+import { genreLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import type { OtakuCard as OtakuCardType, OtakuListMeta } from '../types';
 
@@ -22,20 +23,20 @@ export function GenresPage() {
     <div className="watch-page genre-index-page">
       <header className="container catalog-masthead">
         <div className="watch-masthead-bar">
-          <p className="eyebrow"><span className="watch-live-dot" /> ReogNime / Genres</p>
-          <Link to="/all" className="text-link">All anime A–Z <ArrowRight size={14} /></Link>
+          <p className="eyebrow"><span className="watch-live-dot" /> ReogNime / Genre</p>
+          <Link to="/all" className="text-link">Semua anime A–Z <ArrowRight size={14} /></Link>
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">Find a mood</p>
-            <h1>Every kind<br />of <em>story.</em></h1>
+            <p className="section-index">Cari suasana</p>
+            <h1>Setiap jenis<br /><em>cerita.</em></h1>
           </div>
           <div className="catalog-title-aside">
             <p>
-              All {genres.data?.data.length ?? ''} genres, each one a complete,
-              paginated shelf powered by the watch API.
+              {genres.data?.data.length ?? ''} genre, masing-masing berupa rak
+              lengkap dengan halaman dari API tontonan.
             </p>
-            <Link to="/search" className="catalog-search-link"><Search size={15} /> Search instead</Link>
+            <Link to="/search" className="catalog-search-link"><Search size={15} /> Cari saja</Link>
           </div>
         </div>
       </header>
@@ -48,14 +49,14 @@ export function GenresPage() {
         ) : genres.error ? (
           <div className="inline-error">
             <p>{genres.error}</p>
-            <button className="button button-primary" onClick={genres.reload}>Try again</button>
+            <button className="button button-primary" onClick={genres.reload}>Coba lagi</button>
           </div>
         ) : (
           <div className="genre-index-grid">
             {genres.data?.data.map((genre, index) => (
               <Link to={`/genre/${encodeURIComponent(genre.slug)}`} className="genre-index-card" key={genre.slug}>
                 <span className="genre-index-number">{String(index + 1).padStart(2, '0')}</span>
-                <span className="genre-index-name">{genre.name}</span>
+                <span className="genre-index-name">{genreLabel(genre.name)}</span>
                 <span className="genre-index-arrow"><ArrowUpRight size={16} /></span>
               </Link>
             ))}
@@ -68,7 +69,7 @@ export function GenresPage() {
 
 export function GenrePage() {
   const { slug = '' } = useParams();
-  const label = titleFromSlug(slug);
+  const label = genreLabel(titleFromSlug(slug));
   useDocumentTitle(`${label} Sub Indo`);
   const initial = useApi((signal) => api.otaku.genre(slug, 1, signal), [slug]);
   const { notify } = useToast();
@@ -92,7 +93,7 @@ export function GenrePage() {
       setItems((current) => [...current, ...payload.data]);
       setMeta(payload.meta);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not load more titles.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memuat judul lainnya.', { tone: 'error' });
     } finally {
       setLoadingMore(false);
     }
@@ -102,20 +103,20 @@ export function GenrePage() {
     <div className="watch-page genre-page">
       <header className="container catalog-masthead">
         <div className="watch-masthead-bar">
-          <Link to="/genres" className="back-link-dark"><ArrowLeft size={14} /> All genres</Link>
-          <Link to="/ongoing" className="text-link">Airing now <ArrowRight size={14} /></Link>
+          <Link to="/genres" className="back-link-dark"><ArrowLeft size={14} /> Semua genre</Link>
+          <Link to="/ongoing" className="text-link">Sedang tayang <ArrowRight size={14} /></Link>
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">Genre shelf</p>
+            <p className="section-index">Rak genre</p>
             <h1>{label}.</h1>
           </div>
           <div className="catalog-title-aside">
-            <p>Every title filed under {label}, with pagination straight from the genre endpoint.</p>
+            <p>Semua judul dalam kategori {label}, dengan halaman langsung dari endpoint genre.</p>
             <span className="catalog-count">
               {meta?.pagination
-                ? `${items.length} loaded · page ${meta.pagination.currentPage} of ${meta.pagination.totalPages}`
-                : 'Loading the shelf'}
+                ? `${items.length} tampil · halaman ${meta.pagination.currentPage} dari ${meta.pagination.totalPages}`
+                : 'Memuat rak'}
             </span>
           </div>
         </div>
@@ -136,8 +137,8 @@ export function GenrePage() {
           <div className="inline-error">
             <p>{initial.error}</p>
             <div className="empty-actions">
-              <button className="button button-primary" onClick={initial.reload}>Try again</button>
-              <Link to="/genres" className="button button-quiet">All genres</Link>
+              <button className="button button-primary" onClick={initial.reload}>Coba lagi</button>
+              <Link to="/genres" className="button button-quiet">Semua genre</Link>
             </div>
           </div>
         ) : (
@@ -149,15 +150,15 @@ export function GenrePage() {
               <div className="load-more-wrap">
                 <button className="button button-outline" onClick={loadMore} disabled={loadingMore}>
                   {loadingMore ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                  {loadingMore ? 'Loading' : 'Load more titles'}
+                  {loadingMore ? 'Memuat' : 'Muat lebih banyak'}
                 </button>
               </div>
             )}
             {!items.length && (
               <div className="empty-state">
                 <p className="empty-index">No. 00</p>
-                <h2>No titles here.</h2>
-                <p>This genre came back empty. Choose another shelf.</p>
+                <h2>Belum ada judul.</h2>
+                <p>Genre ini masih kosong. Pilih rak lain.</p>
               </div>
             )}
           </>

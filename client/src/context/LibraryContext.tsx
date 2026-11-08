@@ -46,7 +46,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       setStats(payload.meta.stats);
       setError(null);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Could not load your library.');
+      setError(reason instanceof Error ? reason.message : 'Gagal memuat daftar.');
     } finally {
       setLoading(false);
       setRefreshing(false);

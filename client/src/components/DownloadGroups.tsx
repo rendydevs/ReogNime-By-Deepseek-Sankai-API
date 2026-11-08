@@ -1,7 +1,7 @@
 import { ExternalLink } from 'lucide-react';
 import type { OtakuDownloadGroup } from '../types';
 
-export function DownloadGroups({ groups, emptyLabel = 'No download links available.' }: { groups: OtakuDownloadGroup[]; emptyLabel?: string }) {
+export function DownloadGroups({ groups, emptyLabel = 'Tautan unduhan belum tersedia.' }: { groups: OtakuDownloadGroup[]; emptyLabel?: string }) {
   if (!groups.length) return <p className="download-empty">{emptyLabel}</p>;
 
   return (

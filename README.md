@@ -209,7 +209,7 @@ A few details that make the integration behave:
 - **Home is the real home.** The root page consumes `/home` directly — not a separate mock list — and renders every ongoing/completed title it returns.
 - **Image repair.** Legacy covers point at a Cloudflare-protected host. The server reads the current Otakudesu series sitemap and maps legacy filenames/titles to current WordPress CDN artwork. Unresolved covers become typographic posters.
 - **Quota safety.** 30 upstream calls/minute, request deduplication, per-endpoint TTLs, stale fallback and a 220-entry cache.
-- **Player mirrors.** Priority is `vidhide` → `filelions` → `filedon` → `mega`, so mobile-friendly VidHide is selected first. Mega remains available as a manual fallback. Known frame-blocking `desustream` mirrors are never silently embedded; the player offers a new-tab fallback and a retry.
+- **Player mirrors.** Priority is `vidhide` → `filelions` → `filedon` → `mega`, so mobile-friendly VidHide is selected first. Mega remains available as a manual fallback and often has a cleaner player, but may fail on some mobile browsers. Known frame-blocking `desustream` mirrors are never silently embedded; the player offers a new-tab fallback and a retry. Ads inside the video iframe are controlled by the third-party host; ReogNime cannot remove them without breaking the player. Sandboxing the iframe was tested and VidHide detects it and refuses playback, so the player stays unsandboxed.
 - **No video hosting.** ReogNime embeds third-party mirrors. It does not proxy, download or store video files.
 
 ### Known limitations

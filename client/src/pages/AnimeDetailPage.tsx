@@ -29,7 +29,7 @@ import {
   formatDate,
   formatMinutes,
   formatScore,
-  plural,
+  genreLabel,
 } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import { mediaUrl } from '../lib/media';
@@ -77,7 +77,7 @@ function EpisodeSection({ anime }: { anime: Anime }) {
       })
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === 'AbortError') return;
-        setError(reason instanceof Error ? reason.message : 'Could not load episodes.');
+        setError(reason instanceof Error ? reason.message : 'Gagal memuat episode.');
       })
       .finally(() => setLoading(false));
     return () => controller.abort();
@@ -91,7 +91,7 @@ function EpisodeSection({ anime }: { anime: Anime }) {
       setHasMore(payload.pagination.hasNextPage);
       setNextPage((value) => value + 1);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not load more episodes.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memuat episode lainnya.', { tone: 'error' });
     } finally {
       setLoadingMore(false);
     }
@@ -110,9 +110,9 @@ function EpisodeSection({ anime }: { anime: Anime }) {
         progress: episode.number,
         status: total && episode.number >= total ? 'COMPLETED' : entry.status === 'PLANNING' ? 'WATCHING' : entry.status,
       });
-      notify(`Logged episode ${episode.number}.`);
+      notify(`Episode ${episode.number} tercatat.`);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not update progress.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memperbarui progres.', { tone: 'error' });
     } finally {
       setBusyEpisode(null);
     }
@@ -122,13 +122,13 @@ function EpisodeSection({ anime }: { anime: Anime }) {
     <section className="detail-section" id="episodes">
       <div className="detail-section-head">
         <div>
-          <p className="section-index">Episodes</p>
-          <h2>Episode log</h2>
+          <p className="section-index">Episode</p>
+          <h2>Catatan episode</h2>
         </div>
         <p>
           {entry
-            ? `${entry.progress} of ${anime.episodes ?? '?'} logged. Click an episode to catch up.`
-            : 'Add this title to your list to keep a private episode log.'}
+            ? `${entry.progress} dari ${anime.episodes ?? '?'} tercatat. Klik episode untuk mengejar.`
+            : 'Tambahkan judul ini ke daftar untuk menyimpan catatan episode.'}
         </p>
       </div>
 
@@ -141,7 +141,7 @@ function EpisodeSection({ anime }: { anime: Anime }) {
       ) : error ? (
         <p className="inline-note">{error}</p>
       ) : episodes.length === 0 ? (
-        <p className="inline-note">Episode data is not available for this title yet.</p>
+        <p className="inline-note">Data episode untuk judul ini belum tersedia.</p>
       ) : (
         <>
           <div className="episode-list">
@@ -153,8 +153,8 @@ function EpisodeSection({ anime }: { anime: Anime }) {
                   <span className="episode-info">
                     <strong>{episode.title}</strong>
                     <span>
-                      {episode.airDate ? formatDate(episode.airDate, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Air date TBA'}
-                      {episode.duration ? ` · ${episode.duration} min` : ''}
+                      {episode.airDate ? formatDate(episode.airDate, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Tanggal tayang —'}
+                      {episode.duration ? ` · ${episode.duration} mnt` : ''}
                     </span>
                   </span>
                   {episode.aired ? (
@@ -162,7 +162,7 @@ function EpisodeSection({ anime }: { anime: Anime }) {
                       className={`episode-toggle ${watched ? 'is-watched' : ''}`}
                       onClick={() => markWatched(episode)}
                       disabled={busyEpisode === episode.number || watched}
-                      aria-label={watched ? `Episode ${episode.number} watched` : `Mark episode ${episode.number} watched`}
+                      aria-label={watched ? `Episode ${episode.number} sudah ditonton` : `Tandai episode ${episode.number} ditonton`}
                     >
                       {busyEpisode === episode.number ? (
                         <LoaderCircle size={17} className="spin" />
@@ -171,10 +171,10 @@ function EpisodeSection({ anime }: { anime: Anime }) {
                       ) : (
                         <Circle size={17} />
                       )}
-                      <span>{watched ? 'Watched' : 'Mark'}</span>
+                      <span>{watched ? 'Sudah' : 'Tandai'}</span>
                     </button>
                   ) : (
-                    <span className="episode-upcoming">Upcoming</span>
+                    <span className="episode-upcoming">Segera</span>
                   )}
                 </div>
               );
@@ -183,7 +183,7 @@ function EpisodeSection({ anime }: { anime: Anime }) {
           {hasMore && (
             <button className="text-link episode-more" onClick={loadMore} disabled={loadingMore}>
               {loadingMore ? <LoaderCircle size={14} className="spin" /> : null}
-              Load more episodes
+              Muat episode lain
             </button>
           )}
         </>
@@ -207,12 +207,12 @@ export function AnimeDetailPage() {
   if (error || !anime) {
     return (
       <div className="container error-page">
-        <p className="eyebrow">Not on the shelf</p>
-        <h1>We couldn't find that title.</h1>
-        <p>{error ?? 'It may have been removed from the index.'}</p>
+        <p className="eyebrow">Tidak ada di rak</p>
+        <h1>Judul itu tidak ditemukan.</h1>
+        <p>{error ?? 'Mungkin sudah dihapus dari indeks.'}</p>
         <div className="empty-actions">
-          <button className="button button-primary" onClick={reload}>Try again</button>
-          <Link to="/discover" className="button button-quiet"><ArrowLeft size={15} /> Back to index</Link>
+          <button className="button button-primary" onClick={reload}>Coba lagi</button>
+          <Link to="/discover" className="button button-quiet"><ArrowLeft size={15} /> Kembali ke indeks</Link>
         </div>
       </div>
     );
@@ -229,9 +229,9 @@ export function AnimeDetailPage() {
     setFavoriteBusy(true);
     try {
       await updateEntry(anime.id, { favorite: !entry.favorite });
-      notify(entry.favorite ? 'Removed from favourites.' : 'Marked as a favourite.');
+      notify(entry.favorite ? 'Dihapus dari favorit.' : 'Ditandai sebagai favorit.');
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not update favourite.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memperbarui favorit.', { tone: 'error' });
     } finally {
       setFavoriteBusy(false);
     }
@@ -240,9 +240,9 @@ export function AnimeDetailPage() {
   const handleShare = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
-      notify('Link copied to clipboard.');
+      notify('Tautan disalin.');
     } catch {
-      notify('Copy the address bar to share this title.', { tone: 'info' });
+      notify('Salin tautan dari bilah alamat untuk membagikan judul ini.', { tone: 'info' });
     }
   };
 
@@ -255,12 +255,12 @@ export function AnimeDetailPage() {
         <div className="detail-hero-shade" />
         <div className="container detail-hero-inner">
           <Link to="/discover" className="back-link">
-            <ArrowLeft size={15} /> The index
+            <ArrowLeft size={15} /> Indeks
           </Link>
 
           <div className="detail-head-grid">
             <div className="detail-poster">
-              <img src={mediaUrl(anime.cover)} alt={`${anime.title} poster`} />
+              <img src={mediaUrl(anime.cover)} alt={`Poster ${anime.title}`} />
               <span className="detail-score-badge">
                 <Star size={13} fill="currentColor" /> {formatScore(anime.score)}
               </span>
@@ -268,7 +268,7 @@ export function AnimeDetailPage() {
 
             <div className="detail-head-copy">
               <p className="detail-kicker">
-                {anime.studios[0] ?? 'Independent'} <span>·</span> {anime.seasonYear ?? 'TBA'} <span>·</span> {FORMAT_LABELS[anime.format]}
+                {anime.studios[0] ?? 'Independen'} <span>·</span> {anime.seasonYear ?? '—'} <span>·</span> {FORMAT_LABELS[anime.format]}
               </p>
               <h1>{anime.title}</h1>
               <p className="detail-native">{anime.originalTitle}{anime.nativeTitle ? ` / ${anime.nativeTitle}` : ''}</p>
@@ -277,32 +277,32 @@ export function AnimeDetailPage() {
                 <span className={`airing-pill status-${anime.status.toLowerCase()}`}>{AIRING_LABELS[anime.status]}</span>
                 <span>{episodeLabel(anime.episodes)}</span>
                 <span>{formatMinutes(anime.duration ?? 0)}</span>
-                <span>{anime.season ? `${SEASON_LABELS[anime.season]} ${anime.seasonYear}` : 'Date TBA'}</span>
+                <span>{anime.season ? `${SEASON_LABELS[anime.season]} ${anime.seasonYear}` : 'Tanggal —'}</span>
               </div>
 
               <p className="detail-teaser">{anime.synopsis.split('\n')[0]}</p>
 
               <div className="detail-genres">
                 {anime.genres.map((genre) => (
-                  <Link key={genre} to={`/discover?genre=${encodeURIComponent(genre)}`} className="genre-pill">{genre}</Link>
+                  <Link key={genre} to={`/discover?genre=${encodeURIComponent(genre)}`} className="genre-pill">{genreLabel(genre)}</Link>
                 ))}
               </div>
 
               <div className="detail-actions">
                 <button className="button button-paper" onClick={() => open(anime)}>
                   {entry ? <Check size={16} /> : <Plus size={16} />}
-                  {entry ? `In your list · ${STATUS_LABELS[entry.status]}` : 'Add to my list'}
+                  {entry ? `Di daftar · ${STATUS_LABELS[entry.status]}` : 'Tambah ke daftar'}
                 </button>
                 <button
                   className={`detail-icon-button ${entry?.favorite ? 'is-active' : ''}`}
                   onClick={handleFavorite}
-                  aria-label={entry?.favorite ? 'Remove from favourites' : 'Add to favourites'}
-                  title={entry?.favorite ? 'Remove from favourites' : 'Add to favourites'}
+                  aria-label={entry?.favorite ? 'Hapus dari favorit' : 'Tambah ke favorit'}
+                  title={entry?.favorite ? 'Hapus dari favorit' : 'Tambah ke favorit'}
                   disabled={favoriteBusy}
                 >
                   {favoriteBusy ? <LoaderCircle size={17} className="spin" /> : <Heart size={17} fill={entry?.favorite ? 'currentColor' : 'none'} />}
                 </button>
-                <button className="detail-icon-button" onClick={handleShare} aria-label="Copy link" title="Copy link">
+                <button className="detail-icon-button" onClick={handleShare} aria-label="Salin tautan" title="Salin tautan">
                   <Link2 size={17} />
                 </button>
                 {anime.trailer && (
@@ -311,8 +311,8 @@ export function AnimeDetailPage() {
                     href={`https://www.youtube.com/watch?v=${anime.trailer.id}`}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Watch trailer on YouTube"
-                    title="Watch trailer"
+                    aria-label="Tonton trailer di YouTube"
+                    title="Tonton trailer"
                   >
                     <Play size={17} />
                   </a>
@@ -328,11 +328,11 @@ export function AnimeDetailPage() {
           <section className="detail-section detail-about">
             <div className="detail-section-head">
               <div>
-                <p className="section-index">Synopsis</p>
-                <h2>About the story</h2>
+                <p className="section-index">Sinopsis</p>
+                <h2>Tentang ceritanya</h2>
               </div>
               <a href={`https://anilist.co/anime/${anime.id}`} target="_blank" rel="noreferrer" className="text-link">
-                View on AniList <ExternalLink size={13} />
+                Lihat di AniList <ExternalLink size={13} />
               </a>
             </div>
             <div className="prose">
@@ -346,10 +346,10 @@ export function AnimeDetailPage() {
             <section className="detail-section">
               <div className="detail-section-head">
                 <div>
-                  <p className="section-index">Cast</p>
-                  <h2>Faces in the story</h2>
+                  <p className="section-index">Pengisi suara</p>
+                  <h2>Wajah di cerita</h2>
                 </div>
-                <p>{plural(anime.characters.length, 'character')} from the main cast.</p>
+                <p>{anime.characters.length} karakter dari pemeran utama.</p>
               </div>
               <div className="character-grid">
                 {anime.characters.map((character) => (
@@ -363,7 +363,7 @@ export function AnimeDetailPage() {
                     </div>
                     <div>
                       <h3>{character.name}</h3>
-                      <p>{character.role}</p>
+                      <p>{character.role === 'Main' ? 'Utama' : character.role === 'Supporting' ? 'Pendukung' : character.role}</p>
                     </div>
                   </article>
                 ))}
@@ -377,10 +377,10 @@ export function AnimeDetailPage() {
             <section className="detail-section">
               <div className="detail-section-head">
                 <div>
-                  <p className="section-index">Keep going</p>
-                  <h2>If this stays with you</h2>
+                  <p className="section-index">Lanjutkan</p>
+                  <h2>Kalau ini membekas</h2>
                 </div>
-                <Link to="/discover" className="text-link">More like this <ArrowUpRight size={14} /></Link>
+                <Link to="/discover" className="text-link">Mirip ini <ArrowUpRight size={14} /></Link>
               </div>
               <div className="poster-grid poster-grid-four">
                 {anime.related.slice(0, 4).map((related) => <AnimeCard key={related.id} anime={related} />)}
@@ -391,29 +391,29 @@ export function AnimeDetailPage() {
 
         <aside className="detail-side">
           <div className="side-card side-info">
-            <p className="side-heading">Details</p>
+            <p className="side-heading">Detail</p>
             <dl>
               <div><dt>Format</dt><dd>{FORMAT_LABELS[anime.format]}</dd></div>
-              <div><dt>Episodes</dt><dd>{anime.episodes ?? 'TBA'}</dd></div>
-              <div><dt>Episode length</dt><dd>{anime.duration ? `${anime.duration} min` : 'TBA'}</dd></div>
+              <div><dt>Episode</dt><dd>{anime.episodes ?? '—'}</dd></div>
+              <div><dt>Durasi episode</dt><dd>{anime.duration ? `${anime.duration} mnt` : '—'}</dd></div>
               <div><dt>Status</dt><dd>{AIRING_LABELS[anime.status]}</dd></div>
-              <div><dt>Season</dt><dd>{anime.season ? `${SEASON_LABELS[anime.season]} ${anime.seasonYear}` : 'TBA'}</dd></div>
-              <div><dt>First aired</dt><dd>{formatDate(anime.startDate)}</dd></div>
+              <div><dt>Musim</dt><dd>{anime.season ? `${SEASON_LABELS[anime.season]} ${anime.seasonYear}` : '—'}</dd></div>
+              <div><dt>Tayang perdana</dt><dd>{formatDate(anime.startDate)}</dd></div>
               {anime.nextAiringEpisode && (
-                <div><dt>Next episode</dt><dd>Ep {anime.nextAiringEpisode.episode} · {formatDate(anime.nextAiringEpisode.airingAt, { month: 'short', day: 'numeric' })}</dd></div>
+                <div><dt>Episode berikutnya</dt><dd>Ep {anime.nextAiringEpisode.episode} · {formatDate(anime.nextAiringEpisode.airingAt, { month: 'short', day: 'numeric' })}</dd></div>
               )}
-              <div><dt>Studio</dt><dd>{anime.studios.join(', ') || 'Unknown'}</dd></div>
-              <div><dt>Source</dt><dd>{anime.source.replaceAll('_', ' ').toLowerCase()}</dd></div>
-              <div><dt>Popularity</dt><dd>{formatCount(anime.popularity)}</dd></div>
-              <div><dt>Favourites</dt><dd>{formatCount(anime.favorites)}</dd></div>
+              <div><dt>Studio</dt><dd>{anime.studios.join(', ') || 'Tidak diketahui'}</dd></div>
+              <div><dt>Sumber</dt><dd>{({ MANGA: 'Manga', ORIGINAL: 'Karya orisinal', LIGHT_NOVEL: 'Novel ringan', VISUAL_NOVEL: 'Visual novel', VIDEO_GAME: 'Gim', NOVEL: 'Novel', WEB_MANGA: 'Web manga', MUSIC: 'Musik', OTHER: 'Lainnya' }[anime.source] ?? anime.source.replaceAll('_', ' ').toLowerCase())}</dd></div>
+              <div><dt>Popularitas</dt><dd>{formatCount(anime.popularity)}</dd></div>
+              <div><dt>Favorit</dt><dd>{formatCount(anime.favorites)}</dd></div>
             </dl>
           </div>
 
           {entry && (
             <div className="side-card side-personal">
               <div className="side-personal-head">
-                <p className="side-heading">Your entry</p>
-                <button className="text-link" onClick={() => open(anime)}>Edit</button>
+                <p className="side-heading">Catatanmu</p>
+                <button className="text-link" onClick={() => open(anime)}>Ubah</button>
               </div>
               <div className="side-status-row">
                 <span className={`library-status status-${entry.status.toLowerCase()}`}>{STATUS_LABELS[entry.status]}</span>
@@ -421,7 +421,7 @@ export function AnimeDetailPage() {
               </div>
               <div className="side-progress">
                 <div className="side-progress-label">
-                  <span>Progress</span>
+                  <span>Progres</span>
                   <span>{entry.progress} / {anime.episodes ?? '—'}</span>
                 </div>
                 <div className="progress-track"><span style={{ width: `${progressPercent}%` }} /></div>
@@ -432,9 +432,9 @@ export function AnimeDetailPage() {
 
           {!entry && (
             <div className="side-card side-prompt">
-              <p className="side-heading">Keep a note</p>
-              <p>Add this title to log episodes, leave a private note, and score it when you're ready.</p>
-              <button className="text-link" onClick={() => open(anime)}>Add to my list <Plus size={13} /></button>
+              <p className="side-heading">Simpan catatan</p>
+              <p>Tambahkan judul ini untuk mencatat episode, menyimpan catatan pribadi, dan memberi skor.</p>
+              <button className="text-link" onClick={() => open(anime)}>Tambah ke daftar <Plus size={13} /></button>
             </div>
           )}
         </aside>

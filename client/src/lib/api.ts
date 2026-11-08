@@ -52,7 +52,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
     response = await fetch(`${API_BASE}${path}`, { ...options, headers });
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
-    throw new ApiRequestError('Could not reach the ReogNime API. Is the server running?', 0, 'NETWORK_ERROR');
+    throw new ApiRequestError('Tidak bisa menghubungi API ReogNime. Pastikan server berjalan.', 0, 'NETWORK_ERROR');
   }
 
   if (!response.ok) {
@@ -91,13 +91,13 @@ async function fetchOtakudesuPayload(path: string, signal?: AbortSignal) {
     if (!response.ok) throw new Error(`Upstream HTTP ${response.status}`);
     const payload = await response.json();
     if (!payload || payload.status !== 'success' || payload.data === undefined) {
-      throw new Error('Upstream payload was not valid');
+      throw new Error('Respons upstream tidak valid');
     }
     return payload;
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
     throw new ApiRequestError(
-      'The browser could not reach the anime provider directly. Try another network or retry shortly.',
+      'Browser tidak bisa menghubungi penyedia anime secara langsung. Coba jaringan lain atau ulangi sebentar lagi.',
       502,
       'OTAKUDESU_BROWSER_BLOCKED',
     );

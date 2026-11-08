@@ -47,11 +47,11 @@ const POLL_MS = 15_000;
 const RESOLVED_CLEAR_MS = 3 * 60 * 1000;
 const GREETING = 'Hai, aku NimeBot. Pilih topik cepat di bawah untuk jawaban singkat, atau tulis pesan dan langsung aku teruskan ke Admin ReogNime.';
 const CONNECT_TEXT = 'Halo admin, saya ingin terhubung dan menyampaikan keluhan.';
-const ESCALATION = 'Baik pesan anda dikirim ke admin mohon tunggu ya.';
+const ESCALATION = 'Baik, pesan Anda akan diteruskan ke admin. Mohon tunggu ya.';
 
 const QUICK_PROMPTS = [
   { label: 'Cara nonton', prompt: 'Bagaimana cara nonton anime?' },
-  { label: 'My List', prompt: 'Apa itu fitur My List?' },
+  { label: 'Daftar Saya', prompt: 'Apa itu fitur Daftar Saya?' },
   { label: 'Jadwal', prompt: 'Di mana saya bisa melihat jadwal anime?' },
 ];
 
@@ -61,28 +61,28 @@ let localId = 2;
 function replyFor(raw: string): BotReply {
   const text = raw.toLowerCase();
   if (/^(halo|hai|hi|hello|pagi|siang|malam|sore)\b/.test(text)) {
-    return { text: 'Hai juga! Aku NimeBot. Mau cari anime, cek jadwal, atau menyimpan judul ke My List?', escalate: false };
+    return { text: 'Hai juga! Aku NimeBot. Mau cari anime, cek jadwal, atau menyimpan judul ke Daftar Saya?', escalate: false };
   }
   if (/admin|manusia|lapor|masalah|error|rusak|gak bisa|tidak bisa|kendala|bantuan|bantu|request|saran|hubungi|keluhan/.test(text)) {
     return { text: ESCALATION, escalate: true };
   }
   if (/my\s*list|mylist|simpan|favorite|favourite|favorit|daftar/.test(text)) {
-    return { text: 'Buka halaman anime, lalu tekan "Add to my list". Kamu bisa menyimpan status, progres episode, skor, catatan, dan favorit. Semua tersimpan di perangkatmu.', escalate: false };
+    return { text: 'Buka halaman anime, lalu pilih "Tambah ke daftar". Kamu bisa menyimpan status, progres episode, skor, catatan, dan favorit. Semua tersimpan di perangkatmu.', escalate: false };
   }
   if (/jadwal|schedule|rilis|hari apa/.test(text)) {
-    return { text: 'Buka menu Schedule untuk melihat jadwal tujuh hari. Hari ini ditandai, jadi kamu bisa langsung cek rilisan terdekat.', escalate: false };
+    return { text: 'Buka menu Jadwal untuk melihat jadwal tujuh hari. Hari ini ditandai, jadi kamu bisa langsung cek rilisan terdekat.', escalate: false };
   }
   if (/genre|kategori|mood/.test(text)) {
-    return { text: 'Buka menu Genres. Ada 36 kategori, dari Action sampai Vampire, untuk menemukan tontonan sesuai mood-mu.', escalate: false };
+    return { text: 'Buka menu Genre. Ada 36 kategori, dari Aksi sampai Vampir, untuk menemukan tontonan sesuai suasana.', escalate: false };
   }
   if (/mirror|vidhide|mega|filelions|filedon|player|putar|loading/.test(text)) {
     return { text: 'Mirror default-nya VidHide supaya ramah mobile. Kalau tidak bisa diputar, pilih FileLions atau Filedon di daftar mirror. Mega tetap tersedia sebagai pilihan manual.', escalate: false };
   }
   if (/cara nonton|nonton|streaming|episode/.test(text)) {
-    return { text: 'Pilih anime dari Home atau Ongoing, buka halaman seri, lalu pilih episode. Setelah itu pilih mirror yang tersedia dan tekan play.', escalate: false };
+    return { text: 'Pilih anime dari Beranda atau Tayang, buka halaman seri, lalu pilih episode. Setelah itu pilih mirror yang tersedia dan tekan putar.', escalate: false };
   }
   if (/ongoing|completed|tamat|selesai|rilisan/.test(text)) {
-    return { text: 'Ongoing berisi anime yang masih berjalan, sedangkan Completed sudah tamat. Keduanya bisa dibuka dari menu utama.', escalate: false };
+    return { text: 'Tayang berisi anime yang masih berjalan, sedangkan Tamat sudah selesai. Keduanya bisa dibuka dari menu utama.', escalate: false };
   }
   if (/makasih|terima kasih|thanks|thank you/.test(text)) {
     return { text: 'Sama-sama! Kalau ada pertanyaan lain, tulis saja di sini.', escalate: false };

@@ -4,7 +4,7 @@ const JAPANESE_FONT = "'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic'
 
 export function Logo({ onClick }: { onClick?: () => void }) {
   return (
-    <Link to="/" className="logo" onClick={onClick} aria-label="ReogNime home">
+    <Link to="/" className="logo" onClick={onClick} aria-label="Beranda ReogNime">
       <span className="logo-mark" aria-hidden="true">
         <svg viewBox="0 0 40 40" fill="none">
           <g className="logo-crown" stroke="currentColor" strokeWidth="1.45" strokeLinecap="round" fill="none">

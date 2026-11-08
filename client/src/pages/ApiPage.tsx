@@ -14,58 +14,58 @@ interface Endpoint {
 
 const ENDPOINT_GROUPS: { label: string; note: string; endpoints: Endpoint[] }[] = [
   {
-    label: 'Discovery',
-    note: 'Public, read-only, cached for 30–300 seconds.',
+    label: 'Penemuan',
+    note: 'Publik, hanya baca, di-cache 30–300 detik.',
     endpoints: [
-      { method: 'GET', path: '/home', title: 'Editorial home', description: 'Spotlight, trending, top-rated, new releases, genres and catalog totals in one payload.' },
-      { method: 'GET', path: '/anime', title: 'List & search', description: 'Paginated search with q, genre, year, season, format, status, minScore and sort.' },
-      { method: 'GET', path: '/anime/:id', title: 'Title detail', description: 'Full metadata, synopsis, characters, trailer, related titles and episode tracker.' },
-      { method: 'GET', path: '/anime/:id/episodes', title: 'Episode index', description: 'Paginated episode list with air dates and durations.' },
-      { method: 'GET', path: '/anime/:id/related', title: 'Related titles', description: 'Genre, studio and era affinity, ranked for relevance.' },
-      { method: 'GET', path: '/search/suggestions', title: 'Typeahead', description: 'Lightweight suggestions for command palettes. Empty q returns popular picks.' },
-      { method: 'GET', path: '/random', title: 'Random pick', description: 'Accepts the same filters as /anime and returns one matching title.' },
+      { method: 'GET', path: '/home', title: 'Beranda editorial', description: 'Sorotan, populer, skor tertinggi, rilisan baru, genre, dan total katalog dalam satu respons.' },
+      { method: 'GET', path: '/anime', title: 'Daftar & cari', description: 'Pencarian dengan halaman memakai q, genre, tahun, musim, format, status, minScore, dan sort.' },
+      { method: 'GET', path: '/anime/:id', title: 'Detail judul', description: 'Metadata lengkap, sinopsis, karakter, trailer, judul terkait, dan pelacak episode.' },
+      { method: 'GET', path: '/anime/:id/episodes', title: 'Indeks episode', description: 'Daftar episode dengan halaman, tanggal tayang, dan durasi.' },
+      { method: 'GET', path: '/anime/:id/related', title: 'Judul terkait', description: 'Kedekatan genre, studio, dan era, diurutkan berdasarkan relevansi.' },
+      { method: 'GET', path: '/search/suggestions', title: 'Saran pencarian', description: 'Saran ringan untuk palet perintah. q kosong mengembalikan pilihan populer.' },
+      { method: 'GET', path: '/random', title: 'Pilihan acak', description: 'Menerima filter yang sama dengan /anime dan mengembalikan satu judul.' },
     ],
   },
   {
-    label: 'Library',
-    note: 'A single local profile. JSON persistence, no account required.',
+    label: 'Daftar',
+    note: 'Satu profil lokal. Disimpan sebagai JSON, tanpa akun.',
     endpoints: [
-      { method: 'GET', path: '/library', title: 'Read the list', description: 'Entries joined with anime summaries and aggregate stats.' },
-      { method: 'POST', path: '/library', title: 'Add a title', description: 'Create an entry with status, score, progress, notes and favourite flag.' },
-      { method: 'GET', path: '/library/:animeId', title: 'Read one entry', description: 'A single library entry with its joined anime summary.' },
-      { method: 'PATCH', path: '/library/:animeId', title: 'Update an entry', description: 'Partial update. Completing a title fills progress to the episode count.' },
-      { method: 'DELETE', path: '/library/:animeId', title: 'Remove an entry', description: 'Deletes the entry and returns 204.' },
-      { method: 'GET', path: '/library/stats', title: 'Stats only', description: 'Status counts, episodes and hours watched, mean score and top genres.' },
-      { method: 'GET', path: '/library/export', title: 'Export JSON', description: 'Download the full library as a portable JSON document.' },
+      { method: 'GET', path: '/library', title: 'Baca daftar', description: 'Entri digabung dengan ringkasan anime dan statistik agregat.' },
+      { method: 'POST', path: '/library', title: 'Tambah judul', description: 'Buat entri dengan status, skor, progres, catatan, dan tanda favorit.' },
+      { method: 'GET', path: '/library/:animeId', title: 'Baca satu entri', description: 'Satu entri daftar beserta ringkasan anime-nya.' },
+      { method: 'PATCH', path: '/library/:animeId', title: 'Perbarui entri', description: 'Pembaruan sebagian. Menandai selesai mengisi progres sesuai jumlah episode.' },
+      { method: 'DELETE', path: '/library/:animeId', title: 'Hapus entri', description: 'Menghapus entri dan mengembalikan 204.' },
+      { method: 'GET', path: '/library/stats', title: 'Statistik', description: 'Jumlah status, episode dan jam ditonton, rata-rata skor, dan genre teratas.' },
+      { method: 'GET', path: '/library/export', title: 'Ekspor JSON', description: 'Unduh seluruh daftar sebagai dokumen JSON portabel.' },
     ],
   },
   {
     label: 'Streaming',
-    note: 'The live watch API, sourced from the Otakudesu API. All twelve endpoints are wired into the UI and rate-guarded by the ReogNime server.',
+    note: 'API tontonan langsung dari Otakudesu API. Semua endpoint terhubung ke UI dan dijaga batas permintaannya oleh server ReogNime.',
     endpoints: [
-      { method: 'GET', path: '/otakudesu/home', title: 'Streaming home', description: 'Ongoing and completed lists plus a featured ongoing title.' },
-      { method: 'GET', path: '/otakudesu/ongoing', title: 'Ongoing anime', description: 'Paginated currently airing titles. Optional ?page=1.' },
-      { method: 'GET', path: '/otakudesu/completed', title: 'Completed anime', description: 'Paginated finished series. Optional ?page=1.' },
-      { method: 'GET', path: '/otakudesu/schedule', title: 'Release schedule', description: 'Airing titles grouped by day of the week.' },
-      { method: 'GET', path: '/otakudesu/search', title: 'Search streaming titles', description: 'Search titles by keyword. Required: ?q=frieren.' },
-      { method: 'GET', path: '/otakudesu/genres', title: 'Streaming genres', description: 'All streaming genres with their slugs.' },
-      { method: 'GET', path: '/otakudesu/genres/:slug', title: 'Anime by genre', description: 'Paginated genre results. Example: /otakudesu/genres/action?page=1.' },
-      { method: 'GET', path: '/otakudesu/anime/:slug', title: 'Series detail', description: 'Synopsis, metadata, genres, episode list, related titles and batch reference.' },
-      { method: 'GET', path: '/otakudesu/episode/:slug', title: 'Episode + mirrors', description: 'Streaming servers, downloadable qualities, prev/next episode and episode list.' },
-      { method: 'GET', path: '/otakudesu/batch/:slug', title: 'Batch downloads', description: 'Batch qualities, sizes and mirror links for a complete series.' },
-      { method: 'GET', path: '/otakudesu/server/:serverId', title: 'Resolve embed URL', description: 'Turn a mirror server id into an embeddable player URL.' },
-      { method: 'GET', path: '/otakudesu/unlimited', title: 'All anime (A–Z)', description: 'Every streaming title, grouped by initial.' },
-      { method: 'GET', path: '/otakudesu/status', title: 'Provider status', description: 'Cache size, artwork index size, and current upstream request budget.' },
+      { method: 'GET', path: '/otakudesu/home', title: 'Beranda streaming', description: 'Daftar tayang dan tamat plus satu judul tayang unggulan.' },
+      { method: 'GET', path: '/otakudesu/ongoing', title: 'Anime tayang', description: 'Judul yang sedang tayang dengan halaman. Opsional ?page=1.' },
+      { method: 'GET', path: '/otakudesu/completed', title: 'Anime tamat', description: 'Seri selesai dengan halaman. Opsional ?page=1.' },
+      { method: 'GET', path: '/otakudesu/schedule', title: 'Jadwal rilis', description: 'Judul tayang dikelompokkan per hari.' },
+      { method: 'GET', path: '/otakudesu/search', title: 'Cari judul streaming', description: 'Cari judul lewat kata kunci. Wajib: ?q=frieren.' },
+      { method: 'GET', path: '/otakudesu/genres', title: 'Genre streaming', description: 'Semua genre streaming beserta slug-nya.' },
+      { method: 'GET', path: '/otakudesu/genres/:slug', title: 'Anime per genre', description: 'Hasil genre dengan halaman. Contoh: /otakudesu/genres/action?page=1.' },
+      { method: 'GET', path: '/otakudesu/anime/:slug', title: 'Detail seri', description: 'Sinopsis, metadata, genre, daftar episode, judul terkait, dan referensi batch.' },
+      { method: 'GET', path: '/otakudesu/episode/:slug', title: 'Episode + mirror', description: 'Server streaming, kualitas unduhan, episode sebelumnya/berikutnya, dan daftar episode.' },
+      { method: 'GET', path: '/otakudesu/batch/:slug', title: 'Unduh batch', description: 'Kualitas batch, ukuran, dan tautan mirror untuk satu seri lengkap.' },
+      { method: 'GET', path: '/otakudesu/server/:serverId', title: 'Resolusi URL embed', description: 'Ubah id server mirror menjadi URL pemutar yang bisa di-embed.' },
+      { method: 'GET', path: '/otakudesu/unlimited', title: 'Semua anime (A–Z)', description: 'Semua judul streaming, dikelompokkan berdasarkan huruf awal.' },
+      { method: 'GET', path: '/otakudesu/status', title: 'Status penyedia', description: 'Ukuran cache dan indeks ilustrasi serta sisa jatah permintaan upstream.' },
     ],
   },
   {
-    label: 'Reference',
-    note: 'Everything needed to build a dynamic interface.',
+    label: 'Referensi',
+    note: 'Semua yang dibutuhkan untuk membangun antarmuka dinamis.',
     endpoints: [
-      { method: 'GET', path: '/genres', title: 'Genres', description: 'Genre names with title counts.' },
-      { method: 'GET', path: '/filters', title: 'Filter options', description: 'Years, formats, seasons, statuses and supported sort values.' },
-      { method: 'GET', path: '/meta', title: 'Catalog metadata', description: 'Source, counts and API version information.' },
-      { method: 'GET', path: '/openapi.json', title: 'OpenAPI 3.1', description: 'A complete machine-readable specification for the API.' },
+      { method: 'GET', path: '/genres', title: 'Genre', description: 'Nama genre beserta jumlah judul.' },
+      { method: 'GET', path: '/filters', title: 'Opsi filter', description: 'Tahun, format, musim, status, dan nilai urutan yang didukung.' },
+      { method: 'GET', path: '/meta', title: 'Metadata katalog', description: 'Sumber, jumlah, dan informasi versi API.' },
+      { method: 'GET', path: '/openapi.json', title: 'OpenAPI 3.1', description: 'Spesifikasi API lengkap yang bisa dibaca mesin.' },
     ],
   },
 ];
@@ -78,7 +78,7 @@ const METHOD_CLASS: Record<Endpoint['method'], string> = {
 };
 
 export function ApiPage() {
-  useDocumentTitle('API reference');
+  useDocumentTitle('Referensi API');
   const { notify } = useToast();
   const [copied, setCopied] = useState<string | null>(null);
   const base = API_BASE.startsWith('http') ? API_BASE : `${window.location.origin}${API_BASE}`;
@@ -94,17 +94,17 @@ export function ApiPage() {
     }
   };
 
-  const quickStart = `# The whole shelf in one request
+  const quickStart = `# Seluruh rak dalam satu permintaan
 curl "${base}/home"
 
-# Search with filters
+# Cari dengan filter
 curl "${base}/anime?genre=Drama&sort=score&limit=3"
 
-# Streaming layer
+# Lapisan streaming
 curl "${base}/otakudesu/home"
 curl "${base}/otakudesu/search?q=frieren"
 
-# Add a title to your list
+# Tambahkan judul ke daftar
 curl -X POST "${base}/library" \\
   -H "Content-Type: application/json" \\
   -d '{"animeId": 154587, "status": "WATCHING"}'`;
@@ -125,11 +125,11 @@ curl -X POST "${base}/library" \\
     <div className="api-page">
       <header className="api-masthead container">
         <div className="api-masthead-copy">
-          <p className="eyebrow">Developer reference / v1</p>
-          <h1>The shelf,<br />as an <em>API.</em></h1>
+          <p className="eyebrow">Referensi pengembang / v1</p>
+          <h1>Rak ini,<br />sebagai <em>API.</em></h1>
           <p>
-            The same catalog that powers ReogNime, plus the live streaming API,
-            exposed as a small, predictable REST surface. No key. No SDK. No ceremony.
+            Katalog yang sama yang menjalankan ReogNime, plus API streaming,
+            tersedia sebagai REST yang ringkas dan mudah ditebak. Tanpa key, SDK, atau ritual.
           </p>
         </div>
         <div className="api-terminal" aria-hidden="true">
@@ -148,12 +148,12 @@ curl -X POST "${base}/library" \\
 
       <div className="api-base container">
         <div>
-          <span className="eyebrow">Base URL</span>
+          <span className="eyebrow">URL dasar</span>
           <code>{base}</code>
         </div>
         <button className="button button-quiet" onClick={() => void copy(base, 'base')}>
           {copied === 'base' ? <Check size={15} /> : <Copy size={15} />}
-          {copied === 'base' ? 'Copied' : 'Copy'}
+          {copied === 'base' ? 'Tersalin' : 'Salin'}
         </button>
         <a className="button button-outline" href={openApiUrl} target="_blank" rel="noreferrer">
           OpenAPI 3.1 <ExternalLink size={14} />
@@ -162,16 +162,16 @@ curl -X POST "${base}/library" \\
 
       <div className="api-layout container">
         <aside className="api-toc">
-          <p className="eyebrow">On this page</p>
-          <a href="#quick-start">Quick start</a>
-          <a href="#conventions">Conventions</a>
+          <p className="eyebrow">Di halaman ini</p>
+          <a href="#quick-start">Mulai cepat</a>
+          <a href="#conventions">Konvensi</a>
           {ENDPOINT_GROUPS.map((group) => (
             <a key={group.label} href={`#${group.label.toLowerCase()}`}>{group.label}</a>
           ))}
-          <a href="#notes">Notes</a>
+          <a href="#notes">Catatan</a>
           <div className="api-toc-footer">
             <Terminal size={15} />
-            <span>JSON only.<br />CORS enabled.</span>
+            <span>Hanya JSON.<br />CORS aktif.</span>
           </div>
         </aside>
 
@@ -180,8 +180,8 @@ curl -X POST "${base}/library" \\
             <div className="api-section-head">
               <p className="section-index">01</p>
               <div>
-                <h2>Quick start</h2>
-                <p>Every GET endpoint is public. The library endpoints write to a local JSON file.</p>
+                <h2>Mulai cepat</h2>
+                <p>Semua endpoint GET bersifat publik. Endpoint daftar menulis ke file JSON lokal.</p>
               </div>
             </div>
             <div className="code-block">
@@ -189,16 +189,16 @@ curl -X POST "${base}/library" \\
                 <span>Terminal</span>
                 <button onClick={() => void copy(quickStart, 'quick')}>
                   {copied === 'quick' ? <Check size={13} /> : <Copy size={13} />}
-                  {copied === 'quick' ? 'Copied' : 'Copy'}
+                  {copied === 'quick' ? 'Tersalin' : 'Salin'}
                 </button>
               </div>
               <pre><code>{quickStart}</code></pre>
             </div>
             <div className="api-callout">
-              <strong>Frontend integration.</strong>
+              <strong>Integrasi frontend.</strong>
               <p>
-                The Vite dev server proxies <code>/api</code> to the API on port 8787, so a relative fetch works
-                in development and production without a base URL:
+                Dev server Vite mem-proxy <code>/api</code> ke API di port 8787, jadi fetch relatif bekerja
+                saat pengembangan maupun produksi tanpa base URL:
               </p>
               <pre className="inline-code"><code>{`const res = await fetch('/api/v1/anime?genre=Drama');\nconst { data, meta } = await res.json();`}</code></pre>
             </div>
@@ -208,30 +208,30 @@ curl -X POST "${base}/library" \\
             <div className="api-section-head">
               <p className="section-index">02</p>
               <div>
-                <h2>Conventions</h2>
-                <p>Small and consistent, so a frontend can be built without guesswork.</p>
+                <h2>Konvensi</h2>
+                <p>Kecil dan konsisten, supaya frontend bisa dibangun tanpa menebak.</p>
               </div>
             </div>
             <div className="convention-grid">
               <div>
-                <h3>Envelope</h3>
-                <p>Every successful response uses <code>{'{ data }'}</code>. Lists add <code>meta</code> with pagination and filters.</p>
+                <h3>Struktur respons</h3>
+                <p>Setiap respons sukses memakai <code>{'{ data }'}</code>. Daftar menambahkan <code>meta</code> berisi pagination dan filter.</p>
               </div>
               <div>
-                <h3>Errors</h3>
-                <p>Errors return <code>{'{ error: { code, message } }'}</code> with a useful HTTP status and optional field details.</p>
+                <h3>Error</h3>
+                <p>Error mengembalikan <code>{'{ error: { code, message } }'}</code> dengan status HTTP dan detail field opsional.</p>
               </div>
               <div>
-                <h3>Validation</h3>
-                <p>Query params and bodies are validated. Invalid input returns <code>422</code> before it reaches the data layer.</p>
+                <h3>Validasi</h3>
+                <p>Query dan body divalidasi. Input tidak valid mengembalikan <code>422</code> sebelum mencapai lapisan data.</p>
               </div>
               <div>
                 <h3>Pagination</h3>
-                <p>Use <code>page</code> and <code>limit</code> (max 50). The response always reports <code>total</code> and <code>hasNextPage</code>.</p>
+                <p>Gunakan <code>page</code> dan <code>limit</code> (maks 50). Respons selalu menyertakan <code>total</code> dan <code>hasNextPage</code>.</p>
               </div>
             </div>
             <div className="code-block code-block-small">
-              <div className="code-block-head"><span>List response</span></div>
+              <div className="code-block-head"><span>Respons daftar</span></div>
               <pre><code>{responseShape}</code></pre>
             </div>
           </section>
@@ -255,7 +255,7 @@ curl -X POST "${base}/library" \\
                         <button
                           className="endpoint-copy"
                           onClick={() => void copy(`${base}${endpoint.path.replace(':id', '154587').replace(':animeId', '154587').replace(':slug', 'sousou-frieren-sub-indo').replace(':serverId', '6AE5C9-5-C75u')}`, endpoint.path)}
-                          aria-label={`Copy ${endpoint.path}`}
+                          aria-label={`Salin ${endpoint.path}`}
                         >
                           {copied === endpoint.path ? <Check size={13} /> : <Copy size={13} />}
                         </button>
@@ -269,7 +269,7 @@ curl -X POST "${base}/library" \\
                         href={`${base}${endpoint.path}`}
                         target="_blank"
                         rel="noreferrer"
-                        title="Open response"
+                        title="Buka respons"
                       >
                         <ArrowUpRight size={15} />
                       </a>
@@ -284,20 +284,20 @@ curl -X POST "${base}/library" \\
             <div className="api-section-head">
               <p className="section-index">{String(ENDPOINT_GROUPS.length + 3).padStart(2, '0')}</p>
               <div>
-                <h2>Notes & limits</h2>
-                <p>The small print, kept small.</p>
+                <h2>Catatan & batas</h2>
+                <p>Detail kecil, tetap ringkas.</p>
               </div>
             </div>
             <ul>
-              <li><strong>Data source.</strong> Metadata and artwork are sourced from AniList and cached locally for the demo. All rights remain with their respective holders.</li>
-              <li><strong>Rate limit.</strong> 240 requests per minute per IP in the running demo. Catalog responses are cached in the browser and at the CDN boundary.</li>
-              <li><strong>Streaming source.</strong> The watch layer is sourced from the public Otakudesu API, rate-guarded to 30 upstream requests per minute (the provider allows 45) and cached. Some mirrors are third-party and may be offline; ReogNime never hosts video files.</li>
-              <li><strong>No auth by design.</strong> This is a local, single-profile demo. If you expose it publicly, put the library routes behind authentication at the reverse-proxy layer.</li>
-              <li><strong>Persistence.</strong> Your library lives in <code>server/data/library.json</code>. Writes are atomic. Export it at any time from the button above or from <code>/library/export</code>.</li>
+              <li><strong>Sumber data.</strong> Metadata dan artwork diambil dari AniList dan di-cache lokal untuk demo. Semua hak tetap milik pemegangnya.</li>
+              <li><strong>Batas permintaan.</strong> 240 permintaan per menit per IP di demo. Respons katalog di-cache di browser dan CDN.</li>
+              <li><strong>Sumber streaming.</strong> Lapisan tontonan memakai Otakudesu API publik, dibatasi 30 permintaan upstream per menit (penyedia mengizinkan 45), dan di-cache. Sebagian mirror pihak ketiga bisa offline; ReogNime tidak pernah menyimpan file video.</li>
+              <li><strong>Tanpa autentikasi.</strong> Ini demo lokal satu profil. Jika dipublikasikan, pasang autentikasi untuk rute daftar di reverse proxy.</li>
+              <li><strong>Penyimpanan.</strong> Daftar tersimpan di <code>server/data/library.json</code>. Penulisan atomik. Ekspor kapan saja lewat tombol di atas atau <code>/library/export</code>.</li>
             </ul>
             <div className="api-notes-actions">
-              <Link to="/discover" className="text-link">Browse the catalog <ArrowUpRight size={14} /></Link>
-              <a href={API_HEALTH_URL} target="_blank" rel="noreferrer" className="text-link">API health <ArrowUpRight size={14} /></a>
+              <Link to="/discover" className="text-link">Jelajahi katalog <ArrowUpRight size={14} /></Link>
+              <a href={API_HEALTH_URL} target="_blank" rel="noreferrer" className="text-link">Kesehatan API <ArrowUpRight size={14} /></a>
             </div>
           </section>
         </main>

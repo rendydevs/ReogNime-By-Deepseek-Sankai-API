@@ -30,14 +30,14 @@ export function WatchSchedulePage() {
   return (
     <div className="watch-page schedule-page">
       <header className="container watch-sub-masthead">
-        <Link to="/" className="back-link-dark"><ArrowLeft size={15} /> The screening room</Link>
+        <Link to="/" className="back-link-dark"><ArrowLeft size={15} /> Ruang tayang</Link>
         <div className="schedule-title-row">
           <div>
-            <p className="eyebrow"><CalendarDays size={13} /> ReogNime / weekly</p>
-            <h1>What airs<br /><em>this week.</em></h1>
+            <p className="eyebrow"><CalendarDays size={13} /> ReogNime / mingguan</p>
+            <h1>Apa yang tayang<br /><em>minggu ini.</em></h1>
           </div>
           <p>
-            The whole weekly rhythm, exactly as the provider lists it. {totalTitles ? `${totalTitles} titles` : 'A full week'} across the shelf.
+            Ritme mingguan, sesuai daftar provider. {totalTitles ? `${totalTitles} judul` : 'Seminggu penuh'} di seluruh rak.
           </p>
         </div>
       </header>
@@ -57,7 +57,7 @@ export function WatchSchedulePage() {
         ) : schedule.error ? (
           <div className="inline-error watch-error">
             <p>{schedule.error}</p>
-            <button className="button button-primary" onClick={schedule.reload}>Try again</button>
+            <button className="button button-primary" onClick={schedule.reload}>Coba lagi</button>
           </div>
         ) : (
           <>
@@ -68,10 +68,10 @@ export function WatchSchedulePage() {
                   <section className={`schedule-day ${isToday ? 'is-today' : ''}`} key={day.day}>
                     <header className="schedule-day-head">
                       <div>
-                        <h2>{day.day}</h2>
-                        <span>{day.animeList.length} titles</span>
+                        <h2>{day.day === 'Random' ? 'Acak' : day.day}</h2>
+                        <span>{day.animeList.length} judul</span>
                       </div>
-                      {isToday && <span className="today-badge">Today</span>}
+                      {isToday && <span className="today-badge">Hari ini</span>}
                     </header>
                     <div className="schedule-list">
                       {day.animeList.map((anime) => (
@@ -86,7 +86,7 @@ export function WatchSchedulePage() {
               })}
             </div>
             <p className="watch-attribution">
-              Release days follow the source provider and can shift without notice.
+              Jadwal mengikuti provider dan bisa berubah tanpa pemberitahuan.
             </p>
           </>
         )}

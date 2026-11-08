@@ -85,17 +85,17 @@ const ROUTE_META: Record<string, { title: string; description: string; noindex?:
   '/': {
     title: 'Nonton Anime Sub Indo Tanpa Ribet — ReogNime',
     description:
-      'Nonton anime subtitle Indonesia terbaru di ReogNime. Cek daftar anime ongoing, completed, jadwal rilis, genre, dan pencarian judul dengan antarmuka minimalis.',
+      'Nonton anime subtitle Indonesia terbaru di ReogNime. Cek daftar anime tayang, tamat, jadwal rilis, genre, dan pencarian judul dengan antarmuka minimalis.',
   },
   '/ongoing': {
-    title: 'Anime Ongoing Sub Indo — ReogNime',
+    title: 'Anime Tayang Sub Indo — ReogNime',
     description:
-      'Daftar anime ongoing subtitle Indonesia terbaru. Update episode, poster, jadwal rilis, dan semua mirror streaming di ReogNime.',
+      'Daftar anime tayang subtitle Indonesia terbaru. Update episode, poster, jadwal rilis, dan semua mirror streaming di ReogNime.',
   },
   '/completed': {
-    title: 'Anime Completed Sub Indo — ReogNime',
+    title: 'Anime Tamat Sub Indo — ReogNime',
     description:
-      'Koleksi anime completed subtitle Indonesia pilihan. Temukan anime yang sudah tamat untuk ditonton sampai akhir di ReogNime.',
+      'Koleksi anime tamat subtitle Indonesia pilihan. Temukan anime yang sudah tamat untuk ditonton sampai akhir di ReogNime.',
   },
   '/schedule': {
     title: 'Jadwal Rilis Anime Sub Indo — ReogNime',
@@ -127,17 +127,17 @@ const ROUTE_META: Record<string, { title: string; description: string; noindex?:
     description: 'Temukan anime baru dari katalog AniList berdasarkan genre, tahun, musim, dan skor di ReogNime.',
   },
   '/library': {
-    title: 'My list — ReogNime',
+    title: 'Daftar Saya — ReogNime',
     description: 'Daftar tontonan pribadi ReogNime.',
     noindex: true,
   },
   '/admin': {
     title: 'Admin — ReogNime',
-    description: 'Private message queue.',
+    description: 'Antrean pesan privat admin ReogNime.',
     noindex: true,
   },
   '/developers': {
-    title: 'API reference — ReogNime',
+    title: 'Referensi API — ReogNime',
     description: 'Dokumentasi API ReogNime dan OpenAPI 3.1.',
     noindex: true,
   },

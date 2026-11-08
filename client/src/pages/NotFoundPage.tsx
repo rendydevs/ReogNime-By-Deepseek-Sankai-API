@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 import { useDocumentTitle } from '../lib/hooks';
 
 export function NotFoundPage() {
-  useDocumentTitle('Lost');
+  useDocumentTitle('Tidak ditemukan');
   return (
     <div className="not-found container">
-      <p className="eyebrow">404 / Off the shelf</p>
-      <h1>This page<br />wandered off.</h1>
-      <p>The address doesn't lead anywhere in the index. The good ones are still where you left them.</p>
+      <p className="eyebrow">404 / Di luar rak</p>
+      <h1>Halaman ini<br />tersesat.</h1>
+      <p>Alamat ini tidak menuju ke mana pun di indeks. Yang bagus masih di tempatnya.</p>
       <div className="empty-actions">
-        <Link to="/" className="button button-primary"><ArrowLeft size={15} /> Back home</Link>
-        <Link to="/all" className="button button-quiet"><ListFilter size={15} /> Browse all anime</Link>
+        <Link to="/" className="button button-primary"><ArrowLeft size={15} /> Kembali ke beranda</Link>
+        <Link to="/all" className="button button-quiet"><ListFilter size={15} /> Jelajahi semua anime</Link>
       </div>
       <span className="not-found-jp">迷子</span>
     </div>

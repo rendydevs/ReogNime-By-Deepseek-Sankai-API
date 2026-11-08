@@ -120,14 +120,14 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
       };
       if (entry) {
         await updateEntry(anime.id, payload);
-        notify(`${anime.title} updated.`);
+        notify(`${anime.title} diperbarui.`);
       } else {
         await addEntry({ animeId: anime.id, ...payload });
-        notify(`${anime.title} added to your list.`);
+        notify(`${anime.title} ditambahkan ke daftar.`);
       }
       onClose();
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Could not save this title.');
+      setError(reason instanceof Error ? reason.message : 'Gagal menyimpan judul ini.');
     } finally {
       setBusy(false);
     }
@@ -143,10 +143,10 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
     setError(null);
     try {
       await removeEntry(anime.id);
-      notify(`${anime.title} removed from your list.`);
+      notify(`${anime.title} dihapus dari daftar.`);
       onClose();
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Could not remove this title.');
+      setError(reason instanceof Error ? reason.message : 'Gagal menghapus judul ini.');
       setBusy(false);
     }
   };
@@ -168,10 +168,10 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
         <div className="dialog-card" onClick={(event) => event.stopPropagation()}>
           <header className="dialog-header">
             <div>
-              <p className="eyebrow">Your list</p>
-              <h2 id="library-dialog-title">{entry ? 'Edit entry' : 'Add to your list'}</h2>
+              <p className="eyebrow">Daftarmu</p>
+              <h2 id="library-dialog-title">{entry ? 'Ubah catatan' : 'Tambah ke daftar'}</h2>
             </div>
-            <button className="icon-button" onClick={onClose} aria-label="Close dialog" disabled={busy}>
+            <button className="icon-button" onClick={onClose} aria-label="Tutup dialog" disabled={busy}>
               <X size={19} />
             </button>
           </header>
@@ -181,10 +181,10 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
             <div>
               <h3>{anime.title}</h3>
               <p>
-                {FORMAT_LABELS[anime.format]} · {anime.seasonYear ?? 'TBA'} · {episodeLabel(anime.episodes)}
+                {FORMAT_LABELS[anime.format]} · {anime.seasonYear ?? '—'} · {episodeLabel(anime.episodes)}
               </p>
               <div className="dialog-score-line">
-                <span className="mini-score" title="AniList average score">★ {formatScore(anime.score)} avg</span>
+                <span className="mini-score" title="Skor rata-rata AniList">★ {formatScore(anime.score)} rata-rata</span>
                 {entry && <span className="dialog-entry-status">{STATUS_LABELS[entry.status]}</span>}
               </div>
             </div>
@@ -209,11 +209,11 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
 
           <div className="form-row">
             <label className="form-group">
-              <span className="form-label">Episode progress</span>
+              <span className="form-label">Progres episode</span>
               <div className="progress-input">
                 <button
                   type="button"
-                  aria-label="Decrease progress"
+                  aria-label="Kurangi progres"
                   onClick={() => setProgress((value) => Math.max(0, value - 1))}
                 >
                   <Minus size={14} />
@@ -229,19 +229,19 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
                 />
                 <button
                   type="button"
-                  aria-label="Increase progress"
+                  aria-label="Tambah progres"
                   onClick={() => setProgress((value) => Math.min(maxProgress, value + 1))}
                 >
                   <Plus size={14} />
                 </button>
               </div>
-              <span className="form-hint">of {anime.episodes ?? 'TBA'}</span>
+              <span className="form-hint">dari&nbsp;{anime.episodes ?? '—'}</span>
             </label>
 
             <label className="form-group">
-              <span className="form-label">Your score</span>
+              <span className="form-label">Skormu</span>
               <select className="field" value={score} onChange={(event) => setScore(event.target.value)}>
-                <option value="">Not scored</option>
+                <option value="">Belum dinilai</option>
                 {Array.from({ length: 21 }, (_, index) => (index * 0.5).toFixed(1)).map((value) => (
                   <option key={value} value={value}>
                     {value} / 10
@@ -252,10 +252,10 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
           </div>
 
           <label className="form-group">
-            <span className="form-label">Notes <span className="form-label-light">(private)</span></span>
+            <span className="form-label">Catatan <span className="form-label-light">(pribadi)</span></span>
             <textarea
               className="field field-textarea"
-              placeholder="A thought, a favourite scene, why you saved it…"
+              placeholder="Sebuah pikiran, adegan favorit, alasan menyimpannya…"
               value={notes}
               maxLength={500}
               onChange={(event) => setNotes(event.target.value)}
@@ -270,7 +270,7 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
             aria-pressed={favorite}
           >
             <Heart size={16} fill={favorite ? 'currentColor' : 'none'} />
-            {favorite ? 'One of your favourites' : 'Mark as a favourite'}
+            {favorite ? 'Salah satu favoritmu' : 'Tandai sebagai favorit'}
           </button>
 
           {error && <p className="form-error" role="alert">{error}</p>}
@@ -279,7 +279,7 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
             {entry ? (
               <button className="text-button text-button-danger" onClick={handleRemove} disabled={busy}>
                 <Trash2 size={15} />
-                {confirmRemove ? 'Confirm remove' : 'Remove'}
+                {confirmRemove ? 'Yakin hapus' : 'Hapus'}
               </button>
             ) : (
               <span />
@@ -287,12 +287,12 @@ function LibraryDialog({ anime, open, onClose }: LibraryDialogProps) {
             <div className="dialog-footer-actions">
               {confirmRemove && (
                 <button className="button button-quiet" onClick={() => setConfirmRemove(false)} disabled={busy}>
-                  Keep
+                  Batal
                 </button>
               )}
               <button className="button button-primary" onClick={handleSave} disabled={busy}>
                 {busy ? <LoaderCircle size={16} className="spin" /> : null}
-                {entry ? 'Save changes' : 'Add to list'}
+                {entry ? 'Simpan perubahan' : 'Tambah ke daftar'}
               </button>
             </div>
           </footer>

@@ -43,13 +43,13 @@ export function OtakuPoster({ title, poster, className = '', eager = false }: Ot
       {poster && !failed ? (
         <img
           src={poster}
-          alt={`${title} poster`}
+          alt={`Poster ${title}`}
           loading={eager ? 'eager' : 'lazy'}
           referrerPolicy="no-referrer"
           onError={() => setFailed(true)}
         />
       ) : (
-        <div className="otaku-poster-fallback" aria-label={`${title} — artwork unavailable`}>
+        <div className="otaku-poster-fallback" aria-label={`${title} — gambar tidak tersedia`}>
           <span className="fallback-ghost" aria-hidden="true">アニメ</span>
           <span className="fallback-rule" aria-hidden="true" />
           <span className="fallback-initial" aria-hidden="true">{title.slice(0, 1).toUpperCase()}</span>

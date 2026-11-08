@@ -31,7 +31,7 @@ export function useApi<T>(loader: (signal: AbortSignal) => Promise<T>, deps: Dep
       .catch((reason: unknown) => {
         if (!active) return;
         if (reason instanceof DOMException && reason.name === 'AbortError') return;
-        setError(reason instanceof Error ? reason.message : 'Something went wrong.');
+        setError(reason instanceof Error ? reason.message : 'Terjadi kesalahan.');
       })
       .finally(() => {
         if (active) setLoading(false);

@@ -50,7 +50,7 @@ export async function requireAdmin(req, res, next) {
     ? (await verifyAdminPassword(credentials.password)) && credentials.username === ADMIN_USERNAME
     : false;
   if (!valid) {
-    return res.status(401).json({ error: { code: 'ADMIN_UNAUTHORIZED', message: 'Admin authentication required.' } });
+    return res.status(401).json({ error: { code: 'ADMIN_UNAUTHORIZED', message: 'Autentikasi admin diperlukan.' } });
   }
   req.admin = { username: ADMIN_USERNAME };
   return next();

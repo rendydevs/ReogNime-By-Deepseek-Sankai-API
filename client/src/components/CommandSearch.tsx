@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { useDebouncedValue, useLockBodyScroll } from '../lib/hooks';
+import { otakuStatusLabel } from '../lib/format';
 import { mediaUrl } from '../lib/media';
 import type { OtakuCard } from '../types';
 
@@ -23,11 +24,11 @@ interface CommandSearchProps {
 }
 
 const QUICK_LINKS = [
-  { label: 'Airing now', description: 'Every ongoing series', to: '/ongoing', Icon: Play },
-  { label: 'Completed anime', description: 'Series with an ending', to: '/completed', Icon: LayoutGrid },
-  { label: 'Genres', description: 'Browse by mood', to: '/genres', Icon: Compass },
-  { label: 'All anime A–Z', description: 'The complete catalog', to: '/all', Icon: ListFilter },
-  { label: 'Release schedule', description: 'What airs this week', to: '/schedule', Icon: CalendarDays },
+  { label: 'Sedang tayang', description: 'Semua seri yang tayang', to: '/ongoing', Icon: Play },
+  { label: 'Anime tamat', description: 'Seri yang sudah selesai', to: '/completed', Icon: LayoutGrid },
+  { label: 'Genre', description: 'Jelajahi sesuai suasana', to: '/genres', Icon: Compass },
+  { label: 'Semua anime A–Z', description: 'Katalog lengkap', to: '/all', Icon: ListFilter },
+  { label: 'Jadwal rilis', description: 'Yang tayang minggu ini', to: '/schedule', Icon: CalendarDays },
 ];
 
 function ResultCover({ anime }: { anime: OtakuCard }) {
@@ -95,7 +96,7 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
       })
       .catch((reason: unknown) => {
         if (!active || (reason instanceof DOMException && reason.name === 'AbortError')) return;
-        setError(reason instanceof Error ? reason.message : 'Anime search is unavailable.');
+        setError(reason instanceof Error ? reason.message : 'Pencarian anime sedang tidak tersedia.');
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -147,15 +148,15 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
 
   return (
     <div className="search-overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <div className="command-panel command-panel-watch" role="dialog" aria-modal="true" aria-label="Search the anime catalog">
+      <div className="command-panel command-panel-watch" role="dialog" aria-modal="true" aria-label="Cari di katalog anime">
         <div className="command-input-row">
           <Search size={19} strokeWidth={1.7} />
           <input
             ref={inputRef}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search every anime title…"
-            aria-label="Search anime titles"
+            placeholder="Cari semua judul anime…"
+            aria-label="Cari judul anime"
             autoComplete="off"
             spellCheck={false}
             onKeyDown={(event) => {
@@ -166,7 +167,7 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
             }}
           />
           {loading ? <LoaderCircle size={17} className="spin muted-icon" /> : null}
-          <button className="command-close" onClick={onClose} aria-label="Close search">
+          <button className="command-close" onClick={onClose} aria-label="Tutup pencarian">
             <X size={17} />
           </button>
         </div>
@@ -174,19 +175,19 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
         <div className="command-meta">
           <span>
             {normalizedQuery.length >= 2
-              ? `Results for “${normalizedQuery}”`
+              ? `Hasil untuk “${normalizedQuery}”`
               : normalizedQuery
-                ? 'Keep typing…'
-                : 'Quick navigation'}
+                ? 'Lanjut mengetik…'
+                : 'Navigasi cepat'}
           </span>
-          <span>{normalizedQuery.length >= 2 ? `${results.length} ${results.length === 1 ? 'title' : 'titles'}` : 'ReogNime'}</span>
+          <span>{normalizedQuery.length >= 2 ? `${results.length} judul` : 'ReogNime'}</span>
         </div>
 
         <div className="command-results" ref={listRef}>
           {normalizedQuery.length < 2 ? (
             <div className="command-quick">
               <p className="command-quick-label">
-                {normalizedQuery ? 'Type at least 2 characters to search.' : 'Search by title, or jump straight in.'}
+                {normalizedQuery ? 'Ketik minimal 2 huruf untuk mencari.' : 'Cari judul, atau langsung pilih tujuan.'}
               </p>
               {QUICK_LINKS.map(({ label, description, to, Icon }) => (
                 <button
@@ -210,8 +211,8 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
             <p className="command-empty">{error}</p>
           ) : !loading && results.length === 0 ? (
             <div className="command-empty">
-              <p>Nothing found.</p>
-              <span>Try a shorter title, or use the full search page.</span>
+              <p>Tidak ditemukan.</p>
+              <span>Coba judul lebih pendek, atau buka halaman pencarian.</span>
             </div>
           ) : (
             results.map((anime, index) => (
@@ -228,7 +229,7 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
                 <span className="command-result-body">
                   <strong>{anime.title}</strong>
                   <span>
-                    {[anime.status, anime.type, anime.season, anime.episodes ? `Ep. ${anime.episodes}` : null]
+                    {[otakuStatusLabel(anime.status), anime.type, anime.season, anime.episodes ? `Ep. ${anime.episodes}` : null]
                       .filter(Boolean)
                       .join(' · ')}
                   </span>
@@ -242,12 +243,12 @@ export function CommandSearch({ open, onClose }: CommandSearchProps) {
 
         <footer className="command-footer">
           {normalizedQuery.length >= 2 ? (
-            <span><CornerDownLeft size={12} /> to open</span>
+            <span><CornerDownLeft size={12} /> untuk membuka</span>
           ) : (
-            <span><Search size={12} /> ReogNime catalog</span>
+            <span><Search size={12} /> Katalog ReogNime</span>
           )}
-          <span><kbd>esc</kbd> to close</span>
-          <button onClick={openSearchPage}>Full search page</button>
+          <span><kbd>esc</kbd> untuk menutup</span>
+          <button onClick={openSearchPage}>Halaman pencarian</button>
         </footer>
       </div>
     </div>

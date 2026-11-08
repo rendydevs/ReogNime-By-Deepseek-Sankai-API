@@ -6,8 +6,8 @@ export function TitleMarquee({ items }: { items: OtakuCard[] }) {
   const repeated = [...items, ...items];
 
   return (
-    <div className="title-marquee" aria-label="Airing now">
-      <span className="marquee-label"><span className="marquee-dot" /> On air</span>
+    <div className="title-marquee" aria-label="Sedang tayang">
+      <span className="marquee-label"><span className="marquee-dot" /> Tayang</span>
       <div className="marquee-viewport">
         <div className="marquee-track">
           {repeated.map((anime, index) => (

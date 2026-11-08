@@ -227,7 +227,7 @@ export function AdminPage() {
       setSelectedId(result.data[0]?.id ?? null);
       setPassword('');
     } catch (reason) {
-      if (reason instanceof AdminAuthError) setLoginError('Password admin salah.');
+      if (reason instanceof AdminAuthError) setLoginError('Kata sandi admin salah.');
       else setLoginError(reason instanceof Error ? reason.message : 'Tidak bisa masuk.');
     } finally {
       setLoginBusy(false);
@@ -341,17 +341,17 @@ export function AdminPage() {
         <div className="admin-login-shell">
           <div className="admin-login-card">
             <span className="admin-lock" aria-hidden="true"><Lock size={19} strokeWidth={1.8} /></span>
-            <p className="eyebrow">Private area</p>
-            <h1>Admin access.</h1>
+            <p className="eyebrow">Area privat</p>
+            <h1>Akses admin.</h1>
             <p className="admin-login-copy">Masuk untuk membaca dan membalas pesan pengunjung.</p>
             <form onSubmit={handleLogin} className="admin-login-form">
-              <label htmlFor="admin-password">Password admin</label>
+              <label htmlFor="admin-password">Kata sandi admin</label>
               <input
                 id="admin-password"
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="Masukkan password"
+                placeholder="Masukkan kata sandi"
                 autoComplete="current-password"
                 autoFocus
                 disabled={loginBusy}
@@ -374,13 +374,13 @@ export function AdminPage() {
       <div className="container admin-shell">
         <header className="admin-head">
           <div>
-            <p className="eyebrow">Private queue</p>
+            <p className="eyebrow">Antrean privat</p>
             <h1>Pesan masuk.</h1>
             <p className="admin-subtitle">Percakapan dua arah antara pengunjung dan Admin ReogNime.</p>
           </div>
           <div className="admin-head-actions">
             <button className="button button-outline" onClick={() => void loadList(auth, filter)} disabled={loading}>
-              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
+              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Muat ulang
             </button>
             <button className="button button-quiet" onClick={logout}><LogOut size={14} /> Keluar</button>
           </div>
@@ -439,7 +439,7 @@ export function AdminPage() {
                   </span>
                   <strong>{thread.lastMessage || 'Percakapan baru'}</strong>
                   <span className="admin-thread-item-meta">
-                    {thread.page === '/' ? 'Home' : thread.page}
+                    {thread.page === '/' ? 'Beranda' : thread.page}
                     <i>·</i>
                     {thread.messageCount} pesan
                   </span>
@@ -463,7 +463,7 @@ export function AdminPage() {
                     <ArrowLeft size={15} />
                   </button>
                   <div>
-                    <p className="eyebrow">{detail.page === '/' ? 'Home' : detail.page}</p>
+                    <p className="eyebrow">{detail.page === '/' ? 'Beranda' : detail.page}</p>
                     <h2>{detail.status === 'open' ? 'Percakapan terbuka' : 'Percakapan selesai'}</h2>
                   </div>
                   <div className="admin-thread-head-actions">

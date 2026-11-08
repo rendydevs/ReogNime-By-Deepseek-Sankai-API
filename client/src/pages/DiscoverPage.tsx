@@ -4,12 +4,19 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AnimeCard } from '../components/AnimeCard';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
-import { FORMAT_LABELS, SEASON_LABELS } from '../lib/format';
+import { FORMAT_LABELS, SEASON_LABELS, genreLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import type { AnimeSummary, DiscoverFilters, DiscoverSort, PageMeta } from '../types';
 
 const DEFAULT_SORT: DiscoverSort = 'popularity';
 const PAGE_SIZE = 24;
+const SORT_LABELS: Record<DiscoverSort, string> = {
+  popularity: 'Paling populer',
+  score: 'Skor tertinggi',
+  newest: 'Terbaru',
+  favorites: 'Paling difavoritkan',
+  title: 'A–Z',
+};
 
 function filtersFromParams(params: URLSearchParams): DiscoverFilters {
   return {
@@ -24,7 +31,7 @@ function filtersFromParams(params: URLSearchParams): DiscoverFilters {
 }
 
 export function DiscoverPage() {
-  useDocumentTitle('The index');
+  useDocumentTitle('Indeks');
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { notify } = useToast();
@@ -67,7 +74,7 @@ export function DiscoverPage() {
       })
       .catch((reason: unknown) => {
         if (reason instanceof DOMException && reason.name === 'AbortError') return;
-        setError(reason instanceof Error ? reason.message : 'Could not load the index.');
+        setError(reason instanceof Error ? reason.message : 'Gagal memuat indeks.');
       })
       .finally(() => setLoading(false));
     return () => controller.abort();
@@ -97,7 +104,7 @@ export function DiscoverPage() {
       setItems((current) => [...current, ...payload.data]);
       setMeta(payload.meta);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not load more titles.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memuat judul lainnya.', { tone: 'error' });
     } finally {
       setLoadingMore(false);
     }
@@ -109,7 +116,7 @@ export function DiscoverPage() {
       const payload = await api.random(filters);
       navigate(`/anime/${payload.data.id}`);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'No title matched those filters.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Tidak ada judul yang cocok dengan saringan itu.', { tone: 'error' });
     } finally {
       setSurprising(false);
     }
@@ -121,14 +128,14 @@ export function DiscoverPage() {
     <div className="discover-page">
       <header className="page-masthead container">
         <div className="page-masthead-meta">
-          <p className="eyebrow">The index</p>
-          <p className="masthead-edition">Edition 01 / {new Date().getFullYear()}</p>
+          <p className="eyebrow">Indeks</p>
+          <p className="masthead-edition">Edisi 01 / {new Date().getFullYear()}</p>
         </div>
         <div className="discover-title-row">
-          <h1>Find your<br />next world.</h1>
+          <h1>Temukan<br />dunia berikutnya.</h1>
           <p>
-            Search the full shelf by title, studio, year, or simply a mood.
-            Every entry is here on purpose.
+            Cari di seluruh rak lewat judul, studio, tahun, atau suasana.
+            Setiap entri ada di sini dengan alasan.
           </p>
         </div>
       </header>
@@ -139,24 +146,24 @@ export function DiscoverPage() {
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Try “Frieren”, “Ghibli”, or “Romance”…"
-            aria-label="Search anime by title or studio"
+            placeholder="Coba “Frieren”, “Ghibli”, atau “Romantis”…"
+            aria-label="Cari anime berdasarkan judul atau studio"
             type="search"
           />
           {query && (
-            <button className="clear-search" onClick={() => setQuery('')} aria-label="Clear search">
+            <button className="clear-search" onClick={() => setQuery('')} aria-label="Bersihkan pencarian">
               <X size={16} />
             </button>
           )}
-          <span className="search-field-hint">Type to filter</span>
+          <span className="search-field-hint">Ketik untuk menyaring</span>
         </div>
 
-        <div className="genre-filter-row" aria-label="Filter by genre">
+        <div className="genre-filter-row" aria-label="Saring berdasarkan genre">
           <button
             className={`genre-chip ${!filters.genre ? 'is-active' : ''}`}
             onClick={() => setFilter('genre', '')}
           >
-            All genres
+            Semua genre
           </button>
           {options?.genres.map((genre) => (
             <button
@@ -164,7 +171,7 @@ export function DiscoverPage() {
               className={`genre-chip ${filters.genre === genre.name ? 'is-active' : ''}`}
               onClick={() => setFilter('genre', filters.genre === genre.name ? '' : genre.name)}
             >
-              {genre.name}
+              {genreLabel(genre.name)}
               <span>{genre.count}</span>
             </button>
           ))}
@@ -173,28 +180,28 @@ export function DiscoverPage() {
         <div className="filter-bar">
           <div className="filter-bar-label">
             <SlidersHorizontal size={15} />
-            <span>Refine</span>
+            <span>Saring</span>
           </div>
           <label className="select-wrap">
-            <span className="sr-only">Year</span>
+            <span className="sr-only">Tahun</span>
             <select value={filters.year} onChange={(event) => setFilter('year', event.target.value)}>
-              <option value="">Any year</option>
+              <option value="">Semua tahun</option>
               {options?.years.map((year) => <option key={year} value={year}>{year}</option>)}
             </select>
           </label>
           <label className="select-wrap">
             <span className="sr-only">Format</span>
             <select value={filters.format} onChange={(event) => setFilter('format', event.target.value)}>
-              <option value="">Any format</option>
+              <option value="">Semua format</option>
               {options?.formats.map((formatOption) => (
                 <option key={formatOption.value} value={formatOption.value}>{FORMAT_LABELS[formatOption.value]}</option>
               ))}
             </select>
           </label>
           <label className="select-wrap">
-            <span className="sr-only">Season</span>
+            <span className="sr-only">Musim</span>
             <select value={filters.season} onChange={(event) => setFilter('season', event.target.value)}>
-              <option value="">Any season</option>
+              <option value="">Semua musim</option>
               {options?.seasons.map((season) => (
                 <option key={season.value} value={season.value}>{SEASON_LABELS[season.value]}</option>
               ))}
@@ -203,15 +210,15 @@ export function DiscoverPage() {
           <label className="select-wrap">
             <span className="sr-only">Status</span>
             <select value={filters.status} onChange={(event) => setFilter('status', event.target.value)}>
-              <option value="">Any status</option>
-              <option value="FINISHED">Finished</option>
-              <option value="RELEASING">Airing</option>
+              <option value="">Semua status</option>
+              <option value="FINISHED">Tamat</option>
+              <option value="RELEASING">Tayang</option>
             </select>
           </label>
           <label className="select-wrap select-sort">
-            <span className="sr-only">Sort by</span>
+            <span className="sr-only">Urutkan</span>
             <select value={filters.sort} onChange={(event) => setFilter('sort', event.target.value)}>
-              {options?.sorts.map((sort) => <option key={sort.value} value={sort.value}>{sort.label}</option>)}
+              {options?.sorts.map((sort) => <option key={sort.value} value={sort.value}>{SORT_LABELS[sort.value]}</option>)}
             </select>
           </label>
           {activeFilterCount > 0 && (
@@ -222,7 +229,7 @@ export function DiscoverPage() {
           <div className="filter-bar-spacer" />
           <button className="surprise-button" onClick={surpriseMe} disabled={surprising}>
             {surprising ? <LoaderCircle size={15} className="spin" /> : <Dices size={16} />}
-            Surprise me
+            Pilih acak
           </button>
         </div>
       </section>
@@ -230,12 +237,12 @@ export function DiscoverPage() {
       <section className="results-section container">
         <div className="results-head">
           <p>
-            {loading ? 'Searching the shelf…' : <><strong>{meta?.total ?? 0}</strong> {meta?.total === 1 ? 'title' : 'titles'}</>}
-            {filters.q && !loading && <span> for “{filters.q}”</span>}
-            {filters.genre && !loading && <span> in {filters.genre}</span>}
+            {loading ? 'Mencari di rak…' : <><strong>{meta?.total ?? 0}</strong> judul</>}
+            {filters.q && !loading && <span> untuk “{filters.q}”</span>}
+            {filters.genre && !loading && <span> dalam {genreLabel(filters.genre)}</span>}
           </p>
           <span className="results-range">
-            {items.length && meta ? `Showing ${items.length} of ${meta.total}` : 'The complete index'}
+            {items.length && meta ? `Menampilkan ${items.length} dari ${meta.total}` : 'Indeks lengkap'}
           </span>
         </div>
 
@@ -243,7 +250,7 @@ export function DiscoverPage() {
           <div className="inline-error">
             <p>{error}</p>
             <button className="button button-primary" onClick={() => setReloadToken((value) => value + 1)}>
-              Try again
+              Coba lagi
             </button>
           </div>
         ) : loading ? (
@@ -265,7 +272,7 @@ export function DiscoverPage() {
               <div className="load-more-wrap">
                 <button className="button button-outline" onClick={loadMore} disabled={loadingMore}>
                   {loadingMore ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                  {loadingMore ? 'Loading' : `Load more · ${meta.total - items.length} left`}
+                  {loadingMore ? 'Memuat' : `Muat lagi · ${meta.total - items.length} tersisa`}
                 </button>
               </div>
             )}
@@ -273,12 +280,12 @@ export function DiscoverPage() {
         ) : (
           <div className="empty-state">
             <p className="empty-index">No. 00</p>
-            <h2>Nothing on this shelf.</h2>
-            <p>Try a different mood, a broader year, or clear the filters and start again.</p>
+            <h2>Tidak ada di rak ini.</h2>
+            <p>Coba suasana lain, tahun yang lebih luas, atau bersihkan saringan.</p>
             <div className="empty-actions">
-              <button className="button button-primary" onClick={resetFilters}>Clear all filters</button>
+              <button className="button button-primary" onClick={resetFilters}>Bersihkan semua saringan</button>
               <button className="button button-quiet" onClick={surpriseMe} disabled={surprising}>
-                <Dices size={16} /> Pick one for me
+                <Dices size={16} /> Pilihkan satu
               </button>
             </div>
           </div>

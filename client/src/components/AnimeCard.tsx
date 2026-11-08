@@ -22,21 +22,21 @@ export function AnimeCard({ anime, rank, compact = false }: AnimeCardProps) {
     <article className={`anime-card ${compact ? 'anime-card-compact' : ''}`}>
       {rank !== undefined && <span className="card-rank">{String(rank).padStart(2, '0')}</span>}
       <div className="poster-wrap" style={{ '--anime-accent': anime.accent } as CSSProperties}>
-        <Link to={`/anime/${anime.id}`} className="poster-link" aria-label={`View ${anime.title}`}>
+        <Link to={`/anime/${anime.id}`} className="poster-link" aria-label={`Lihat ${anime.title}`}>
           {anime.cover ? (
-            <img src={mediaUrl(anime.cover)} alt={`${anime.title} cover`} className="poster-image" loading="lazy" />
+            <img src={mediaUrl(anime.cover)} alt={`Sampul ${anime.title}`} className="poster-image" loading="lazy" />
           ) : (
             <span className="poster-fallback">{anime.title.slice(0, 1)}</span>
           )}
           <span className="poster-wash" />
           <span className="poster-score">★ {formatScore(anime.score)}</span>
-          <span className="poster-view">View title</span>
+          <span className="poster-view">Lihat judul</span>
         </Link>
         <button
           className={`quick-add ${entry ? 'is-saved' : ''}`}
           onClick={() => open(anime)}
-          aria-label={entry ? `Edit ${anime.title} in your library` : `Add ${anime.title} to your library`}
-          title={entry ? 'Edit in your list' : 'Add to list'}
+          aria-label={entry ? `Ubah ${anime.title} di daftar` : `Tambah ${anime.title} ke daftar`}
+          title={entry ? 'Ubah di daftar' : 'Tambah ke daftar'}
         >
           {entry ? <Check size={14} /> : <Plus size={14} />}
         </button>

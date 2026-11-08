@@ -20,7 +20,7 @@ import {
   STATUS_ORDER,
   formatDate,
   formatScore,
-  plural,
+  genreLabel,
 } from '../lib/format';
 import { useDocumentTitle } from '../lib/hooks';
 import { mediaUrl } from '../lib/media';
@@ -32,7 +32,7 @@ type Sort = 'updated' | 'title' | 'score';
 const TABS: Tab[] = ['ALL', ...STATUS_ORDER];
 
 export function LibraryPage() {
-  useDocumentTitle('My list');
+  useDocumentTitle('Daftar Saya');
   const { entries, stats, loading, refreshing, error, refresh, addEntry, updateEntry, removeEntry } = useLibrary();
   const { open } = useLibraryDialog();
   const { notify } = useToast();
@@ -59,7 +59,7 @@ export function LibraryPage() {
     if (!entry.anime) return;
     const total = entry.anime.episodes;
     if (total !== null && entry.progress >= total) {
-      notify('This title is already complete.', { tone: 'info' });
+      notify('Judul ini sudah selesai.', { tone: 'info' });
       return;
     }
     const nextProgress = entry.progress + 1;
@@ -70,7 +70,7 @@ export function LibraryPage() {
         status: total !== null && nextProgress >= total ? 'COMPLETED' : entry.status === 'PLANNING' ? 'WATCHING' : entry.status,
       });
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not update progress.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memperbarui progres.', { tone: 'error' });
     } finally {
       setBusyId(null);
     }
@@ -82,10 +82,10 @@ export function LibraryPage() {
     try {
       await removeEntry(entry.animeId);
       const snapshot = entry;
-      notify(`${entry.anime.title} removed.`, {
+      notify(`${entry.anime.title} dihapus.`, {
         tone: 'info',
         action: {
-          label: 'Undo',
+          label: 'Urungkan',
           onClick: () => {
             void addEntry({
               animeId: snapshot.animeId,
@@ -95,13 +95,13 @@ export function LibraryPage() {
               notes: snapshot.notes,
               favorite: snapshot.favorite,
             })
-              .then(() => notify(`${snapshot.anime?.title ?? 'Title'} restored.`))
-              .catch((reason: unknown) => notify(reason instanceof Error ? reason.message : 'Could not undo.', { tone: 'error' }));
+              .then(() => notify(`${snapshot.anime?.title ?? 'Judul'} dikembalikan.`))
+              .catch((reason: unknown) => notify(reason instanceof Error ? reason.message : 'Gagal mengurungkan.', { tone: 'error' }));
           },
         },
       });
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not remove this title.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal menghapus judul ini.', { tone: 'error' });
     } finally {
       setBusyId(null);
     }
@@ -124,10 +124,10 @@ export function LibraryPage() {
   if (error && !entries.length) {
     return (
       <div className="container error-page">
-        <p className="eyebrow">Your shelf</p>
-        <h1>We couldn't open your list.</h1>
+        <p className="eyebrow">Rakmu</p>
+        <h1>Daftar tidak bisa dibuka.</h1>
         <p>{error}</p>
-        <button className="button button-primary" onClick={() => void refresh()}>Try again</button>
+        <button className="button button-primary" onClick={() => void refresh()}>Coba lagi</button>
       </div>
     );
   }
@@ -140,23 +140,23 @@ export function LibraryPage() {
     <div className="library-page">
       <header className="page-masthead library-masthead container">
         <div className="page-masthead-meta">
-          <p className="eyebrow">Your shelf</p>
-          <p className="masthead-edition">Private by default · Local file</p>
+          <p className="eyebrow">Rakmu</p>
+          <p className="masthead-edition">Privat · file lokal</p>
         </div>
         <div className="library-title-row">
           <div>
-            <h1>Keep the good ones close.</h1>
+            <h1>Simpan yang dekat.</h1>
             <p className="library-subtitle">
-              A list of what you're watching, saving, and still thinking about.
-              {refreshing && <span className="saving-indicator"><LoaderCircle size={12} className="spin" /> saving</span>}
+              Daftar yang sedang ditonton, disimpan, dan masih dipikirkan.
+              {refreshing && <span className="saving-indicator"><LoaderCircle size={12} className="spin" /> menyimpan</span>}
             </p>
           </div>
           <div className="library-actions">
             <a className="button button-outline" href={api.exportUrl()} download>
-              <Download size={15} /> Export
+              <Download size={15} /> Ekspor
             </a>
             <Link to="/discover" className="button button-primary">
-              <Plus size={15} /> Add a title
+              <Plus size={15} /> Tambah judul
             </Link>
           </div>
         </div>
@@ -164,38 +164,38 @@ export function LibraryPage() {
 
       <section className="library-stats container">
         <div className="library-stat">
-          <span className="stat-label">On the shelf</span>
+          <span className="stat-label">Di rak</span>
           <strong className="stat-value">{stats.total}</strong>
-          <span className="stat-note">{plural(stats.favorites, 'favourite')}</span>
+          <span className="stat-note">{stats.favorites} favorit</span>
         </div>
         <div className="library-stat">
-          <span className="stat-label">Episodes logged</span>
+          <span className="stat-label">Episode tercatat</span>
           <strong className="stat-value">{stats.episodesWatched}</strong>
-          <span className="stat-note">{stats.hoursWatched}h watched</span>
+          <span className="stat-note">{stats.hoursWatched} jam ditonton</span>
         </div>
         <div className="library-stat">
-          <span className="stat-label">Mean score</span>
+          <span className="stat-label">Rata-rata skor</span>
           <strong className="stat-value">{stats.meanScore?.toFixed(1) ?? '—'}</strong>
-          <span className="stat-note">{stats.scoredTitles} titles scored</span>
+          <span className="stat-note">{stats.scoredTitles} judul dinilai</span>
         </div>
         <div className="library-stat library-stat-dial">
           <div className="completion-dial" style={completionStyle}>
             <span>{stats.completionRate}%</span>
           </div>
           <div>
-            <span className="stat-label">Completion</span>
-            <span className="stat-note">{stats.statusCounts.COMPLETED} of {stats.total || 0} finished</span>
+            <span className="stat-label">Penyelesaian</span>
+            <span className="stat-note">{stats.statusCounts.COMPLETED} dari {stats.total || 0} selesai</span>
           </div>
         </div>
       </section>
 
       {stats.topGenres.length > 0 && (
         <div className="mood-strip container">
-          <span className="eyebrow">Your moods</span>
+          <span className="eyebrow">Suasana kamu</span>
           <div className="mood-list">
             {stats.topGenres.map((genre) => (
               <Link key={genre.name} to={`/discover?genre=${encodeURIComponent(genre.name)}`} className="mood-chip">
-                {genre.name} <span>{genre.count}</span>
+                {genreLabel(genre.name)} <span>{genre.count}</span>
               </Link>
             ))}
           </div>
@@ -204,7 +204,7 @@ export function LibraryPage() {
 
       <section className="library-list-section container">
         <div className="library-toolbar">
-          <div className="library-tabs" role="tablist" aria-label="Filter library by status">
+          <div className="library-tabs" role="tablist" aria-label="Saring daftar berdasarkan status">
             {TABS.map((value) => (
               <button
                 key={value}
@@ -213,7 +213,7 @@ export function LibraryPage() {
                 className={`library-tab ${tab === value ? 'is-active' : ''}`}
                 onClick={() => setTab(value)}
               >
-                {value === 'ALL' ? 'All' : STATUS_LABELS[value]}
+                {value === 'ALL' ? 'Semua' : STATUS_LABELS[value]}
                 <span>{tabCount(value)}</span>
               </button>
             ))}
@@ -221,14 +221,14 @@ export function LibraryPage() {
           <div className="library-list-controls">
             <label className="library-search">
               <Search size={15} />
-              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Filter your list" aria-label="Filter your list" />
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Saring daftar" aria-label="Saring daftar" />
             </label>
             <label className="select-wrap">
-              <span className="sr-only">Sort your list</span>
+              <span className="sr-only">Urutkan daftar</span>
               <select value={sort} onChange={(event) => setSort(event.target.value as Sort)}>
-                <option value="updated">Recently updated</option>
-                <option value="title">Title A–Z</option>
-                <option value="score">Highest score</option>
+                <option value="updated">Terbaru diperbarui</option>
+                <option value="title">Judul A–Z</option>
+                <option value="score">Skor tertinggi</option>
               </select>
             </label>
           </div>
@@ -236,17 +236,17 @@ export function LibraryPage() {
 
         {visibleEntries.length === 0 ? (
           <div className="empty-state library-empty">
-            <p className="empty-index">{tab === 'ALL' && !query ? 'No. 00' : 'No match'}</p>
-            <h2>{tab === 'ALL' && !query ? 'An empty shelf is a beginning.' : 'Nothing here yet.'}</h2>
+            <p className="empty-index">{tab === 'ALL' && !query ? 'No. 00' : 'Tidak ada'}</p>
+            <h2>{tab === 'ALL' && !query ? 'Rak kosong adalah awal.' : 'Belum ada di sini.'}</h2>
             <p>
               {tab === 'ALL' && !query
-                ? 'Find a title that sounds like tonight, and add it to your list.'
-                : 'Try another status or clear the filter.'}
+                ? 'Temukan judul yang cocok malam ini, lalu tambahkan ke daftar.'
+                : 'Coba status lain atau bersihkan saringan.'}
             </p>
             <div className="empty-actions">
-              <Link to="/discover" className="button button-primary">Browse the index <ArrowRight size={15} /></Link>
+              <Link to="/discover" className="button button-primary">Jelajahi indeks <ArrowRight size={15} /></Link>
               {(tab !== 'ALL' || query) && (
-                <button className="button button-quiet" onClick={() => { setTab('ALL'); setQuery(''); }}>Clear filters</button>
+                <button className="button button-quiet" onClick={() => { setTab('ALL'); setQuery(''); }}>Bersihkan saringan</button>
               )}
             </div>
           </div>
@@ -260,12 +260,12 @@ export function LibraryPage() {
               return (
                 <article className="library-row" key={entry.animeId}>
                   <Link to={`/anime/${entry.anime.id}`} className="library-cover-link">
-                    <img src={mediaUrl(entry.anime.cover)} alt={`${entry.anime.title} cover`} />
+                    <img src={mediaUrl(entry.anime.cover)} alt={`Sampul ${entry.anime.title}`} />
                   </Link>
                   <div className="library-row-main">
                     <div className="library-row-top">
                       <div>
-                        <p className="card-kicker">{FORMAT_LABELS[entry.anime.format]} · {entry.anime.seasonYear ?? 'TBA'}</p>
+                        <p className="card-kicker">{FORMAT_LABELS[entry.anime.format]} · {entry.anime.seasonYear ?? '—'}</p>
                         <h3><Link to={`/anime/${entry.anime.id}`}>{entry.anime.title}</Link></h3>
                       </div>
                       <span className={`library-status status-${entry.status.toLowerCase()}`}>{STATUS_LABELS[entry.status]}</span>
@@ -273,7 +273,7 @@ export function LibraryPage() {
                     <div className="library-progress-row">
                       <div className="library-progress">
                         <div className="side-progress-label">
-                          <span>{entry.progress} / {total ?? '—'} episodes</span>
+                          <span>{entry.progress} / {total ?? '—'} episode</span>
                           <span>{Math.round(percent)}%</span>
                         </div>
                         <div className="progress-track"><span style={{ width: `${percent}%` }} /></div>
@@ -282,35 +282,35 @@ export function LibraryPage() {
                         className={`episode-add ${complete ? 'is-complete' : ''}`}
                         onClick={() => increment(entry)}
                         disabled={busyId === entry.animeId || complete}
-                        aria-label={`Log next episode of ${entry.anime.title}`}
-                        title={complete ? 'Complete' : 'Log one more episode'}
+                        aria-label={`Catat episode berikutnya dari ${entry.anime.title}`}
+                        title={complete ? 'Selesai' : 'Catat satu episode lagi'}
                       >
                         {busyId === entry.animeId ? <LoaderCircle size={14} className="spin" /> : complete ? <Check size={14} /> : <Plus size={14} />}
-                        <span>{complete ? 'Done' : '+1'}</span>
+                        <span>{complete ? 'Selesai' : '+1'}</span>
                       </button>
                     </div>
                     {entry.notes && <p className="library-note">“{entry.notes}”</p>}
                   </div>
                   <div className="library-row-side">
                     <div className="library-score">
-                      <span className="library-score-label">Score</span>
+                      <span className="library-score-label">Skor</span>
                       <strong>{formatScore(entry.score !== null ? entry.score * 10 : null)}</strong>
                     </div>
                     <div className="library-row-actions">
-                      <button className="icon-button" onClick={() => open(entry.anime!)} aria-label={`Edit ${entry.anime.title}`} title="Edit entry">
+                      <button className="icon-button" onClick={() => open(entry.anime!)} aria-label={`Ubah ${entry.anime.title}`} title="Ubah catatan">
                         <ArrowUpRight size={17} />
                       </button>
                       <button
                         className="icon-button icon-danger"
                         onClick={() => void remove(entry)}
                         disabled={busyId === entry.animeId}
-                        aria-label={`Remove ${entry.anime.title}`}
-                        title="Remove from list"
+                        aria-label={`Hapus ${entry.anime.title}`}
+                        title="Hapus dari daftar"
                       >
                         <Trash2 size={16} />
                       </button>
                     </div>
-                    <span className="library-updated">Updated {formatDate(entry.updatedAt, { month: 'short', day: 'numeric' })}</span>
+                    <span className="library-updated">Diperbarui {formatDate(entry.updatedAt, { month: 'short', day: 'numeric' })}</span>
                   </div>
                 </article>
               );

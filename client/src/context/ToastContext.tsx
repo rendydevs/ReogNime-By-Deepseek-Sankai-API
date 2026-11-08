@@ -77,7 +77,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   {toast.action.label}
                 </button>
               )}
-              <button className="toast-close" aria-label="Dismiss notification" onClick={() => dismiss(toast.id)}>
+              <button className="toast-close" aria-label="Tutup notifikasi" onClick={() => dismiss(toast.id)}>
                 <X size={14} />
               </button>
             </div>

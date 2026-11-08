@@ -15,6 +15,7 @@ import { OtakuCard } from '../components/OtakuCard';
 import { OtakuPoster } from '../components/OtakuPoster';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
+import { formatDurationLabel, formatProviderDate, genreLabel, otakuStatusLabel, seasonName } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import { usePageSeo } from '../lib/seo';
 import type { OtakuBatch } from '../types';
@@ -37,7 +38,7 @@ function WatchDetailSkeleton() {
 }
 
 export function WatchAnimePage() {
-  useDocumentTitle('Watch series');
+  useDocumentTitle('Tonton seri');
   const { slug } = useParams();
   const detail = useApi((signal) => api.otaku.anime(slug ?? '', signal), [slug]);
   const { notify } = useToast();
@@ -53,7 +54,7 @@ export function WatchAnimePage() {
 
   useDocumentTitle(anime ? `${anime.title} Sub Indo` : 'Nonton Anime Sub Indo');
   usePageSeo({
-    title: anime ? `${anime.title} Sub Indo — ReogNime` : 'Watch series — ReogNime',
+    title: anime ? `${anime.title} Sub Indo — ReogNime` : 'Tonton seri — ReogNime',
     description: anime
       ? `Nonton ${anime.title} subtitle Indonesia di ReogNime. ${anime.synopsis.join(' ').slice(0, 150)}`
       : 'Nonton anime subtitle Indonesia di ReogNime.',
@@ -92,7 +93,7 @@ export function WatchAnimePage() {
       setBatch(payload.data);
       window.setTimeout(() => document.getElementById('downloads')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Could not load batch downloads.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memuat unduhan batch.', { tone: 'error' });
     } finally {
       setBatchLoading(false);
     }
@@ -103,11 +104,11 @@ export function WatchAnimePage() {
   if (detail.error || !anime) {
     return (
       <div className="container error-page">
-        <p className="eyebrow">ReogNime / not found</p>
-        <h1>That screening is empty.</h1>
-        <p>{detail.error ?? 'The series could not be loaded from the streaming source.'}</p>
+        <p className="eyebrow">ReogNime / tidak ditemukan</p>
+        <h1>Tayangan itu kosong.</h1>
+        <p>{detail.error ?? 'Seri tidak bisa dimuat dari sumber streaming.'}</p>
         <div className="empty-actions">
-          <Link to="/" className="button button-primary"><ArrowLeft size={15} /> Back home</Link>
+          <Link to="/" className="button button-primary"><ArrowLeft size={15} /> Kembali ke beranda</Link>
         </div>
       </div>
     );
@@ -121,7 +122,7 @@ export function WatchAnimePage() {
           <span />
         </div>
         <div className="container watch-detail-hero-inner">
-          <Link to="/" className="back-link"><ArrowLeft size={15} /> The screening room</Link>
+          <Link to="/" className="back-link"><ArrowLeft size={15} /> Ruang tayang</Link>
           <div className="watch-detail-grid">
             <OtakuPoster title={anime.title} poster={anime.poster} className="watch-detail-poster" eager />
             <div className="watch-detail-copy">
@@ -132,27 +133,27 @@ export function WatchAnimePage() {
               {anime.japanese && <p className="watch-detail-japanese">{anime.japanese}</p>}
               <div className="watch-detail-meta">
                 {anime.score !== null && <span className="watch-detail-score"><Star size={12} fill="currentColor" /> {anime.score.toFixed(2)}</span>}
-                <span>{anime.status ?? 'Anime'}</span>
+                <span>{otakuStatusLabel(anime.status)}</span>
                 {anime.type && <span>{anime.type}</span>}
-                {anime.episodes !== null && <span>{anime.episodes} eps</span>}
-                {anime.duration && <span>{anime.duration}</span>}
-                {anime.aired && <span>{anime.aired}</span>}
+                {anime.episodes !== null && <span>{anime.episodes} ep</span>}
+                {anime.duration && <span>{formatDurationLabel(anime.duration)}</span>}
+                {anime.aired && <span>{formatProviderDate(anime.aired)}</span>}
               </div>
               <div className="watch-detail-genres">
                 {anime.genres.map((genre) => (
-                  <Link key={genre.slug} to={`/genre/${encodeURIComponent(genre.slug)}`} className="genre-pill">{genre.name}</Link>
+                  <Link key={genre.slug} to={`/genre/${encodeURIComponent(genre.slug)}`} className="genre-pill">{genreLabel(genre.name)}</Link>
                 ))}
               </div>
               <div className="watch-detail-actions">
                 {firstEpisode ? (
                   <Link to={`/watch/episode/${firstEpisode.slug}`} className="button button-paper">
-                    <Play size={15} fill="currentColor" /> Start episode {firstEpisode.number ?? 1}
+                    <Play size={15} fill="currentColor" /> Mulai episode {firstEpisode.number ?? 1}
                   </Link>
                 ) : null}
                 {anime.batch && (
                   <button className="button button-ghost-light" onClick={() => void loadBatch()}>
                     {batchLoading ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                    Batch download
+                    Unduh batch
                   </button>
                 )}
               </div>
@@ -165,8 +166,8 @@ export function WatchAnimePage() {
         <main className="watch-detail-main">
           {anime.synopsis.length > 0 && (
             <section className="watch-detail-section">
-              <div className="section-index">Synopsis</div>
-              <h2>About the series</h2>
+              <div className="section-index">Sinopsis</div>
+              <h2>Tentang seri</h2>
               <div className="watch-synopsis">
                 {anime.synopsis.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
               </div>
@@ -176,10 +177,10 @@ export function WatchAnimePage() {
           <section className="watch-detail-section" id="episodes">
             <div className="watch-detail-section-head">
               <div>
-                <div className="section-index">Episodes</div>
-                <h2>Episode list</h2>
+                <div className="section-index">Episode</div>
+                <h2>Daftar episode</h2>
               </div>
-              <span>{anime.episodeList.length} episodes · latest first</span>
+              <span>{anime.episodeList.length} episode · terbaru dulu</span>
             </div>
             {episodes.length ? (
               <>
@@ -197,13 +198,13 @@ export function WatchAnimePage() {
                 </div>
                 {episodes.length > 12 && (
                   <button className="text-link watch-show-all" onClick={() => setShowAllEpisodes((value) => !value)}>
-                    {showAllEpisodes ? 'Show fewer episodes' : `Show all ${episodes.length} episodes`}
+                    {showAllEpisodes ? 'Tampilkan lebih sedikit' : `Tampilkan semua ${episodes.length} episode`}
                     <ChevronRight size={14} className={showAllEpisodes ? 'is-rotated' : ''} />
                   </button>
                 )}
               </>
             ) : (
-              <p className="inline-note">No episodes have been listed yet.</p>
+              <p className="inline-note">Belum ada episode yang terdaftar.</p>
             )}
           </section>
 
@@ -211,17 +212,17 @@ export function WatchAnimePage() {
             <section className="watch-detail-section" id="downloads">
               <div className="watch-detail-section-head">
                 <div>
-                  <div className="section-index">Downloads</div>
-                  <h2>Batch download</h2>
+                  <div className="section-index">Unduhan</div>
+                  <h2>Unduh batch</h2>
                 </div>
-                {batch && <span>{onlineMirrorCount(batch)} mirrors</span>}
+                {batch && <span>{onlineMirrorCount(batch)} mirror</span>}
               </div>
               {batch ? (
-                <DownloadGroups groups={batch.downloads} emptyLabel="Batch links are not available right now." />
+                <DownloadGroups groups={batch.downloads} emptyLabel="Tautan batch belum tersedia." />
               ) : (
                 <button className="button button-outline" onClick={() => void loadBatch()} disabled={batchLoading}>
                   {batchLoading ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                  {batchLoading ? 'Loading mirrors…' : 'Reveal batch download links'}
+                  {batchLoading ? 'Memuat mirror…' : 'Tampilkan tautan batch'}
                 </button>
               )}
             </section>
@@ -231,10 +232,10 @@ export function WatchAnimePage() {
             <section className="watch-detail-section">
               <div className="watch-detail-section-head">
                 <div>
-                  <div className="section-index">Keep watching</div>
-                  <h2>More from the shelf</h2>
+                  <div className="section-index">Lanjut nonton</div>
+                  <h2>Lainnya dari rak</h2>
                 </div>
-                <Link to="/all" className="text-link">All titles <ChevronRight size={13} /></Link>
+                <Link to="/all" className="text-link">Semua judul <ChevronRight size={13} /></Link>
               </div>
               <div className="watch-grid watch-grid-related">
                 {anime.recommendations.slice(0, 5).map((recommendation) => (
@@ -247,23 +248,23 @@ export function WatchAnimePage() {
 
         <aside className="watch-detail-side">
           <div className="watch-side-card">
-            <p className="watch-side-heading">Details</p>
+            <p className="watch-side-heading">Detail</p>
             <dl className="watch-facts">
-              <div><dt>Status</dt><dd>{anime.status ?? 'Unknown'}</dd></div>
-              <div><dt>Type</dt><dd>{anime.type ?? 'Anime'}</dd></div>
-              <div><dt>Episodes</dt><dd>{anime.episodes ?? 'TBA'}</dd></div>
-              <div><dt>Duration</dt><dd>{anime.duration ?? 'TBA'}</dd></div>
-              <div><dt>Aired</dt><dd>{anime.aired ?? 'TBA'}</dd></div>
-              <div><dt>Studio</dt><dd>{anime.studios.join(', ') || 'Unknown'}</dd></div>
-              <div><dt>Season</dt><dd>{anime.season ?? '—'}</dd></div>
-              {anime.score !== null && <div><dt>Provider score</dt><dd>{anime.score.toFixed(2)} / 10</dd></div>}
+              <div><dt>Status</dt><dd>{otakuStatusLabel(anime.status)}</dd></div>
+              <div><dt>Tipe</dt><dd>{anime.type ?? 'Anime'}</dd></div>
+              <div><dt>Episode</dt><dd>{anime.episodes ?? '—'}</dd></div>
+              <div><dt>Durasi</dt><dd>{formatDurationLabel(anime.duration)}</dd></div>
+              <div><dt>Tayang</dt><dd>{formatProviderDate(anime.aired)}</dd></div>
+              <div><dt>Studio</dt><dd>{anime.studios.join(', ') || 'Tidak diketahui'}</dd></div>
+              <div><dt>Musim</dt><dd>{seasonName(anime.season)}</dd></div>
+              {anime.score !== null && <div><dt>Skor provider</dt><dd>{anime.score.toFixed(2)} / 10</dd></div>}
             </dl>
           </div>
 
           <div className="watch-side-card watch-source-card">
-            <p className="watch-side-heading">Source</p>
+            <p className="watch-side-heading">Sumber</p>
             <div className="watch-source-line"><CalendarDays size={14} /><span>Sumber data streaming</span></div>
-            <div className="watch-source-line"><Clock3 size={14} /><span>Indonesian subtitles</span></div>
+            <div className="watch-source-line"><Clock3 size={14} /><span>Subtitle Indonesia</span></div>
             <p>Video di-embed dari server pihak ketiga; ReogNime tidak menyimpan file video.</p>
           </div>
         </aside>
