@@ -183,3 +183,14 @@ test('Otakudesu relay normalizes browser-fetched payloads without calling the up
 
   await assert.rejects(() => service.relay('home', { status: 'error' }), /valid Otakudesu payload/);
 });
+
+test('Otakudesu uses the bundled sitemap when the artwork source is unreachable', async () => {
+  const service = new OtakudesuService({
+    sitemapUrl: 'https://example.test/series-sitemap.xml',
+    fetchImpl: async () => {
+      throw new Error('offline');
+    },
+  });
+  const index = await service.getArtworkIndex();
+  assert.ok(index.entries.length > 100, 'bundled artwork index should contain the series catalog');
+});

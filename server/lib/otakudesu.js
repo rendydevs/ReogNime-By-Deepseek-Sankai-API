@@ -6,6 +6,7 @@
  * frontend never has to know about upstream quirks, and every upstream call is
  * cached + softly rate limited (the provider allows 45 requests/minute).
  */
+import { readFileSync } from 'node:fs';
 import { ApiError } from './errors.js';
 
 export const OTAKUDESU_SOURCE = {
@@ -193,6 +194,20 @@ function buildArtworkIndex(entries) {
     byStem,
     loadedAt: Date.now(),
   };
+}
+
+let bundledArtwork = null;
+
+function getBundledArtwork() {
+  if (!bundledArtwork) {
+    try {
+      const xml = readFileSync(new URL('../data/series-sitemap.xml', import.meta.url), 'utf8');
+      bundledArtwork = buildArtworkIndex(sitemapEntries(xml));
+    } catch {
+      bundledArtwork = buildArtworkIndex([]);
+    }
+  }
+  return bundledArtwork;
 }
 
 function titleMatchScore(title, candidate) {
@@ -397,7 +412,7 @@ export class OtakudesuService {
     if (this.artwork && this.now() - this.artwork.loadedAt < TTL.covers) return this.artwork;
     if (this.artworkPromise) return this.artworkPromise;
     if (this.artworkFailedAt && this.now() - this.artworkFailedAt < 300_000) {
-      return this.artwork ?? buildArtworkIndex([]);
+      return this.artwork ?? getBundledArtwork();
     }
 
     this.artworkPromise = (async () => {
@@ -414,7 +429,7 @@ export class OtakudesuService {
         return index;
       } catch {
         this.artworkFailedAt = this.now();
-        return this.artwork ?? buildArtworkIndex([]);
+        return this.artwork ?? getBundledArtwork();
       } finally {
         this.artworkPromise = null;
       }

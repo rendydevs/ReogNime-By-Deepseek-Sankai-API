@@ -263,7 +263,7 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 ## Tests
 
 ```bash
-npm test        # 14 API, provider, relay, and Vercel-adapter tests
+npm test        # 15 API, provider, relay, artwork-fallback, and Vercel-adapter tests
 npm run typecheck
 npm run build
 ```
