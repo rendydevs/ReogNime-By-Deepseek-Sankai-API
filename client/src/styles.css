@@ -1354,7 +1354,7 @@ svg {
   padding: 0 7px;
   background: rgba(18, 17, 14, 0.55);
   color: rgba(255, 255, 255, 0.92);
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   backdrop-filter: blur(8px);
@@ -8509,7 +8509,7 @@ select.field {
   position: relative;
   padding: 4px 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.04em;
   transition: color 0.2s ease;
@@ -11690,4 +11690,54 @@ li {
     animation: none;
     transform: scale(1.02);
   }
+}
+
+/* Reog + hiragana brand mark */
+.logo-mark {
+  width: 33px;
+  height: 33px;
+  border-radius: 10px;
+}
+
+.logo-mark svg {
+  width: 27px;
+  height: 27px;
+}
+
+.logo-crown {
+  opacity: 0.82;
+}
+
+.logo-word {
+  font-size: 17px;
+}
+
+.logo-kana {
+  margin-left: -4px;
+  color: var(--accent);
+  font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.logo-tag {
+  padding-left: 8px;
+}
+
+.site-footer .logo-kana {
+  color: var(--gold);
+}
+
+@media (max-width: 760px) {
+  .logo-mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .logo-mark svg {
+    width: 25px;
+    height: 25px;
+  }
+
 }
