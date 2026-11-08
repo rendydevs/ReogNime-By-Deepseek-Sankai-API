@@ -8,6 +8,7 @@ import { useOnlineStatus } from '../lib/hooks';
 import { ChatWidget } from './ChatWidget';
 import { CommandSearch } from './CommandSearch';
 import { Logo } from './Logo';
+import { HeaderCredits, MobileCredits } from './PartnerCredits';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Beranda', end: true },
@@ -66,7 +67,10 @@ export function Layout() {
       <a href="#main" className="skip-link">Lewati ke konten</a>
       <header className="site-header">
         <div className="header-inner">
-          <Logo />
+          <div className="header-brand">
+            <Logo />
+            <HeaderCredits />
+          </div>
           <nav className="desktop-nav" aria-label="Navigasi utama">
             {NAV_ITEMS.map((item) => (
               <NavLink
@@ -134,6 +138,7 @@ export function Layout() {
               <span className="mobile-nav-index">08</span>
               Daftar Saya
             </NavLink>
+            <MobileCredits />
           </nav>
         )}
       </header>
