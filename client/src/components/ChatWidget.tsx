@@ -44,6 +44,7 @@ const STORAGE_KEY = 'reognime-chat-thread-v1';
 const OPEN_TTL = 7 * 24 * 60 * 60 * 1000;
 const RESOLVED_TTL = 3 * 24 * 60 * 60 * 1000;
 const POLL_MS = 15_000;
+const RESOLVED_CLEAR_MS = 3 * 60 * 1000;
 const GREETING = 'Hai, aku NimeBot. Pilih topik cepat di bawah untuk jawaban singkat, atau tulis pesan dan langsung aku teruskan ke Admin ReogNime.';
 const CONNECT_TEXT = 'Halo admin, saya ingin terhubung dan menyampaikan keluhan.';
 const ESCALATION = 'Baik pesan anda dikirim ke admin mohon tunggu ya.';
@@ -215,10 +216,31 @@ export function ChatWidget() {
     }, 170);
   }, [closing, later]);
 
+  const resetToBot = useCallback((showNudge: boolean) => {
+    setThread(null);
+    setBotMessages([{ id: BOT_ID, from: 'bot', text: GREETING }]);
+    setInput('');
+    setTyping(null);
+    setSyncError(null);
+    setConnecting(false);
+    setSending(false);
+    setAdminOpen(false);
+    setHasOpened(!showNudge);
+    setNudgeVisible(showNudge);
+  }, []);
+
   useEffect(() => () => timers.current.forEach((timer) => window.clearTimeout(timer)), []);
   useEffect(() => {
     writeCachedThread(thread);
   }, [thread]);
+
+  useEffect(() => {
+    if (!thread || thread.status !== 'resolved') return;
+    // Once resolved, leave the notice available for a few minutes, then clear
+    // the browser cache and return to the normal bot + "Hubungkan ke admin" view.
+    const cleanup = window.setTimeout(() => resetToBot(true), RESOLVED_CLEAR_MS);
+    return () => window.clearTimeout(cleanup);
+  }, [thread?.id, thread?.status, resetToBot]);
 
   useEffect(() => {
     if (!open) return;
@@ -299,6 +321,7 @@ export function ChatWidget() {
       return;
     }
     setNudgeVisible(true);
+    if (notification.title === 'Pesan selesai') return;
     const timer = window.setTimeout(() => setNudgeVisible(false), 12_000);
     return () => window.clearTimeout(timer);
   }, [notification?.title, notification?.body]);
@@ -308,13 +331,7 @@ export function ChatWidget() {
   };
 
   const startNewConversation = () => {
-    setThread(null);
-    setSyncError(null);
-    setBotMessages([{ id: BOT_ID, from: 'bot', text: GREETING }]);
-    setInput('');
-    setTyping(null);
-    setHasOpened(true);
-    setNudgeVisible(false);
+    resetToBot(false);
   };
 
   const connectToAdmin = async (seed: string) => {
