@@ -23,6 +23,30 @@ const meta = (extra = {}) => ({
   ...extra,
 });
 
+const relaySchema = z.object({
+  endpoint: z.enum([
+    'home',
+    'ongoing',
+    'completed',
+    'schedule',
+    'genres',
+    'genre',
+    'search',
+    'anime',
+    'episode',
+    'batch',
+    'server',
+    'unlimited',
+  ]),
+  payload: z.object({ status: z.string().optional(), data: z.unknown() }).passthrough(),
+  params: z
+    .object({
+      slug: z.string().trim().max(220).optional(),
+      query: z.string().trim().max(100).optional(),
+    })
+    .optional(),
+});
+
 export function createOtakudesuRouter(service) {
   const router = express.Router();
   if (!service) throw new Error('createOtakudesuRouter requires an Otakudesu service.');
@@ -102,6 +126,32 @@ export function createOtakudesuRouter(service) {
     const data = await service.getUnlimited();
     res.set('Cache-Control', 'public, max-age=1800');
     res.json({ data, meta: meta() });
+  });
+
+
+  router.post('/relay', async (req, res) => {
+    const parsed = relaySchema.safeParse(req.body);
+    if (!parsed.success) {
+      throw new ApiError(422, 'VALIDATION_ERROR', 'Invalid browser relay payload.', parsed.error.flatten());
+    }
+    const { endpoint, payload, params = {} } = parsed.data;
+    const result = await service.relay(endpoint, payload, params);
+    const extra = {};
+    let data = result;
+    if (endpoint === 'ongoing' || endpoint === 'completed') {
+      data = result.animeList;
+      extra.pagination = result.pagination;
+      extra.section = result.kind;
+    } else if (endpoint === 'genre') {
+      data = result.animeList;
+      extra.pagination = result.pagination;
+      extra.genre = result.slug;
+    } else if (endpoint === 'search') {
+      data = result.animeList;
+      extra.query = result.query;
+    }
+    res.set('Cache-Control', 'no-store');
+    res.json({ data, meta: meta(extra) });
   });
 
   router.get('/status', (req, res) => {

@@ -134,6 +134,8 @@ To reproduce the Vercel environment locally (functions + SPA rewrites):
 npx vercel dev --local
 ```
 
+**Provider network note:** the public Otakudesu API sometimes returns HTTP 403 to datacenter IPs such as Vercel Functions. The SPA handles this automatically: if the server-side watch request fails, the visitor's browser fetches the public provider payload directly and posts it to `POST /api/v1/otakudesu/relay`, where the normal server normalizers (including artwork repair) run. The relay accepts only known endpoint names, has a 2 MB body limit, and is rate-limited. To disable this fallback, point `OTAKUDESU_API_BASE` at a reachable proxy or host the API where the provider is accessible.
+
 **Vercel storage caveat:** the archive library is a single local JSON profile. On Vercel it is written to `/tmp/reognime-library.json`, seeded with the six demo entries on each fresh function instance. It resets on a cold start or redeploy. For a persistent personal library, point `LIBRARY_FILE` at a writable persistent volume or move `LibraryStore` to a database/KV; alternatively host the Express API on a persistent service and set `VITE_API_BASE_URL` to it. The in-memory upstream cache also resets with the function instance.
 
 ### A fresh archive list
@@ -261,7 +263,7 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 ## Tests
 
 ```bash
-npm test        # 13 API, provider, and Vercel-adapter tests
+npm test        # 14 API, provider, relay, and Vercel-adapter tests
 npm run typecheck
 npm run build
 ```

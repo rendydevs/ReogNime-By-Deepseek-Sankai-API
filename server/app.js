@@ -156,6 +156,8 @@ export async function createApp({
       maxAge: 86_400,
     }),
   );
+  // The relay receives raw provider payloads from the browser (large episode/unlimited data).
+  app.use('/api/v1/otakudesu/relay', express.json({ limit: '2mb' }));
   app.use(express.json({ limit: '64kb' }));
 
   app.use((req, res, next) => {
@@ -388,6 +390,9 @@ export async function createApp({
     }
     if (error?.type === 'entity.parse.failed') {
       return res.status(400).json({ error: { code: 'INVALID_JSON', message: 'Request body must be valid JSON.' } });
+    }
+    if (error?.type === 'entity.too.large') {
+      return res.status(413).json({ error: { code: 'PAYLOAD_TOO_LARGE', message: 'Request body is too large.' } });
     }
     console.error(error);
     return res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: 'Something went wrong on our side.' } });

@@ -72,6 +72,73 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   return (await response.json()) as T;
 }
 
+const OTAKUDESU_UPSTREAM_BASE = 'https://www.sankavollerei.web.id/anime';
+let preferOtakuRelay = false;
+
+function isRelayableProviderError(error: unknown) {
+  return (
+    error instanceof ApiRequestError &&
+    ['OTAKUDESU_BAD_RESPONSE', 'OTAKUDESU_UPSTREAM_ERROR', 'OTAKUDESU_UNREACHABLE'].includes(error.code)
+  );
+}
+
+async function fetchOtakudesuPayload(path: string, signal?: AbortSignal) {
+  try {
+    const response = await fetch(`${OTAKUDESU_UPSTREAM_BASE}${path}`, {
+      headers: { Accept: 'application/json' },
+      signal,
+    });
+    if (!response.ok) throw new Error(`Upstream HTTP ${response.status}`);
+    const payload = await response.json();
+    if (!payload || payload.status !== 'success' || payload.data === undefined) {
+      throw new Error('Upstream payload was not valid');
+    }
+    return payload;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') throw error;
+    throw new ApiRequestError(
+      'The browser could not reach the anime provider directly. Try another network or retry shortly.',
+      502,
+      'OTAKUDESU_BROWSER_BLOCKED',
+    );
+  }
+}
+
+async function relayOtaku<T>(
+  endpoint: string,
+  path: string,
+  params: Record<string, unknown> = {},
+  signal?: AbortSignal,
+): Promise<T> {
+  const payload = await fetchOtakudesuPayload(path, signal);
+  return request<T>('/otakudesu/relay', {
+    method: 'POST',
+    body: JSON.stringify({ endpoint, payload, params }),
+    signal,
+  });
+}
+
+async function otakuRequest<T>(
+  server: () => Promise<T>,
+  endpoint: string,
+  upstreamPath: string,
+  params: Record<string, unknown> = {},
+  signal?: AbortSignal,
+): Promise<T> {
+  if (!preferOtakuRelay) {
+    try {
+      return await server();
+    } catch (error) {
+      if (!isRelayableProviderError(error)) throw error;
+      // Vercel and other datacenter IPs are sometimes blocked by the provider.
+      // Once that happens, let the visitor's browser fetch the raw payload and
+      // send it to the server for the same normalization.
+      preferOtakuRelay = true;
+    }
+  }
+  return relayOtaku<T>(endpoint, upstreamPath, params, signal);
+}
+
 function queryString(params: Record<string, string | number | undefined | null>) {
   const search = new URLSearchParams();
   for (const [key, value] of Object.entries(params)) {
@@ -184,56 +251,132 @@ export const api = {
 
   otaku: {
     home(signal?: AbortSignal) {
-      return request<{ data: OtakuHome }>('/otakudesu/home', { signal });
+      return otakuRequest<{ data: OtakuHome }>(
+        () => request<{ data: OtakuHome }>('/otakudesu/home', { signal }),
+        'home',
+        '/home',
+        {},
+        signal,
+      );
     },
 
     list(kind: 'ongoing' | 'completed', page = 1, signal?: AbortSignal) {
-      return request<{ data: OtakuCard[]; meta: OtakuListMeta }>(
-        `/otakudesu/${kind}${queryString({ page })}`,
-        { signal },
+      const upstreamPath = `${kind === 'completed' ? '/complete-anime' : '/ongoing-anime'}?page=${encodeURIComponent(page)}`;
+      return otakuRequest<{ data: OtakuCard[]; meta: OtakuListMeta }>(
+        () =>
+          request<{ data: OtakuCard[]; meta: OtakuListMeta }>(
+            `/otakudesu/${kind}${queryString({ page })}`,
+            { signal },
+          ),
+        kind,
+        upstreamPath,
+        { page },
+        signal,
       );
     },
 
     schedule(signal?: AbortSignal) {
-      return request<{ data: OtakuScheduleDay[] }>('/otakudesu/schedule', { signal });
+      return otakuRequest<{ data: OtakuScheduleDay[] }>(
+        () => request<{ data: OtakuScheduleDay[] }>('/otakudesu/schedule', { signal }),
+        'schedule',
+        '/schedule',
+        {},
+        signal,
+      );
     },
 
     genres(signal?: AbortSignal) {
-      return request<{ data: OtakuGenre[] }>('/otakudesu/genres', { signal });
+      return otakuRequest<{ data: OtakuGenre[] }>(
+        () => request<{ data: OtakuGenre[] }>('/otakudesu/genres', { signal }),
+        'genres',
+        '/genre',
+        {},
+        signal,
+      );
     },
 
     genre(slug: string, page = 1, signal?: AbortSignal) {
-      return request<{ data: OtakuCard[]; meta: OtakuListMeta }>(
-        `/otakudesu/genres/${encodeURIComponent(slug)}${queryString({ page })}`,
-        { signal },
+      return otakuRequest<{ data: OtakuCard[]; meta: OtakuListMeta }>(
+        () =>
+          request<{ data: OtakuCard[]; meta: OtakuListMeta }>(
+            `/otakudesu/genres/${encodeURIComponent(slug)}${queryString({ page })}`,
+            { signal },
+          ),
+        'genre',
+        `/genre/${encodeURIComponent(slug)}?page=${encodeURIComponent(page)}`,
+        { slug },
+        signal,
       );
     },
 
     search(q: string, signal?: AbortSignal) {
-      return request<{ data: OtakuCard[]; meta: OtakuListMeta }>(
-        `/otakudesu/search${queryString({ q })}`,
-        { signal },
+      return otakuRequest<{ data: OtakuCard[]; meta: OtakuListMeta }>(
+        () =>
+          request<{ data: OtakuCard[]; meta: OtakuListMeta }>(
+            `/otakudesu/search${queryString({ q })}`,
+            { signal },
+          ),
+        'search',
+        `/search/${encodeURIComponent(q)}`,
+        { query: q },
+        signal,
       );
     },
 
     anime(slug: string, signal?: AbortSignal) {
-      return request<{ data: OtakuAnimeDetail }>(`/otakudesu/anime/${encodeURIComponent(slug)}`, { signal });
+      return otakuRequest<{ data: OtakuAnimeDetail }>(
+        () =>
+          request<{ data: OtakuAnimeDetail }>(`/otakudesu/anime/${encodeURIComponent(slug)}`, { signal }),
+        'anime',
+        `/anime/${encodeURIComponent(slug)}`,
+        { slug },
+        signal,
+      );
     },
 
     episode(slug: string, signal?: AbortSignal) {
-      return request<{ data: OtakuEpisodePage }>(`/otakudesu/episode/${encodeURIComponent(slug)}`, { signal });
+      return otakuRequest<{ data: OtakuEpisodePage }>(
+        () =>
+          request<{ data: OtakuEpisodePage }>(`/otakudesu/episode/${encodeURIComponent(slug)}`, { signal }),
+        'episode',
+        `/episode/${encodeURIComponent(slug)}`,
+        { slug },
+        signal,
+      );
     },
 
     batch(slug: string, signal?: AbortSignal) {
-      return request<{ data: OtakuBatch }>(`/otakudesu/batch/${encodeURIComponent(slug)}`, { signal });
+      return otakuRequest<{ data: OtakuBatch }>(
+        () =>
+          request<{ data: OtakuBatch }>(`/otakudesu/batch/${encodeURIComponent(slug)}`, { signal }),
+        'batch',
+        `/batch/${encodeURIComponent(slug)}`,
+        { slug },
+        signal,
+      );
     },
 
     server(serverId: string, signal?: AbortSignal) {
-      return request<{ data: { url: string } }>(`/otakudesu/server/${encodeURIComponent(serverId)}`, { signal });
+      return otakuRequest<{ data: { url: string } }>(
+        () =>
+          request<{ data: { url: string } }>(`/otakudesu/server/${encodeURIComponent(serverId)}`, {
+            signal,
+          }),
+        'server',
+        `/server/${encodeURIComponent(serverId)}`,
+        {},
+        signal,
+      );
     },
 
     unlimited(signal?: AbortSignal) {
-      return request<{ data: OtakuUnlimitedGroup[] }>('/otakudesu/unlimited', { signal });
+      return otakuRequest<{ data: OtakuUnlimitedGroup[] }>(
+        () => request<{ data: OtakuUnlimitedGroup[] }>('/otakudesu/unlimited', { signal }),
+        'unlimited',
+        '/unlimited',
+        {},
+        signal,
+      );
     },
   },
 };

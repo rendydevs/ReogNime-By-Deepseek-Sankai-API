@@ -516,18 +516,175 @@ export class OtakudesuService {
     };
   }
 
+  /* ---------- raw normalisers (shared by upstream fetches and browser relay) ---------- */
+
+  normalizeHome(payload, artwork) {
+    const ongoing = (payload.data?.ongoing?.animeList ?? []).map((item) =>
+      this.card(item, artwork, { status: 'Ongoing' }),
+    );
+    const completed = (payload.data?.completed?.animeList ?? []).map((item) =>
+      this.card(item, artwork, { status: 'Completed' }),
+    );
+    return { ongoing, completed, featured: ongoing[0] ?? completed[0] ?? null };
+  }
+
+  normalizeList(payload, kind, artwork) {
+    return {
+      animeList: (payload.data?.animeList ?? []).map((item) =>
+        this.card(item, artwork, { status: kind === 'completed' ? 'Completed' : 'Ongoing' }),
+      ),
+      pagination: payload.pagination ?? null,
+      kind,
+    };
+  }
+
+  normalizeSchedule(payload, artwork) {
+    return (payload.data ?? []).map((day) => ({
+      day: day.day,
+      animeList: (day.anime_list ?? day.animeList ?? []).map((item) => {
+        const art = this.resolveArtwork(item.poster, cleanTitle(item.title), artwork);
+        return {
+          slug: safeSlug(item.slug ?? item.animeId),
+          title: cleanTitle(item.title),
+          poster: art.image,
+          sourceUrl: art.sourceUrl,
+        };
+      }),
+    }));
+  }
+
+  normalizeGenres(payload) {
+    return (payload.data?.genreList ?? []).map((genre) => ({
+      name: cleanTitle(genre.title),
+      slug: genre.genreId,
+    }));
+  }
+
+  normalizeGenre(payload, slug, artwork) {
+    return {
+      slug,
+      animeList: (payload.data?.animeList ?? []).map((item) => this.card(item, artwork)),
+      pagination: payload.pagination ?? null,
+    };
+  }
+
+  normalizeSearch(payload, query, artwork) {
+    return {
+      query,
+      animeList: (payload.data?.animeList ?? []).map((item) => this.card(item, artwork)),
+    };
+  }
+
+  normalizeEpisode(raw, slug) {
+    const servers = (raw.server?.qualities ?? []).map((quality) => ({
+      quality: quality.title ?? '',
+      servers: (quality.serverList ?? []).map((server) => ({
+        name: (server.title ?? '').trim(),
+        id: server.serverId,
+      })),
+    }));
+    return {
+      slug,
+      title: cleanTitle(raw.title ?? ''),
+      animeSlug: safeSlug(raw.animeId) || slug,
+      releaseTime: raw.releaseTime ?? null,
+      defaultStreamingUrl: safeExternalUrl(raw.defaultStreamingUrl),
+      previous: raw.prevEpisode
+        ? { slug: safeSlug(raw.prevEpisode.episodeId), label: 'Previous' }
+        : null,
+      next: raw.nextEpisode ? { slug: safeSlug(raw.nextEpisode.episodeId), label: 'Next' } : null,
+      servers,
+      downloads: normalizeDownloadGroups(raw.downloadUrl),
+      info: {
+        credit: raw.info?.credit ?? null,
+        encoder: raw.info?.encoder ?? null,
+        duration: raw.info?.duration ?? null,
+        type: raw.info?.type ?? null,
+        genres: normalizeGenres(raw.info?.genreList),
+      },
+      episodes: (raw.info?.episodeList ?? []).map((episode, index) => fromRawEpisode(episode, index)),
+    };
+  }
+
+  normalizeBatch(payload, artwork) {
+    const raw = payload.data ?? {};
+    const card = this.card(raw, artwork);
+    return {
+      ...card,
+      title: cleanTitle(raw.title ?? card.title),
+      downloads: normalizeDownloadGroups(raw.downloadUrl),
+    };
+  }
+
+  normalizeServer(payload) {
+    const url = safeExternalUrl(payload.data?.url);
+    if (!url) throw new ApiError(502, 'NO_STREAM', 'That streaming server did not return a playable URL.');
+    return { url };
+  }
+
+  normalizeUnlimited(payload) {
+    return (payload.data?.list ?? []).map((group) => ({
+      letter: group.startWith,
+      animeList: (group.animeList ?? []).map((item) => ({
+        slug: safeSlug(item.animeId),
+        title: cleanTitle(item.title),
+      })),
+    }));
+  }
+
+  async relay(endpoint, payload, params = {}) {
+    if (!payload || payload.status !== 'success' || payload.data === undefined) {
+      throw new ApiError(502, 'OTAKUDESU_BAD_RESPONSE', 'The browser relay did not receive a valid Otakudesu payload.');
+    }
+
+    switch (endpoint) {
+      case 'home':
+        return this.normalizeHome(payload, await this.getArtworkIndex());
+      case 'ongoing':
+      case 'completed':
+        return this.normalizeList(payload, endpoint, await this.getArtworkIndex());
+      case 'schedule':
+        return this.normalizeSchedule(payload, await this.getArtworkIndex());
+      case 'genres':
+        return this.normalizeGenres(payload);
+      case 'genre': {
+        const slug = safeSlug(params.slug);
+        if (!slug) throw new ApiError(400, 'INVALID_SLUG', 'A valid genre slug is required.');
+        return this.normalizeGenre(payload, slug, await this.getArtworkIndex());
+      }
+      case 'search': {
+        const query = String(params.query ?? '').trim();
+        if (!query) throw new ApiError(400, 'MISSING_QUERY', 'A search query is required.');
+        return this.normalizeSearch(payload, query, await this.getArtworkIndex());
+      }
+      case 'anime': {
+        if (!payload.data || typeof payload.data !== 'object') {
+          throw new ApiError(502, 'OTAKUDESU_BAD_RESPONSE', 'The browser relay returned an invalid anime payload.');
+        }
+        return this.detail(payload.data);
+      }
+      case 'episode': {
+        const slug = safeSlug(params.slug);
+        if (!slug) throw new ApiError(400, 'INVALID_SLUG', 'A valid episode slug is required.');
+        return this.normalizeEpisode(payload.data ?? {}, slug);
+      }
+      case 'batch':
+        return this.normalizeBatch(payload, await this.getArtworkIndex());
+      case 'server':
+        return this.normalizeServer(payload);
+      case 'unlimited':
+        return this.normalizeUnlimited(payload);
+      default:
+        throw new ApiError(400, 'INVALID_RELAY_ENDPOINT', 'That browser relay endpoint is not supported.');
+    }
+  }
+
   /* ---------- public endpoints ---------- */
 
   async getHome() {
     return this.cached('home', TTL.home, async () => {
       const [payload, artwork] = await Promise.all([this.upstream('/home'), this.getArtworkIndex()]);
-      const ongoing = (payload.data?.ongoing?.animeList ?? []).map((item) =>
-        this.card(item, artwork, { status: 'Ongoing' }),
-      );
-      const completed = (payload.data?.completed?.animeList ?? []).map((item) =>
-        this.card(item, artwork, { status: 'Completed' }),
-      );
-      return { ongoing, completed, featured: ongoing[0] ?? completed[0] ?? null };
+      return this.normalizeHome(payload, artwork);
     });
   }
 
@@ -539,41 +696,21 @@ export class OtakudesuService {
         this.upstream(`${path}?page=${encodeURIComponent(page)}`),
         this.getArtworkIndex(),
       ]);
-      return {
-        animeList: (payload.data?.animeList ?? []).map((item) =>
-          this.card(item, artwork, { status: kind === 'completed' ? 'Completed' : 'Ongoing' }),
-        ),
-        pagination: payload.pagination ?? null,
-        kind,
-      };
+      return this.normalizeList(payload, kind, artwork);
     });
   }
 
   async getSchedule() {
     return this.cached('schedule', TTL.schedule, async () => {
       const [payload, artwork] = await Promise.all([this.upstream('/schedule'), this.getArtworkIndex()]);
-      return (payload.data ?? []).map((day) => ({
-        day: day.day,
-        animeList: (day.anime_list ?? day.animeList ?? []).map((item) => {
-          const art = this.resolveArtwork(item.poster, cleanTitle(item.title), artwork);
-          return {
-            slug: safeSlug(item.slug ?? item.animeId),
-            title: cleanTitle(item.title),
-            poster: art.image,
-            sourceUrl: art.sourceUrl,
-          };
-        }),
-      }));
+      return this.normalizeSchedule(payload, artwork);
     });
   }
 
   async getGenres() {
     return this.cached('genres', TTL.genres, async () => {
       const payload = await this.upstream('/genre');
-      return (payload.data?.genreList ?? []).map((genre) => ({
-        name: cleanTitle(genre.title),
-        slug: genre.genreId,
-      }));
+      return this.normalizeGenres(payload);
     });
   }
 
@@ -585,11 +722,7 @@ export class OtakudesuService {
         this.upstream(`/genre/${encodeURIComponent(safe)}?page=${encodeURIComponent(page)}`),
         this.getArtworkIndex(),
       ]);
-      return {
-        slug: safe,
-        animeList: (payload.data?.animeList ?? []).map((item) => this.card(item, artwork)),
-        pagination: payload.pagination ?? null,
-      };
+      return this.normalizeGenre(payload, safe, artwork);
     });
   }
 
@@ -603,10 +736,7 @@ export class OtakudesuService {
         this.upstream(`/search/${encodeURIComponent(text)}`),
         this.getArtworkIndex(),
       ]);
-      return {
-        query: text,
-        animeList: (payload.data?.animeList ?? []).map((item) => this.card(item, artwork)),
-      };
+      return this.normalizeSearch(payload, text, artwork);
     });
   }
 
@@ -625,35 +755,7 @@ export class OtakudesuService {
     if (!safe) throw new ApiError(400, 'INVALID_SLUG', 'A valid episode slug is required.');
     return this.cached(`episode:${safe}`, TTL.episode, async () => {
       const payload = await this.upstream(`/episode/${encodeURIComponent(safe)}`);
-      const raw = payload.data ?? {};
-      const servers = (raw.server?.qualities ?? []).map((quality) => ({
-        quality: quality.title ?? '',
-        servers: (quality.serverList ?? []).map((server) => ({
-          name: (server.title ?? '').trim(),
-          id: server.serverId,
-        })),
-      }));
-      return {
-        slug: safe,
-        title: cleanTitle(raw.title ?? ''),
-        animeSlug: safeSlug(raw.animeId),
-        releaseTime: raw.releaseTime ?? null,
-        defaultStreamingUrl: safeExternalUrl(raw.defaultStreamingUrl),
-        previous: raw.prevEpisode
-          ? { slug: safeSlug(raw.prevEpisode.episodeId), label: 'Previous' }
-          : null,
-        next: raw.nextEpisode ? { slug: safeSlug(raw.nextEpisode.episodeId), label: 'Next' } : null,
-        servers,
-        downloads: normalizeDownloadGroups(raw.downloadUrl),
-        info: {
-          credit: raw.info?.credit ?? null,
-          encoder: raw.info?.encoder ?? null,
-          duration: raw.info?.duration ?? null,
-          type: raw.info?.type ?? null,
-          genres: normalizeGenres(raw.info?.genreList),
-        },
-        episodes: (raw.info?.episodeList ?? []).map((episode, index) => fromRawEpisode(episode, index)),
-      };
+      return this.normalizeEpisode(payload.data ?? {}, safe);
     });
   }
 
@@ -665,13 +767,7 @@ export class OtakudesuService {
         this.upstream(`/batch/${encodeURIComponent(safe)}`),
         this.getArtworkIndex(),
       ]);
-      const raw = payload.data ?? {};
-      const card = this.card(raw, artwork);
-      return {
-        ...card,
-        title: cleanTitle(raw.title ?? card.title),
-        downloads: normalizeDownloadGroups(raw.downloadUrl),
-      };
+      return this.normalizeBatch(payload, artwork);
     });
   }
 
@@ -680,22 +776,14 @@ export class OtakudesuService {
     if (!safe) throw new ApiError(400, 'INVALID_SERVER', 'A valid streaming server id is required.');
     return this.cached(`server:${safe}`, TTL.server, async () => {
       const payload = await this.upstream(`/server/${encodeURIComponent(safe)}`);
-      const url = safeExternalUrl(payload.data?.url);
-      if (!url) throw new ApiError(502, 'NO_STREAM', 'That streaming server did not return a playable URL.');
-      return { url };
+      return this.normalizeServer(payload);
     });
   }
 
   async getUnlimited() {
     return this.cached('unlimited', TTL.unlimited, async () => {
       const payload = await this.upstream('/unlimited');
-      return (payload.data?.list ?? []).map((group) => ({
-        letter: group.startWith,
-        animeList: (group.animeList ?? []).map((item) => ({
-          slug: safeSlug(item.animeId),
-          title: cleanTitle(item.title),
-        })),
-      }));
+      return this.normalizeUnlimited(payload);
     });
   }
 

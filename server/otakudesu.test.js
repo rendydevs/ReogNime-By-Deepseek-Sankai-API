@@ -155,3 +155,31 @@ test('Otakudesu rejects invalid identifiers before calling upstream', async () =
   await assert.rejects(() => service.getServer('bad/id'), /valid streaming server id/);
   assert.equal(called, false);
 });
+
+test('Otakudesu relay normalizes browser-fetched payloads without calling the upstream API', async () => {
+  const service = new OtakudesuService({
+    sitemapUrl: 'https://example.test/series-sitemap.xml',
+    fetchImpl: async (url) => {
+      if (String(url).includes('sitemap')) {
+        return new Response(SITEMAP, { status: 200, headers: { 'Content-Type': 'application/xml' } });
+      }
+      throw new Error(`Relay must not call upstream: ${url}`);
+    },
+  });
+
+  const home = await service.relay('home', HOME);
+  assert.equal(home.ongoing.length, 1);
+  assert.equal(home.ongoing[0].title, 'Sousou no Frieren Season 2');
+  assert.match(home.ongoing[0].poster, /i0\.wp\.com/);
+
+  const list = await service.relay('ongoing', {
+    status: 'success',
+    data: { animeList: HOME.data.ongoing.animeList },
+    pagination: { currentPage: 1, hasNextPage: true },
+  });
+  assert.equal(list.kind, 'ongoing');
+  assert.equal(list.animeList.length, 1);
+  assert.equal(list.pagination.hasNextPage, true);
+
+  await assert.rejects(() => service.relay('home', { status: 'error' }), /valid Otakudesu payload/);
+});
