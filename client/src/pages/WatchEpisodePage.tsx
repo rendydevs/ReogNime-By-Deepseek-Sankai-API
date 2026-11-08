@@ -30,7 +30,8 @@ function PlayerSkeleton() {
   );
 }
 
-const SERVER_PREFERENCE = ['filedon', 'filelions', 'vidhide', 'mega'];
+// Mega is the cleanest embed we have tested; keep every mirror visible as a fallback.
+const SERVER_PREFERENCE = ['mega', 'filelions', 'vidhide', 'filedon'];
 
 function serverPreference(name: string): number {
   const normalized = name.toLowerCase().trim();
@@ -241,7 +242,7 @@ export function WatchEpisodePage() {
             </div>
             <p className="player-disclaimer">
               Streams are embedded from third-party servers. ReogNime does not host video files.
-              If a mirror fails, choose another one above.
+              Mega is selected first when available for a cleaner player; all mirrors above remain available.
             </p>
           </section>
 
