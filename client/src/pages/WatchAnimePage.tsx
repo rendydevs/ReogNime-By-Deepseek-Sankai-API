@@ -4,7 +4,6 @@ import {
   CalendarDays,
   ChevronRight,
   Clock3,
-  ExternalLink,
   LoaderCircle,
   Play,
   Star,
@@ -134,11 +133,6 @@ export function WatchAnimePage() {
                     Batch download
                   </button>
                 )}
-                {anime.sourceUrl && (
-                  <a href={anime.sourceUrl} target="_blank" rel="noopener noreferrer" className="detail-icon-button" title="Open source" aria-label="Open source">
-                    <ExternalLink size={17} />
-                  </a>
-                )}
               </div>
             </div>
           </div>
@@ -249,7 +243,6 @@ export function WatchAnimePage() {
             <div className="watch-source-line"><CalendarDays size={14} /><span>Sumber data streaming</span></div>
             <div className="watch-source-line"><Clock3 size={14} /><span>Indonesian subtitles</span></div>
             <p>Video di-embed dari server pihak ketiga; ReogNime tidak menyimpan file video.</p>
-            {anime.sourceUrl && <a href={anime.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-link">Open series source <ExternalLink size={12} /></a>}
           </div>
         </aside>
       </div>
