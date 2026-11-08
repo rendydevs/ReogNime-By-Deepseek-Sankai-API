@@ -96,7 +96,7 @@ export function WatchAnimePage() {
     <div className="watch-anime-page">
       <section className="watch-detail-hero">
         <div className="watch-detail-backdrop">
-          {anime.poster && <img src={anime.poster} alt="" referrerPolicy="no-referrer" />}
+          {(anime.banner || anime.poster) && <img src={anime.banner || anime.poster || ''} alt="" referrerPolicy="no-referrer" />}
           <span />
         </div>
         <div className="container watch-detail-hero-inner">

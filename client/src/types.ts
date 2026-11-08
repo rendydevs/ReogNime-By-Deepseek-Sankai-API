@@ -190,6 +190,7 @@ export interface OtakuCard {
   slug: string;
   title: string;
   poster: string | null;
+  banner?: string | null;
   sourceUrl: string | null;
   status: string | null;
   episodes: number | null;

@@ -306,11 +306,13 @@ export class OtakudesuService {
     sitemapUrl = process.env.OTAKUDESU_SITEMAP_URL || DEFAULT_SITEMAP_URL,
     fetchImpl = globalThis.fetch,
     now = () => Date.now(),
+    anilistArtwork = null,
   } = {}) {
     this.apiBase = apiBase.replace(/\/$/, '');
     this.sitemapUrl = sitemapUrl;
     this.fetchImpl = fetchImpl;
     this.now = now;
+    this.anilistArtwork = anilistArtwork;
     this.cache = new StaleCache();
     this.inflight = new Map();
     this.upstreamTimes = [];
@@ -488,6 +490,7 @@ export class OtakudesuService {
       slug: safeSlug(raw?.animeId ?? raw?.slug ?? ''),
       title,
       poster: art.image,
+      banner: null,
       sourceUrl: art.sourceUrl,
       status: cleanStatus(raw?.status, status),
       episodes: numeric(raw?.episodes),
@@ -647,51 +650,82 @@ export class OtakudesuService {
     }));
   }
 
+  async enrichResult(endpoint, result) {
+    if (!this.anilistArtwork) return result;
+    const cards = [];
+    if (endpoint === 'home') {
+      cards.push(...(result.ongoing ?? []), ...(result.completed ?? []));
+    } else if (['ongoing', 'completed', 'genre', 'search'].includes(endpoint)) {
+      cards.push(...(result.animeList ?? []));
+    } else if (endpoint === 'anime') {
+      cards.push(result, ...(result.recommendations ?? []));
+    } else if (endpoint === 'schedule') {
+      for (const day of result) cards.push(...(day.animeList ?? []));
+    } else {
+      return result;
+    }
+    await this.anilistArtwork.apply(cards);
+    return result;
+  }
+
   async relay(endpoint, payload, params = {}) {
     if (!payload || payload.status !== 'success' || payload.data === undefined) {
       throw new ApiError(502, 'OTAKUDESU_BAD_RESPONSE', 'The browser relay did not receive a valid Otakudesu payload.');
     }
 
+    let result;
     switch (endpoint) {
       case 'home':
-        return this.normalizeHome(payload, await this.getArtworkIndex());
+        result = this.normalizeHome(payload, await this.getArtworkIndex());
+        break;
       case 'ongoing':
       case 'completed':
-        return this.normalizeList(payload, endpoint, await this.getArtworkIndex());
+        result = this.normalizeList(payload, endpoint, await this.getArtworkIndex());
+        break;
       case 'schedule':
-        return this.normalizeSchedule(payload, await this.getArtworkIndex());
+        result = this.normalizeSchedule(payload, await this.getArtworkIndex());
+        break;
       case 'genres':
-        return this.normalizeGenres(payload);
+        result = this.normalizeGenres(payload);
+        break;
       case 'genre': {
         const slug = safeSlug(params.slug);
         if (!slug) throw new ApiError(400, 'INVALID_SLUG', 'A valid genre slug is required.');
-        return this.normalizeGenre(payload, slug, await this.getArtworkIndex());
+        result = this.normalizeGenre(payload, slug, await this.getArtworkIndex());
+        break;
       }
       case 'search': {
         const query = String(params.query ?? '').trim();
         if (!query) throw new ApiError(400, 'MISSING_QUERY', 'A search query is required.');
-        return this.normalizeSearch(payload, query, await this.getArtworkIndex());
+        result = this.normalizeSearch(payload, query, await this.getArtworkIndex());
+        break;
       }
       case 'anime': {
         if (!payload.data || typeof payload.data !== 'object') {
           throw new ApiError(502, 'OTAKUDESU_BAD_RESPONSE', 'The browser relay returned an invalid anime payload.');
         }
-        return this.detail(payload.data);
+        result = await this.detail(payload.data);
+        break;
       }
       case 'episode': {
         const slug = safeSlug(params.slug);
         if (!slug) throw new ApiError(400, 'INVALID_SLUG', 'A valid episode slug is required.');
-        return this.normalizeEpisode(payload.data ?? {}, slug);
+        result = this.normalizeEpisode(payload.data ?? {}, slug);
+        break;
       }
       case 'batch':
-        return this.normalizeBatch(payload, await this.getArtworkIndex());
+        result = this.normalizeBatch(payload, await this.getArtworkIndex());
+        break;
       case 'server':
-        return this.normalizeServer(payload);
+        result = this.normalizeServer(payload);
+        break;
       case 'unlimited':
-        return this.normalizeUnlimited(payload);
+        result = this.normalizeUnlimited(payload);
+        break;
       default:
         throw new ApiError(400, 'INVALID_RELAY_ENDPOINT', 'That browser relay endpoint is not supported.');
     }
+    return this.enrichResult(endpoint, result);
   }
 
   /* ---------- public endpoints ---------- */
@@ -699,7 +733,7 @@ export class OtakudesuService {
   async getHome() {
     return this.cached('home', TTL.home, async () => {
       const [payload, artwork] = await Promise.all([this.upstream('/home'), this.getArtworkIndex()]);
-      return this.normalizeHome(payload, artwork);
+      return this.enrichResult('home', this.normalizeHome(payload, artwork));
     });
   }
 
@@ -711,14 +745,14 @@ export class OtakudesuService {
         this.upstream(`${path}?page=${encodeURIComponent(page)}`),
         this.getArtworkIndex(),
       ]);
-      return this.normalizeList(payload, kind, artwork);
+      return this.enrichResult(kind, this.normalizeList(payload, kind, artwork));
     });
   }
 
   async getSchedule() {
     return this.cached('schedule', TTL.schedule, async () => {
       const [payload, artwork] = await Promise.all([this.upstream('/schedule'), this.getArtworkIndex()]);
-      return this.normalizeSchedule(payload, artwork);
+      return this.enrichResult('schedule', this.normalizeSchedule(payload, artwork));
     });
   }
 
@@ -737,7 +771,7 @@ export class OtakudesuService {
         this.upstream(`/genre/${encodeURIComponent(safe)}?page=${encodeURIComponent(page)}`),
         this.getArtworkIndex(),
       ]);
-      return this.normalizeGenre(payload, safe, artwork);
+      return this.enrichResult('genre', this.normalizeGenre(payload, safe, artwork));
     });
   }
 
@@ -751,7 +785,7 @@ export class OtakudesuService {
         this.upstream(`/search/${encodeURIComponent(text)}`),
         this.getArtworkIndex(),
       ]);
-      return this.normalizeSearch(payload, text, artwork);
+      return this.enrichResult('search', this.normalizeSearch(payload, text, artwork));
     });
   }
 
@@ -761,7 +795,7 @@ export class OtakudesuService {
     return this.cached(`anime:${safe}`, TTL.anime, async () => {
       const payload = await this.upstream(`/anime/${encodeURIComponent(safe)}`);
       if (!payload.data) throw new ApiError(404, 'ANIME_NOT_FOUND', 'That anime could not be found.');
-      return this.detail(payload.data);
+      return this.enrichResult('anime', await this.detail(payload.data));
     });
   }
 

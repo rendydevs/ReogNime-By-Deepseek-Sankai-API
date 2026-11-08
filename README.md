@@ -263,7 +263,7 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 ## Tests
 
 ```bash
-npm test        # 15 API, provider, relay, artwork-fallback, and Vercel-adapter tests
+npm test        # 17 API, provider, relay, artwork, and Vercel-adapter tests
 npm run typecheck
 npm run build
 ```
@@ -275,6 +275,7 @@ npm run build
 - Rounded poster cards and panel surfaces, hairline rules, generous negative space.
 - The home page is alive without being loud: an auto-advancing featured pick (pauses on hover/focus), animated progress rails, a moving on-air ticker, staggered card entrances and scroll reveals.
 - All motion respects `prefers-reduced-motion`; content remains fully visible without animation.
+- AniList artwork enrichment upgrades streaming cards to high-resolution covers and wide hero banners, with provider artwork as the fallback.
 - Dedicated typographic cover fallback so missing provider artwork never looks broken.
 - Dark mode is a complete palette, not an inverted filter.
 - Footer signature: **made by aldi with love**. The Otakudesu API data credit is intentionally retained.

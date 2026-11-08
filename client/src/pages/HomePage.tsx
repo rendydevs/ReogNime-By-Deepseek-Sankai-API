@@ -156,19 +156,22 @@ export function HomePage() {
             if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
           }}
         >
-          <div className="screening-visual">
-            {features.map((item, index) => (
-              item.poster ? (
+          <div className="screening-ambient" aria-hidden="true">
+            {features.map((item, index) => {
+              const image = item.banner || item.poster;
+              return image ? (
                 <img
                   key={item.slug}
-                  src={item.poster}
+                  src={image}
                   alt=""
-                  aria-hidden="true"
-                  className={`screening-backdrop ${index === active ? 'is-active' : ''}`}
+                  className={`screening-ambient-image ${index === active ? 'is-active' : ''}`}
                   referrerPolicy="no-referrer"
                 />
-              ) : null
-            ))}
+              ) : null;
+            })}
+            <div className="screening-ambient-shade" />
+          </div>
+          <div className="screening-visual">
             <div className="screening-visual-veil" />
             <div className="screening-poster-frame" key={feature.slug}>
               <OtakuPoster title={feature.title} poster={feature.poster} className="screening-poster" eager />

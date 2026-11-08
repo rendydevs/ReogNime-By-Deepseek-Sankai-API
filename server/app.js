@@ -24,6 +24,7 @@ import {
 import { ApiError, notFound } from './lib/errors.js';
 import { LIBRARY_STATUSES, LibraryStore } from './lib/library.js';
 import { getLibraryStats } from './lib/libraryStats.js';
+import { AniListArtwork } from './lib/anilistArtwork.js';
 import { OtakudesuService } from './lib/otakudesu.js';
 import { openApiDocument } from './openapi.js';
 import { createOtakudesuRouter } from './routes/otakudesu.js';
@@ -122,7 +123,7 @@ export async function createApp({
   libraryFile = process.env.LIBRARY_FILE || path.join(ROOT, 'server', 'data', 'library.json'),
   rateLimitEnabled = process.env.NODE_ENV !== 'test',
   trustProxy = Boolean(process.env.VERCEL),
-  otakudesu = new OtakudesuService(),
+  otakudesu = new OtakudesuService({ anilistArtwork: new AniListArtwork() }),
 } = {}) {
   const library = await new LibraryStore(libraryFile).init();
   const app = express();
