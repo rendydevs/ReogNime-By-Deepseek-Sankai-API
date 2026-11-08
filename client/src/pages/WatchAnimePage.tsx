@@ -6,6 +6,8 @@ import {
   Clock3,
   LoaderCircle,
   Play,
+  Search,
+  Share2,
   Star,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -17,6 +19,8 @@ import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { formatDurationLabel, formatProviderDate, genreLabel, otakuStatusLabel, seasonName } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { shareCurrentPage } from '../lib/share';
+import { rememberSeriesMeta } from '../lib/watchHistory';
 import { usePageSeo } from '../lib/seo';
 import type { OtakuBatch } from '../types';
 
@@ -44,11 +48,13 @@ export function WatchAnimePage() {
   const { notify } = useToast();
   const anime = detail.data?.data ?? null;
   const [showAllEpisodes, setShowAllEpisodes] = useState(false);
+  const [episodeQuery, setEpisodeQuery] = useState('');
   const [batch, setBatch] = useState<OtakuBatch | null>(null);
   const [batchLoading, setBatchLoading] = useState(false);
 
   useEffect(() => {
     setShowAllEpisodes(false);
+    setEpisodeQuery('');
     setBatch(null);
   }, [slug]);
 
@@ -75,12 +81,35 @@ export function WatchAnimePage() {
       : null,
   });
 
+  useEffect(() => {
+    if (!anime) return;
+    const seriesSlug = anime.slug || slug;
+    if (!seriesSlug) return;
+    rememberSeriesMeta({ slug: seriesSlug, title: anime.title, poster: anime.poster, banner: anime.banner });
+  }, [anime?.slug, anime?.title, anime?.poster, anime?.banner, slug]);
+
   const episodes = useMemo(
     () => [...(anime?.episodeList ?? [])].sort((a, b) => (a.number ?? 0) - (b.number ?? 0)),
     [anime],
   );
   const firstEpisode = episodes[0] ?? null;
-  const displayedEpisodes = showAllEpisodes ? [...episodes].reverse() : [...episodes].reverse().slice(0, 12);
+  const filteredEpisodes = useMemo(() => {
+    const needle = episodeQuery.trim().toLowerCase();
+    if (!needle) return episodes;
+    return episodes.filter((episode) => episode.title.toLowerCase().includes(needle) || String(episode.number ?? '').includes(needle));
+  }, [episodes, episodeQuery]);
+  const displayedEpisodes = episodeQuery.trim()
+    ? [...filteredEpisodes].reverse().slice(0, 24)
+    : showAllEpisodes
+      ? [...episodes].reverse()
+      : [...episodes].reverse().slice(0, 12);
+
+  const shareSeries = async () => {
+    if (!anime) return;
+    const result = await shareCurrentPage(anime.title);
+    if (result === 'copied') notify('Tautan seri disalin.');
+    else if (result === 'failed') notify('Gagal membagikan tautan.', { tone: 'error' });
+  };
 
   const loadBatch = async () => {
     if (!anime?.batch || batchLoading) {
@@ -156,6 +185,15 @@ export function WatchAnimePage() {
                     Unduh batch
                   </button>
                 )}
+                <button
+                  type="button"
+                  className="watch-share-button"
+                  onClick={() => void shareSeries()}
+                  aria-label="Bagikan seri"
+                  title="Bagikan seri"
+                >
+                  <Share2 size={16} />
+                </button>
               </div>
             </div>
           </div>
@@ -180,8 +218,27 @@ export function WatchAnimePage() {
                 <div className="section-index">Episode</div>
                 <h2>Daftar episode</h2>
               </div>
-              <span>{anime.episodeList.length} episode · terbaru dulu</span>
+              <span>{filteredEpisodes.length} episode · terbaru dulu</span>
             </div>
+            {episodes.length > 8 && (
+              <div className="episode-tools">
+                <label className="episode-search">
+                  <Search size={14} />
+                  <input
+                    value={episodeQuery}
+                    onChange={(event) => setEpisodeQuery(event.target.value)}
+                    placeholder="Cari episode…"
+                    aria-label="Cari episode"
+                    type="search"
+                  />
+                </label>
+                {episodeQuery && (
+                  <button type="button" className="text-button" onClick={() => setEpisodeQuery('')}>
+                    Bersihkan
+                  </button>
+                )}
+              </div>
+            )}
             {episodes.length ? (
               <>
                 <div className="watch-episode-list">
@@ -196,11 +253,14 @@ export function WatchAnimePage() {
                     </Link>
                   ))}
                 </div>
-                {episodes.length > 12 && (
+                {!episodeQuery && episodes.length > 12 && (
                   <button className="text-link watch-show-all" onClick={() => setShowAllEpisodes((value) => !value)}>
                     {showAllEpisodes ? 'Tampilkan lebih sedikit' : `Tampilkan semua ${episodes.length} episode`}
                     <ChevronRight size={14} className={showAllEpisodes ? 'is-rotated' : ''} />
                   </button>
+                )}
+                {episodeQuery && !displayedEpisodes.length && (
+                  <p className="inline-note">Tidak ada episode yang cocok.</p>
                 )}
               </>
             ) : (

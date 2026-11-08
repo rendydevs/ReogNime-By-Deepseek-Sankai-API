@@ -1,8 +1,10 @@
-import { Menu, Moon, Search, Sun, X } from 'lucide-react';
+import { ArrowUp, BookMarked, Menu, Moon, Search, Sun, WifiOff, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { useLibrary } from '../context/LibraryContext';
 import { useTheme } from '../context/ThemeContext';
 import { OPENAPI_URL } from '../lib/api';
+import { useOnlineStatus } from '../lib/hooks';
 import { ChatWidget } from './ChatWidget';
 import { CommandSearch } from './CommandSearch';
 import { Logo } from './Logo';
@@ -24,6 +26,9 @@ function isTypingTarget(target: EventTarget | null) {
 
 export function Layout() {
   const { theme, toggleTheme } = useTheme();
+  const { stats } = useLibrary();
+  const online = useOnlineStatus();
+  const [showTop, setShowTop] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -32,6 +37,13 @@ export function Layout() {
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 760);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -73,6 +85,15 @@ export function Layout() {
               <span>Cari</span>
               <kbd>⌘K</kbd>
             </button>
+            <Link
+              to="/library"
+              className={`icon-button library-shortcut ${location.pathname === '/library' ? 'is-active' : ''}`}
+              aria-label={stats.total ? `Daftar saya, ${stats.total} judul` : 'Daftar saya'}
+              title="Daftar saya"
+            >
+              <BookMarked size={18} strokeWidth={1.6} />
+              {stats.total > 0 && <span className="library-shortcut-badge">{stats.total > 99 ? '99+' : stats.total}</span>}
+            </Link>
             <button
               className="icon-button theme-toggle"
               onClick={toggleTheme}
@@ -109,13 +130,36 @@ export function Layout() {
               <span className="mobile-nav-index">07</span>
               Cari
             </button>
+            <NavLink to="/library" className="mobile-nav-link">
+              <span className="mobile-nav-index">08</span>
+              Daftar Saya
+            </NavLink>
           </nav>
         )}
       </header>
 
+      {!online && (
+        <div className="offline-banner" role="status" aria-live="polite">
+          <WifiOff size={14} />
+          <span>Kamu sedang offline. Data yang tersimpan tetap bisa dibuka.</span>
+        </div>
+      )}
+
       <main id="main">
         <Outlet />
       </main>
+
+      {showTop && !menuOpen && (
+        <button
+          type="button"
+          className="back-to-top"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Kembali ke atas"
+          title="Kembali ke atas"
+        >
+          <ArrowUp size={17} />
+        </button>
+      )}
 
       <footer className="site-footer">
         <div className="footer-inner">

@@ -6,6 +6,7 @@ import {
   LoaderCircle,
   Play,
   RotateCw,
+  Share2,
   Subtitles,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
@@ -13,7 +14,10 @@ import { Link, useParams } from 'react-router-dom';
 import { DownloadGroups } from '../components/DownloadGroups';
 import { api } from '../lib/api';
 import { formatDurationLabel, formatReleaseTime, genreLabel } from '../lib/format';
+import { useToast } from '../context/ToastContext';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { shareCurrentPage } from '../lib/share';
+import { getSeriesMeta, recordWatch } from '../lib/watchHistory';
 import { usePageSeo } from '../lib/seo';
 import type { OtakuEpisodeServer, OtakuEpisodePage as EpisodePayload } from '../types';
 
@@ -69,6 +73,7 @@ export function WatchEpisodePage() {
   useDocumentTitle('Tonton episode');
   const { slug } = useParams();
   const episode = useApi((signal) => api.otaku.episode(slug ?? '', signal), [slug]);
+  const { notify } = useToast();
   const data = episode.data?.data ?? null;
   const [selected, setSelected] = useState<FlatServer | null>(null);
   const [streamUrl, setStreamUrl] = useState<string | null>(null);
@@ -101,6 +106,19 @@ export function WatchEpisodePage() {
 
   useEffect(() => {
     if (!data) return;
+    const meta = getSeriesMeta(data.animeSlug);
+    const fallbackTitle = data.title.replace(/\s+(Episode|Eps?\.?)\s*\d+.*$/i, '').trim() || data.title;
+    recordWatch({
+      episodeSlug: data.slug,
+      animeSlug: data.animeSlug,
+      animeTitle: meta?.title ?? fallbackTitle,
+      episodeTitle: data.title,
+      poster: meta?.poster ?? null,
+    });
+  }, [data?.slug, data?.animeSlug]);
+
+  useEffect(() => {
+    if (!data) return;
     if (!selected) {
       const fallback = data.defaultStreamingUrl;
       if (fallback && !/maintenance/i.test(fallback)) setStreamUrl(fallback);
@@ -127,6 +145,13 @@ export function WatchEpisodePage() {
       active = false;
     };
   }, [data, selected, reloadKey]);
+
+  const shareEpisode = async () => {
+    if (!data) return;
+    const result = await shareCurrentPage(data.title);
+    if (result === 'copied') notify('Tautan episode disalin.');
+    else if (result === 'failed') notify('Gagal membagikan tautan.', { tone: 'error' });
+  };
 
   const flatServers = useMemo(
     () => (data?.servers ?? []).flatMap((group) => group.servers.map((server) => ({ ...server, quality: group.quality }))),
@@ -187,7 +212,18 @@ export function WatchEpisodePage() {
             <p className="eyebrow"><span className="watch-live-dot" /> Sedang diputar</p>
             <h1>{data.title}</h1>
           </div>
-          <span className="player-release">{formatReleaseTime(data.releaseTime)}</span>
+          <div className="player-title-side">
+            <span className="player-release">{formatReleaseTime(data.releaseTime)}</span>
+            <button
+              type="button"
+              className="player-share"
+              onClick={() => void shareEpisode()}
+              aria-label="Bagikan episode"
+              title="Bagikan episode"
+            >
+              <Share2 size={15} />
+            </button>
+          </div>
         </div>
       </div>
 

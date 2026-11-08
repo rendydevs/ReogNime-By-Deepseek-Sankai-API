@@ -26,6 +26,11 @@ export function WatchSchedulePage() {
   }, [schedule.data]);
 
   const totalTitles = ordered.reduce((total, day) => total + day.animeList.length, 0);
+  const jumpDays = ordered.filter((day) => day.day !== 'Random');
+
+  const jumpToDay = (index: number) => {
+    document.getElementById(`schedule-day-${index}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <div className="watch-page schedule-page">
@@ -61,11 +66,29 @@ export function WatchSchedulePage() {
           </div>
         ) : (
           <>
+            {jumpDays.length > 0 && (
+              <nav className="schedule-jump" aria-label="Lompat ke hari">
+                {jumpDays.map((day) => {
+                  const index = ordered.indexOf(day);
+                  return (
+                    <button
+                      type="button"
+                      key={day.day}
+                      className={`schedule-jump-day ${day.day === today ? 'is-today' : ''}`}
+                      onClick={() => jumpToDay(index)}
+                    >
+                      <span>{day.day}</span>
+                      <small>{day.animeList.length}</small>
+                    </button>
+                  );
+                })}
+              </nav>
+            )}
             <div className="schedule-grid">
               {ordered.map((day) => {
                 const isToday = day.day === today;
                 return (
-                  <section className={`schedule-day ${isToday ? 'is-today' : ''}`} key={day.day}>
+                  <section id={`schedule-day-${ordered.indexOf(day)}`} className={`schedule-day ${isToday ? 'is-today' : ''}`} key={day.day}>
                     <header className="schedule-day-head">
                       <div>
                         <h2>{day.day === 'Random' ? 'Acak' : day.day}</h2>

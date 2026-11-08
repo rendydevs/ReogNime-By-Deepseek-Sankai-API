@@ -116,6 +116,22 @@ export function formatProviderDate(value: string | null | undefined): string {
 }
 
 
+
+export function formatRelativeTime(value: string | null | undefined, now = Date.now()): string {
+  if (!value) return '—';
+  const time = new Date(value).getTime();
+  if (Number.isNaN(time)) return '—';
+  const diff = Math.max(0, now - time);
+  const minutes = Math.floor(diff / 60_000);
+  if (minutes < 1) return 'Baru saja';
+  if (minutes < 60) return `${minutes} mnt lalu`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} jam lalu`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days} hari lalu`;
+  return formatDate(value, { month: 'short', day: 'numeric' });
+}
+
 export function formatReleaseTime(value: string | null | undefined): string {
   if (!value) return 'Subtitle Indonesia';
   const match = value.match(/^Release on\s+(\d{1,2}):(\d{2})\s*(am|pm)$/i);

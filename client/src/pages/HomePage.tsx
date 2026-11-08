@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, ChevronRight, Compass, ListFilter, Play, Search, Sparkles } from 'lucide-react';
+import { ArrowRight, CalendarDays, ChevronRight, Compass, ListFilter, Play, Search, Sparkles, X } from 'lucide-react';
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { OtakuCard } from '../components/OtakuCard';
@@ -7,8 +7,9 @@ import { OtakuPoster } from '../components/OtakuPoster';
 import { Reveal } from '../components/Reveal';
 import { TitleMarquee } from '../components/TitleMarquee';
 import { API_HEALTH_URL, api } from '../lib/api';
-import { otakuStatusLabel } from '../lib/format';
+import { formatRelativeTime, otakuStatusLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { useWatchHistory } from '../lib/watchHistory';
 
 function HomeSkeleton() {
   return (
@@ -69,6 +70,7 @@ export function HomePage() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [apiStatus, setApiStatus] = useState<{ phase: 'checking' | 'online' | 'offline'; ms: number | null }>({ phase: 'checking', ms: null });
+  const watchHistory = useWatchHistory();
 
   useEffect(() => {
     let active = true;
@@ -261,6 +263,50 @@ export function HomePage() {
             <span className="screening-aside-note">Subtitle Indonesia.<br />Setiap minggu.</span>
           </div>
         </section>
+      ) : null}
+
+      {watchHistory.items.length > 0 ? (
+        <div className="container home-continue-wrap">
+          <Reveal className="home-continue" delay={15}>
+            <div className="home-continue-head">
+              <div>
+                <p className="section-index">Lanjutkan</p>
+                <h2>Terakhir ditonton</h2>
+              </div>
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => {
+                  if (window.confirm('Hapus seluruh riwayat tontonan?')) watchHistory.clear();
+                }}
+              >
+                Hapus riwayat
+              </button>
+            </div>
+            <div className="home-continue-grid">
+              {watchHistory.items.map((item) => (
+                <article className="continue-card" key={item.episodeSlug}>
+                  <Link to={`/watch/episode/${item.episodeSlug}`} className="continue-link">
+                    <OtakuPoster title={item.animeTitle} poster={item.poster} className="continue-poster" />
+                    <div className="continue-copy">
+                      <span>{item.animeTitle}</span>
+                      <strong>{item.episodeTitle}</strong>
+                      <small>{formatRelativeTime(item.watchedAt)}</small>
+                    </div>
+                  </Link>
+                  <button
+                    type="button"
+                    className="continue-remove"
+                    onClick={() => watchHistory.remove(item.episodeSlug)}
+                    aria-label={`Hapus ${item.episodeTitle} dari riwayat`}
+                  >
+                    <X size={13} />
+                  </button>
+                </article>
+              ))}
+            </div>
+          </Reveal>
+        </div>
       ) : null}
 
       <div className="container home-marquee-wrap">

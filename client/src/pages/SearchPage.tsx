@@ -4,11 +4,13 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { OtakuCard } from '../components/OtakuCard';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { addRecentSearch, useRecentSearches } from '../lib/searchHistory';
 
 export function SearchPage() {
   useDocumentTitle('Cari Anime Sub Indo');
   const [params, setParams] = useSearchParams();
   const q = params.get('q')?.trim() ?? '';
+  const recentSearches = useRecentSearches();
   const [query, setQuery] = useState(q);
   const search = useApi(
     (signal) => (q ? api.otaku.search(q, signal) : Promise.resolve(null)),
@@ -17,6 +19,7 @@ export function SearchPage() {
 
   useEffect(() => {
     setQuery(q);
+    if (q.length >= 2) addRecentSearch(q);
   }, [q]);
 
   const submit = (event: FormEvent) => {
@@ -64,19 +67,36 @@ export function SearchPage() {
 
       <div className="container search-content">
         {!q ? (
-          <div className="search-empty">
-            <div className="search-empty-copy">
-              <p className="section-index">Mulai dari sini</p>
-              <h2>Mau nonton apa malam ini?</h2>
-              <p>Cari lewat judul romaji Jepang, atau langsung pilih raknya.</p>
+          <>
+            {recentSearches.items.length > 0 && (
+              <div className="recent-searches">
+                <div className="recent-searches-head">
+                  <p className="section-index">Pencarian terakhir</p>
+                  <button type="button" className="text-button" onClick={recentSearches.clear}>Hapus</button>
+                </div>
+                <div className="recent-searches-list">
+                  {recentSearches.items.map((item) => (
+                    <Link key={item} to={`/search?q=${encodeURIComponent(item)}`} className="recent-search-chip">
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="search-empty">
+              <div className="search-empty-copy">
+                <p className="section-index">Mulai dari sini</p>
+                <h2>Mau nonton apa?</h2>
+                <p>Cari lewat judul romaji Jepang, atau langsung pilih raknya.</p>
+              </div>
+              <div className="search-empty-links">
+                <Link to="/ongoing"><Compass size={18} /><span>Sedang tayang</span><ArrowRight size={14} /></Link>
+                <Link to="/completed"><Compass size={18} /><span>Seri tamat</span><ArrowRight size={14} /></Link>
+                <Link to="/genres"><Compass size={18} /><span>Semua genre</span><ArrowRight size={14} /></Link>
+                <Link to="/all"><Compass size={18} /><span>Semua A–Z</span><ArrowRight size={14} /></Link>
+              </div>
             </div>
-            <div className="search-empty-links">
-              <Link to="/ongoing"><Compass size={18} /><span>Sedang tayang</span><ArrowRight size={14} /></Link>
-              <Link to="/completed"><Compass size={18} /><span>Seri tamat</span><ArrowRight size={14} /></Link>
-              <Link to="/genres"><Compass size={18} /><span>Semua genre</span><ArrowRight size={14} /></Link>
-              <Link to="/all"><Compass size={18} /><span>Semua A–Z</span><ArrowRight size={14} /></Link>
-            </div>
-          </div>
+          </>
         ) : searching ? (
           <div className="searching-indicator"><LoaderCircle size={18} className="spin" /> Mencari di rak…</div>
         ) : search.error ? (

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { AppErrorBoundary } from './components/AppErrorBoundary';
 import { Layout } from './components/Layout';
 import { LibraryDialogProvider } from './components/LibraryDialog';
 import { AdminPage } from './pages/AdminPage';
@@ -36,6 +37,7 @@ export function App() {
     <LibraryDialogProvider>
       <SeoManager />
       <PageviewTracker />
+      <AppErrorBoundary>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -59,6 +61,7 @@ export function App() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
+      </AppErrorBoundary>
     </LibraryDialogProvider>
   );
 }
