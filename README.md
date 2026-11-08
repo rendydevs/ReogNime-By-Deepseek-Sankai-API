@@ -247,7 +247,7 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 | `HOST` | `0.0.0.0` | Bind address |
 | `CORS_ORIGIN` | reflect request origin | Comma-separated allowed origins |
 | `LIBRARY_FILE` | `server/data/library.json` (`/tmp/reognime-library.json` on Vercel) | Archive library file |
-| `MESSAGES_FILE` | `server/data/messages.json` (`/tmp/reognime-messages.json` on Vercel) | Hidden admin message queue |
+| `MESSAGES_FILE` | `server/data/messages.json` (`/tmp/reognime-messages.json` on Vercel) | Hidden two-way admin thread store |
 | `ADMIN_PASSWORD_HASH` | built-in scrypt hash | Optional `salt:hash` override for `/admin` |
 | `VITE_API_BASE_URL` | `/api/v1` | Frontend API base |
 | `OTAKUDESU_API_BASE` | `https://www.sankavollerei.web.id/anime` | Public Otakudesu provider base |
@@ -255,9 +255,11 @@ Copy `.env.example` and adjust as needed. Server variables are read at runtime; 
 
 ## Admin message queue
 
-The hidden admin area lives at `/admin`; it is intentionally absent from navigation, `robots.txt`, and the sitemap. Sign-in uses HTTP Basic credentials verified server-side against a scrypt password hash, and the endpoints are rate-limited. There is no admin cookie/session: the password is held only in the admin tab's memory and re-entered after a refresh.
+The hidden admin workspace lives at `/admin`; it is intentionally absent from navigation, `robots.txt`, and the sitemap. Sign-in uses HTTP Basic credentials verified server-side against a scrypt password hash, and the endpoints are rate-limited. There is no admin cookie/session: the password is held only in the admin tab's memory and re-entered after a refresh.
 
-Messages forwarded by NimeBot are stored server-side and can be filtered, marked read/resolved, or deleted. The queue also keeps the originating page path, but no IP address or contact data.
+Visitors can press **Hubungkan ke admin** in the chat widget. That creates a two-way thread with a random 256-bit browser token (only its hash is stored on the server). Admin replies, thread status, and resolved notices are delivered through the thread API; the visitor tab polls for new messages.
+
+Admin can reply, mark a thread resolved, reopen it, or delete it. A resolved thread appends the notice **“Pesan ini ditandai selesai oleh admin.”** The chat widget keeps the conversation in `localStorage` for 7 days while the thread is open (3 days after resolution), so a visitor can leave, come back, and find the reply. The queue stores the originating page path, but no IP address or contact data.
 
 > **Persistence note:** the default queue is a JSON file. On Vercel only `/tmp` is writable, so the queue is ephemeral across cold starts/instances. For a durable production queue, point `MESSAGES_FILE` at persistent storage or replace the store with a database. The admin UI shows a warning when it detects Vercel's ephemeral storage.
 
@@ -273,7 +275,7 @@ Messages forwarded by NimeBot are stored server-side and can be filtered, marked
 │       ├── context/         # theme, toast, archive library state
 │       ├── lib/             # API client, hooks, formatting, media helpers
 │       ├── pages/           # home, ongoing/completed, genres, A–Z, search, schedule,
-│       │                    # series, player, archive, discovery, library, API reference
+│       │                    # series, player, archive, discovery, library, admin, API reference
 │       └── styles.css       # complete design system
 ├── server/
 │   ├── app.js               # Express factory and routes
@@ -283,6 +285,8 @@ Messages forwarded by NimeBot are stored server-side and can be filtered, marked
 │   ├── lib/otakudesu.js     # upstream client, cache, guard, image repair, normalizers
 │   ├── lib/catalog.js       # archive catalog + search
 │   ├── lib/library.js       # archive library store
+│   ├── lib/threads.js       # token-protected two-way chat threads
+│   ├── lib/adminAuth.js     # scrypt Basic-auth guard for /admin
 │   ├── data/anime.json      # local AniList archive catalog
 │   └── data/library.json    # archive library
 ├── public/media/            # local archive artwork

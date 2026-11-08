@@ -8,6 +8,7 @@ import { after, before, test } from 'node:test';
 process.env.NODE_ENV = 'test';
 const tempDir = await mkdtemp(path.join(tmpdir(), 'reognime-vercel-test-'));
 process.env.LIBRARY_FILE = path.join(tempDir, 'library.json');
+process.env.MESSAGES_FILE = path.join(tempDir, 'messages.json');
 const { default: handler } = await import('../api/index.js');
 
 let server;

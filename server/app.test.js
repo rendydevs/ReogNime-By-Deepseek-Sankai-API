@@ -130,49 +130,96 @@ test('detail, episodes, suggestions, genres, and random endpoints work', async (
 });
 
 
-test('chat queue accepts a message and admin queue is protected', async () => {
-  const sent = await fetch(`${base}/api/v1/chat/messages`, {
+test('two-way chat threads are token-protected and admin can reply/resolve', async () => {
+  const created = await fetch(`${base}/api/v1/chat/threads`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: 'Video tidak bisa diputar di mobile.', page: '/watch/episode/vtfc-episode-6-sub-indo' }),
   });
-  assert.equal(sent.status, 201);
-  const sentBody = await sent.json();
-  assert.ok(sentBody.data.id);
+  assert.equal(created.status, 201);
+  const createdBody = await created.json();
+  const threadId = createdBody.data.thread.id;
+  const token = createdBody.data.token;
+  assert.ok(threadId);
+  assert.ok(token);
+  assert.equal(createdBody.data.thread.status, 'open');
+  assert.equal(createdBody.data.thread.messages[0].from, 'visitor');
 
-  const denied = await fetch(`${base}/api/v1/admin/messages`);
+  const noToken = await fetch(`${base}/api/v1/chat/threads/${threadId}`);
+  assert.equal(noToken.status, 401);
+
+  const visitor = await fetch(`${base}/api/v1/chat/threads/${threadId}`, {
+    headers: { 'X-Thread-Token': token },
+  });
+  assert.equal(visitor.status, 200);
+
+  const denied = await fetch(`${base}/api/v1/admin/threads`);
   assert.equal(denied.status, 401);
   assert.equal((await denied.json()).error.code, 'ADMIN_UNAUTHORIZED');
 
-  const wrong = await fetch(`${base}/api/v1/admin/messages`, {
-    headers: { Authorization: `Basic ${Buffer.from('admin:wrong-password').toString('base64')}` },
-  });
-  assert.equal(wrong.status, 401);
-
   const auth = `Basic ${Buffer.from(`admin:${testAdminPassword}`).toString('base64')}`;
-  const queue = await fetch(`${base}/api/v1/admin/messages`, { headers: { Authorization: auth } });
+  const queue = await fetch(`${base}/api/v1/admin/threads`, { headers: { Authorization: auth } });
   assert.equal(queue.status, 200);
   const queueBody = await queue.json();
   assert.equal(queueBody.data.length, 1);
-  assert.equal(queueBody.data[0].status, 'new');
+  assert.equal(queueBody.meta.stats.open, 1);
   assert.equal(queueBody.data[0].page, '/watch/episode/vtfc-episode-6-sub-indo');
-  assert.equal(queueBody.meta.stats.new, 1);
 
-  const patched = await fetch(`${base}/api/v1/admin/messages/${sentBody.data.id}`, {
+  const adminReply = await fetch(`${base}/api/v1/admin/threads/${threadId}/messages`, {
+    method: 'POST',
+    headers: { Authorization: auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: 'Coba mirror VidHide dulu, ya.' }),
+  });
+  assert.equal(adminReply.status, 200);
+  assert.ok((await adminReply.json()).data.messages.some((message) => message.from === 'admin'));
+
+  const visitorAfterReply = await (await fetch(`${base}/api/v1/chat/threads/${threadId}`, {
+    headers: { 'X-Thread-Token': token },
+  })).json();
+  assert.ok(visitorAfterReply.data.messages.some((message) => message.from === 'admin' && message.text === 'Coba mirror VidHide dulu, ya.'));
+
+  const visitorReply = await fetch(`${base}/api/v1/chat/threads/${threadId}/messages`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Thread-Token': token },
+    body: JSON.stringify({ message: 'Sudah saya coba, masih error.' }),
+  });
+  assert.equal(visitorReply.status, 200);
+  assert.ok((await visitorReply.json()).data.messages.some((message) => message.from === 'visitor' && message.text === 'Sudah saya coba, masih error.'));
+
+  const resolved = await fetch(`${base}/api/v1/admin/threads/${threadId}`, {
     method: 'PATCH',
     headers: { Authorization: auth, 'Content-Type': 'application/json' },
     body: JSON.stringify({ status: 'resolved' }),
   });
-  assert.equal(patched.status, 200);
-  assert.equal((await patched.json()).data.status, 'resolved');
+  assert.equal(resolved.status, 200);
+  const resolvedBody = await resolved.json();
+  assert.equal(resolvedBody.data.status, 'resolved');
+  assert.ok(resolvedBody.data.messages.some((message) => message.from === 'system' && /ditandai selesai oleh admin/.test(message.text)));
 
-  const removed = await fetch(`${base}/api/v1/admin/messages/${sentBody.data.id}`, {
+  const afterResolved = await fetch(`${base}/api/v1/chat/threads/${threadId}/messages`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Thread-Token': token },
+    body: JSON.stringify({ message: 'Masih error.' }),
+  });
+  assert.equal(afterResolved.status, 409);
+
+  const reopened = await fetch(`${base}/api/v1/admin/threads/${threadId}`, {
+    method: 'PATCH',
+    headers: { Authorization: auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status: 'open' }),
+  });
+  assert.equal(reopened.status, 200);
+  assert.equal((await reopened.json()).data.status, 'open');
+
+  const deleted = await fetch(`${base}/api/v1/admin/threads/${threadId}`, {
     method: 'DELETE',
     headers: { Authorization: auth },
   });
-  assert.equal(removed.status, 204);
-  const empty = await fetch(`${base}/api/v1/admin/messages`, { headers: { Authorization: auth } });
-  assert.equal((await empty.json()).data.length, 0);
+  assert.equal(deleted.status, 204);
+  const missing = await fetch(`${base}/api/v1/chat/threads/${threadId}`, {
+    headers: { 'X-Thread-Token': token },
+  });
+  assert.equal(missing.status, 401);
 });
 
 test('library CRUD persists and computes stats', async () => {

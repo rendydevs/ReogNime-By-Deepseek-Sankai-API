@@ -1,45 +1,60 @@
 import {
   AlertCircle,
-  Check,
+  ArrowLeft,
   CheckCircle2,
   Inbox,
   LoaderCircle,
   Lock,
   LogOut,
-  MailOpen,
   RefreshCw,
+  RotateCcw,
+  Send,
   ShieldCheck,
   Trash2,
+  UserRound,
 } from 'lucide-react';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { API_BASE } from '../lib/api';
 import { useDocumentTitle } from '../lib/hooks';
 
-type MessageStatus = 'new' | 'read' | 'resolved';
-type Filter = 'all' | MessageStatus;
+type ThreadStatus = 'open' | 'resolved';
+type Filter = 'all' | ThreadStatus;
 
-interface AdminMessage {
+interface ThreadSummary {
   id: string;
-  message: string;
+  status: ThreadStatus;
   page: string;
-  status: MessageStatus;
   createdAt: string;
   updatedAt: string;
+  resolvedAt: string | null;
+  messageCount: number;
+  lastMessage: string;
+  lastFrom: 'visitor' | 'admin' | 'system';
 }
 
-interface AdminStats {
-  new: number;
-  read: number;
-  resolved: number;
-  total: number;
+interface ThreadMessage {
+  id: string;
+  from: 'visitor' | 'admin' | 'system';
+  text: string;
+  createdAt: string;
 }
 
-interface AdminPayload {
-  data: AdminMessage[];
+interface ThreadDetail {
+  id: string;
+  status: ThreadStatus;
+  page: string;
+  createdAt: string;
+  updatedAt: string;
+  resolvedAt: string | null;
+  messages: ThreadMessage[];
+}
+
+interface ThreadPayload {
+  data: ThreadSummary[];
   meta: {
     total: number;
     status: Filter;
-    stats: AdminStats;
+    stats: { open: number; resolved: number; total: number };
     storage: 'file' | 'ephemeral';
   };
 }
@@ -48,16 +63,9 @@ class AdminAuthError extends Error {}
 
 const FILTERS: { value: Filter; label: string }[] = [
   { value: 'all', label: 'Semua' },
-  { value: 'new', label: 'Baru' },
-  { value: 'read', label: 'Dibaca' },
+  { value: 'open', label: 'Terbuka' },
   { value: 'resolved', label: 'Selesai' },
 ];
-
-const STATUS_LABEL: Record<MessageStatus, string> = {
-  new: 'Baru',
-  read: 'Dibaca',
-  resolved: 'Selesai',
-};
 
 function authHeader(password: string) {
   return `Basic ${btoa(`admin:${password}`)}`;
@@ -82,10 +90,7 @@ async function adminRequest<T>(path: string, auth: string, options: RequestInit 
   });
   if (response.status === 401) throw new AdminAuthError('AUTH');
   const body = response.status === 204 ? null : await response.json().catch(() => null);
-  if (!response.ok) {
-    const message = body?.error?.message ?? 'Permintaan admin gagal.';
-    throw new Error(message);
-  }
+  if (!response.ok) throw new Error(body?.error?.message ?? 'Permintaan admin gagal.');
   return body as T;
 }
 
@@ -95,35 +100,85 @@ export function AdminPage() {
   const [password, setPassword] = useState('');
   const [loginBusy, setLoginBusy] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [payload, setPayload] = useState<AdminPayload | null>(null);
+  const [threads, setThreads] = useState<ThreadSummary[]>([]);
+  const [stats, setStats] = useState({ open: 0, resolved: 0, total: 0 });
+  const [storage, setStorage] = useState<'file' | 'ephemeral'>('file');
   const [filter, setFilter] = useState<Filter>('all');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [detail, setDetail] = useState<ThreadDetail | null>(null);
   const [loading, setLoading] = useState(false);
+  const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [busyId, setBusyId] = useState<string | null>(null);
+  const [reply, setReply] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  const load = useCallback(async (nextAuth: string, nextFilter: Filter) => {
+  const loadList = useCallback(async (nextAuth: string, nextFilter: Filter, selectMissing = true) => {
     setLoading(true);
     setError(null);
     try {
-      const result = await adminRequest<AdminPayload>(`/admin/messages?status=${nextFilter}&limit=100`, nextAuth);
-      setPayload(result);
+      const result = await adminRequest<ThreadPayload>(`/admin/threads?status=${nextFilter}&limit=100`, nextAuth);
+      setThreads(result.data);
+      setStats(result.meta.stats);
+      setStorage(result.meta.storage);
+      if (selectMissing) {
+        setSelectedId((current) => result.data.some((thread) => thread.id === current) ? current : result.data[0]?.id ?? null);
+      }
     } catch (reason) {
       if (reason instanceof AdminAuthError) {
         setAuth(null);
-        setPayload(null);
+        setThreads([]);
+        setDetail(null);
         setLoginError('Sesi admin tidak valid. Masukkan password lagi.');
       } else {
-        setError(reason instanceof Error ? reason.message : 'Tidak bisa memuat pesan.');
+        setError(reason instanceof Error ? reason.message : 'Tidak bisa memuat percakapan.');
       }
     } finally {
       setLoading(false);
     }
   }, []);
 
+  const loadDetail = useCallback(async (nextAuth: string, id: string, quiet = false) => {
+    if (!quiet) setDetailLoading(true);
+    try {
+      const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${id}`, nextAuth);
+      setDetail(result.data);
+    } catch (reason) {
+      if (reason instanceof AdminAuthError) {
+        setAuth(null);
+        setDetail(null);
+        setLoginError('Sesi admin tidak valid. Masukkan password lagi.');
+      } else if (!quiet) {
+        setError(reason instanceof Error ? reason.message : 'Tidak bisa memuat percakapan.');
+      }
+    } finally {
+      if (!quiet) setDetailLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (!auth) return;
-    void load(auth, filter);
-  }, [auth, filter, load]);
+    void loadList(auth, filter);
+  }, [auth, filter, loadList]);
+
+  useEffect(() => {
+    if (!auth || !selectedId) {
+      setDetail(null);
+      return;
+    }
+    void loadDetail(auth, selectedId);
+  }, [auth, selectedId, loadDetail]);
+
+  useEffect(() => {
+    if (!auth) return;
+    const listTimer = window.setInterval(() => void loadList(auth, filter, false), 20_000);
+    const detailTimer = selectedId
+      ? window.setInterval(() => void loadDetail(auth, selectedId, true), 15_000)
+      : undefined;
+    return () => {
+      window.clearInterval(listTimer);
+      if (detailTimer) window.clearInterval(detailTimer);
+    };
+  }, [auth, filter, selectedId, loadList, loadDetail]);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -132,10 +187,13 @@ export function AdminPage() {
     setLoginBusy(true);
     setLoginError(null);
     try {
-      const result = await adminRequest<AdminPayload>('/admin/messages?status=all&limit=100', nextAuth);
+      const result = await adminRequest<ThreadPayload>('/admin/threads?status=all&limit=100', nextAuth);
       setAuth(nextAuth);
-      setPayload(result);
+      setThreads(result.data);
+      setStats(result.meta.stats);
+      setStorage(result.meta.storage);
       setFilter('all');
+      setSelectedId(result.data[0]?.id ?? null);
       setPassword('');
     } catch (reason) {
       if (reason instanceof AdminAuthError) setLoginError('Password admin salah.');
@@ -145,40 +203,66 @@ export function AdminPage() {
     }
   };
 
-  const updateStatus = async (id: string, status: MessageStatus) => {
-    if (!auth) return;
-    setBusyId(id);
+  const handleReply = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!auth || !detail || !reply.trim() || busy) return;
+    setBusy(true);
+    setError(null);
     try {
-      await adminRequest(`/admin/messages/${id}`, auth, {
-        method: 'PATCH',
-        body: JSON.stringify({ status }),
+      const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${detail.id}/messages`, auth, {
+        method: 'POST',
+        body: JSON.stringify({ message: reply.trim() }),
       });
-      await load(auth, filter);
+      setDetail(result.data);
+      setReply('');
+      await loadList(auth, filter, false);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Status pesan tidak bisa diubah.');
+      setError(reason instanceof Error ? reason.message : 'Balasan tidak terkirim.');
     } finally {
-      setBusyId(null);
+      setBusy(false);
     }
   };
 
-  const removeMessage = async (id: string) => {
-    if (!auth || !window.confirm('Hapus pesan ini dari antrean?')) return;
-    setBusyId(id);
+  const setStatus = async (status: ThreadStatus) => {
+    if (!auth || !detail || busy) return;
+    setBusy(true);
+    setError(null);
     try {
-      await adminRequest(`/admin/messages/${id}`, auth, { method: 'DELETE' });
-      await load(auth, filter);
+      const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${detail.id}`, auth, {
+        method: 'PATCH',
+        body: JSON.stringify({ status }),
+      });
+      setDetail(result.data);
+      await loadList(auth, filter, false);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Pesan tidak bisa dihapus.');
+      setError(reason instanceof Error ? reason.message : 'Status tidak bisa diubah.');
     } finally {
-      setBusyId(null);
+      setBusy(false);
+    }
+  };
+
+  const removeThread = async () => {
+    if (!auth || !detail || !window.confirm('Hapus seluruh percakapan ini?')) return;
+    setBusy(true);
+    try {
+      await adminRequest(`/admin/threads/${detail.id}`, auth, { method: 'DELETE' });
+      setDetail(null);
+      setSelectedId(null);
+      await loadList(auth, filter);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : 'Percakapan tidak bisa dihapus.');
+    } finally {
+      setBusy(false);
     }
   };
 
   const logout = () => {
     setAuth(null);
-    setPayload(null);
+    setThreads([]);
+    setDetail(null);
     setPassword('');
     setLoginError(null);
+    setSelectedId(null);
   };
 
   if (!auth) {
@@ -189,7 +273,7 @@ export function AdminPage() {
             <span className="admin-lock" aria-hidden="true"><Lock size={19} strokeWidth={1.8} /></span>
             <p className="eyebrow">Private area</p>
             <h1>Admin access.</h1>
-            <p className="admin-login-copy">Masuk untuk membaca antrean pesan pengunjung.</p>
+            <p className="admin-login-copy">Masuk untuk membaca dan membalas pesan pengunjung.</p>
             <form onSubmit={handleLogin} className="admin-login-form">
               <label htmlFor="admin-password">Password admin</label>
               <input
@@ -215,9 +299,6 @@ export function AdminPage() {
     );
   }
 
-  const stats = payload?.meta.stats ?? { new: 0, read: 0, resolved: 0, total: 0 };
-  const messages = payload?.data ?? [];
-
   return (
     <div className="admin-page">
       <div className="container admin-shell">
@@ -225,31 +306,28 @@ export function AdminPage() {
           <div>
             <p className="eyebrow">Private queue</p>
             <h1>Pesan masuk.</h1>
-            <p className="admin-subtitle">Pesan dari NimeBot yang diteruskan pengunjung.</p>
+            <p className="admin-subtitle">Percakapan dua arah antara pengunjung dan Admin ReogNime.</p>
           </div>
           <div className="admin-head-actions">
-            <button className="button button-outline" onClick={() => void load(auth, filter)} disabled={loading}>
+            <button className="button button-outline" onClick={() => void loadList(auth, filter)} disabled={loading}>
               <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
             </button>
-            <button className="button button-quiet" onClick={logout}>
-              <LogOut size={14} /> Keluar
-            </button>
+            <button className="button button-quiet" onClick={logout}><LogOut size={14} /> Keluar</button>
           </div>
         </header>
 
         <div className="admin-stats">
-          <div><span>Baru</span><strong>{stats.new}</strong><Inbox size={16} /></div>
-          <div><span>Dibaca</span><strong>{stats.read}</strong><MailOpen size={16} /></div>
+          <div><span>Terbuka</span><strong>{stats.open}</strong><Inbox size={16} /></div>
           <div><span>Selesai</span><strong>{stats.resolved}</strong><CheckCircle2 size={16} /></div>
           <div><span>Total</span><strong>{stats.total}</strong><Inbox size={16} /></div>
         </div>
 
-        {payload?.meta.storage === 'ephemeral' && (
-          <p className="admin-storage-note"><AlertCircle size={13} /> Penyimpanan sementara di Vercel—pesan bisa hilang saat instance restart.</p>
+        {storage === 'ephemeral' && (
+          <p className="admin-storage-note"><AlertCircle size={13} /> Penyimpanan sementara di Vercel—percakapan bisa hilang saat instance restart.</p>
         )}
 
         <div className="admin-toolbar">
-          <div className="admin-filters" role="tablist" aria-label="Filter pesan">
+          <div className="admin-filters" role="tablist" aria-label="Filter percakapan">
             {FILTERS.map((item) => (
               <button
                 key={item.value}
@@ -263,53 +341,123 @@ export function AdminPage() {
               </button>
             ))}
           </div>
-          <span className="admin-message-count">{loading ? 'Memuat…' : `${messages.length} pesan`}</span>
+          <span className="admin-message-count">{loading ? 'Memuat…' : `${threads.length} percakapan`}</span>
         </div>
 
         {error && <p className="admin-error" role="alert"><AlertCircle size={14} /> {error}</p>}
 
-        {loading && !messages.length ? (
-          <div className="admin-loading"><LoaderCircle size={19} className="spin" /> Memuat antrean…</div>
-        ) : messages.length === 0 ? (
-          <div className="admin-empty">
-            <Inbox size={24} strokeWidth={1.5} />
-            <h2>Belum ada pesan di filter ini.</h2>
-            <p>Pesan yang diteruskan bot akan muncul di sini.</p>
-          </div>
-        ) : (
-          <div className="admin-message-list">
-            {messages.map((message) => (
-              <article className={`admin-message admin-message-${message.status}`} key={message.id}>
-                <header>
-                  <span className={`admin-status admin-status-${message.status}`}>{STATUS_LABEL[message.status]}</span>
-                  <time dateTime={message.createdAt}>{formatDate(message.createdAt)}</time>
-                  <span className="admin-page-path">{message.page === '/' ? 'Home' : message.page}</span>
-                </header>
-                <p>{message.message}</p>
-                <footer>
-                  {message.status === 'new' && (
-                    <button onClick={() => void updateStatus(message.id, 'read')} disabled={busyId === message.id}>
-                      <MailOpen size={13} /> Tandai dibaca
-                    </button>
-                  )}
-                  {message.status !== 'resolved' && (
-                    <button onClick={() => void updateStatus(message.id, 'resolved')} disabled={busyId === message.id}>
-                      <Check size={13} /> Selesai
-                    </button>
-                  )}
-                  {message.status === 'resolved' && (
-                    <button onClick={() => void updateStatus(message.id, 'new')} disabled={busyId === message.id}>
-                      <RefreshCw size={13} /> Buka lagi
-                    </button>
-                  )}
-                  <button className="admin-delete" onClick={() => void removeMessage(message.id)} disabled={busyId === message.id}>
-                    <Trash2 size={13} /> Hapus
+        <div className="admin-threads-layout">
+          <aside className="admin-thread-list" aria-label="Daftar percakapan">
+            {loading && !threads.length ? (
+              <div className="admin-loading"><LoaderCircle size={18} className="spin" /> Memuat…</div>
+            ) : threads.length === 0 ? (
+              <div className="admin-thread-empty">
+                <Inbox size={22} />
+                <p>Belum ada percakapan.</p>
+              </div>
+            ) : (
+              threads.map((thread) => (
+                <button
+                  key={thread.id}
+                  type="button"
+                  className={`admin-thread-item ${selectedId === thread.id ? 'is-active' : ''}`}
+                  onClick={() => setSelectedId(thread.id)}
+                >
+                  <span className="admin-thread-item-top">
+                    <span className={`admin-status admin-status-${thread.status}`}>{thread.status === 'open' ? 'Terbuka' : 'Selesai'}</span>
+                    <time dateTime={thread.updatedAt}>{formatDate(thread.updatedAt)}</time>
+                  </span>
+                  <strong>{thread.lastMessage || 'Percakapan baru'}</strong>
+                  <span className="admin-thread-item-meta">
+                    {thread.page === '/' ? 'Home' : thread.page}
+                    <i>·</i>
+                    {thread.messageCount} pesan
+                  </span>
+                </button>
+              ))
+            )}
+          </aside>
+
+          <section className="admin-thread-detail">
+            {!detail && !detailLoading ? (
+              <div className="admin-thread-empty admin-thread-empty-large">
+                <Inbox size={24} />
+                <p>Pilih percakapan untuk membalas.</p>
+              </div>
+            ) : detailLoading && !detail ? (
+              <div className="admin-loading"><LoaderCircle size={18} className="spin" /> Memuat percakapan…</div>
+            ) : detail ? (
+              <>
+                <header className="admin-thread-head">
+                  <button className="admin-thread-back" onClick={() => setSelectedId(null)} aria-label="Tutup percakapan">
+                    <ArrowLeft size={15} />
                   </button>
-                </footer>
-              </article>
-            ))}
-          </div>
-        )}
+                  <div>
+                    <p className="eyebrow">{detail.page === '/' ? 'Home' : detail.page}</p>
+                    <h2>{detail.status === 'open' ? 'Percakapan terbuka' : 'Percakapan selesai'}</h2>
+                  </div>
+                  <div className="admin-thread-head-actions">
+                    {detail.status === 'open' ? (
+                      <button className="button button-outline" onClick={() => void setStatus('resolved')} disabled={busy}>
+                        <CheckCircle2 size={14} /> Tandai selesai
+                      </button>
+                    ) : (
+                      <button className="button button-outline" onClick={() => void setStatus('open')} disabled={busy}>
+                        <RotateCcw size={14} /> Buka lagi
+                      </button>
+                    )}
+                    <button className="admin-thread-delete" onClick={() => void removeThread()} disabled={busy} aria-label="Hapus percakapan">
+                      <Trash2 size={15} />
+                    </button>
+                  </div>
+                </header>
+
+                <div className="admin-thread-conversation">
+                  {detail.messages.map((message) => (
+                    message.from === 'system' ? (
+                      <div className="admin-thread-system" key={message.id}>
+                        {message.text.includes('selesai') && <CheckCircle2 size={13} />}
+                        <span>{message.text}</span>
+                      </div>
+                    ) : (
+                      <div className={`admin-thread-msg admin-thread-msg-${message.from}`} key={message.id}>
+                        {message.from === 'admin' && (
+                          <span className="admin-thread-avatar"><UserRound size={13} /></span>
+                        )}
+                        <div>
+                          <span>{message.from === 'admin' ? 'Admin ReogNime' : 'Pengunjung'} · {formatDate(message.createdAt)}</span>
+                          <p>{message.text}</p>
+                        </div>
+                      </div>
+                    )
+                  ))}
+                </div>
+
+                {detail.status === 'resolved' ? (
+                  <div className="admin-thread-closed">
+                    <CheckCircle2 size={15} />
+                    <span>Percakapan sudah ditandai selesai. Buka lagi untuk membalas.</span>
+                  </div>
+                ) : (
+                  <form className="admin-thread-reply" onSubmit={handleReply}>
+                    <textarea
+                      value={reply}
+                      onChange={(event) => setReply(event.target.value)}
+                      placeholder="Tulis balasan untuk pengunjung…"
+                      rows={3}
+                      maxLength={1000}
+                      disabled={busy}
+                    />
+                    <button type="submit" className="button button-primary" disabled={!reply.trim() || busy}>
+                      {busy ? <LoaderCircle size={14} className="spin" /> : <Send size={14} />}
+                      Kirim balasan
+                    </button>
+                  </form>
+                )}
+              </>
+            ) : null}
+          </section>
+        </div>
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ import {
 import { ADMIN_USERNAME, requireAdmin } from './lib/adminAuth.js';
 import { ApiError, notFound } from './lib/errors.js';
 import { LIBRARY_STATUSES, LibraryStore } from './lib/library.js';
-import { MESSAGE_STATUSES, MessageStore } from './lib/messages.js';
+import { THREAD_STATUSES, ThreadStore } from './lib/threads.js';
 import { getLibraryStats } from './lib/libraryStats.js';
 import { AniListArtwork } from './lib/anilistArtwork.js';
 import { OtakudesuService } from './lib/otakudesu.js';
@@ -79,17 +79,21 @@ const libraryCreateSchema = z.object({
 });
 
 const chatMessageSchema = z.object({
-  message: z.string().trim().min(2).max(1000),
+  message: z.string().trim().min(1).max(1000),
   page: z.string().trim().max(200).optional().default('/'),
 });
 
-const adminMessageQuerySchema = z.object({
-  status: z.enum(['all', ...MESSAGE_STATUSES]).optional().default('all'),
+const threadMessageSchema = z.object({
+  message: z.string().trim().min(1).max(1000),
+});
+
+const adminThreadQuerySchema = z.object({
+  status: z.enum(['all', ...THREAD_STATUSES]).optional().default('all'),
   limit: z.coerce.number().int().min(1).max(100).optional().default(100),
 });
 
-const adminMessagePatchSchema = z.object({
-  status: z.enum(MESSAGE_STATUSES),
+const adminThreadPatchSchema = z.object({
+  status: z.enum(THREAD_STATUSES),
 });
 
 const libraryPatchSchema = z
@@ -143,7 +147,7 @@ export async function createApp({
   otakudesu = new OtakudesuService({ anilistArtwork: new AniListArtwork() }),
 } = {}) {
   const library = await new LibraryStore(libraryFile).init();
-  const messages = await new MessageStore(messagesFile).init();
+  const threads = await new ThreadStore(messagesFile).init();
   const app = express();
 
   // The serverless entry sits behind Vercel's proxy; trust one hop for client IPs.
@@ -171,7 +175,7 @@ export async function createApp({
     cors({
       origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()) : true,
       methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+      allowedHeaders: ['Content-Type', 'Accept', 'Authorization', 'X-Thread-Token'],
       maxAge: 86_400,
     }),
   );
@@ -383,14 +387,41 @@ export async function createApp({
     res.status(204).end();
   });
 
-  app.post('/api/v1/chat/messages', chatSendLimiter, async (req, res) => {
+  const threadAccess = (req) => {
+    const thread = threads.get(req.params.id);
+    const token = req.get('x-thread-token') || '';
+    if (!thread || !threads.verifyToken(thread, token)) {
+      throw new ApiError(401, 'THREAD_UNAUTHORIZED', 'This conversation is not accessible from this browser.');
+    }
+    return thread;
+  };
+
+  app.post('/api/v1/chat/threads', chatSendLimiter, async (req, res) => {
     const body = validate(chatMessageSchema, req.body);
-    const entry = await messages.add({
+    const result = await threads.create({
       message: body.message,
       page: body.page.startsWith('/') ? body.page : '/',
     });
     res.set('Cache-Control', 'no-store');
-    res.status(201).json({ data: { id: entry.id, createdAt: entry.createdAt } });
+    res.status(201).json({ data: { thread: threads.publicView(result.thread), token: result.token } });
+  });
+
+  app.get('/api/v1/chat/threads/:id', (req, res) => {
+    const thread = threadAccess(req);
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: threads.publicView(thread) });
+  });
+
+  app.post('/api/v1/chat/threads/:id/messages', chatSendLimiter, async (req, res) => {
+    const thread = threadAccess(req);
+    if (thread.status === 'resolved') {
+      throw new ApiError(409, 'THREAD_RESOLVED', 'This conversation has been marked as resolved.');
+    }
+    const body = validate(threadMessageSchema, req.body);
+    const result = await threads.addVisitorMessage(thread.id, body.message);
+    if (!result?.thread) throw notFound('Conversation not found.');
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: threads.publicView(result.thread) });
   });
 
   app.get('/api/v1/admin/session', (req, res) => {
@@ -398,32 +429,47 @@ export async function createApp({
     res.json({ data: { username: ADMIN_USERNAME } });
   });
 
-  app.get('/api/v1/admin/messages', (req, res) => {
-    const query = validate(adminMessageQuerySchema, req.query);
-    const entries = messages.list(query);
+  app.get('/api/v1/admin/threads', (req, res) => {
+    const query = validate(adminThreadQuerySchema, req.query);
+    const entries = threads.list(query);
     res.set('Cache-Control', 'no-store');
     res.json({
       data: entries,
       meta: {
         total: entries.length,
         status: query.status,
-        stats: messages.stats(),
+        stats: threads.stats(),
         storage: process.env.VERCEL ? 'ephemeral' : 'file',
       },
     });
   });
 
-  app.patch('/api/v1/admin/messages/:id', async (req, res) => {
-    const body = validate(adminMessagePatchSchema, req.body);
-    const entry = await messages.updateStatus(req.params.id, body.status);
-    if (!entry) throw notFound('Message not found.');
+  app.get('/api/v1/admin/threads/:id', (req, res) => {
+    const thread = threads.get(req.params.id);
+    if (!thread) throw notFound('Conversation not found.');
     res.set('Cache-Control', 'no-store');
-    res.json({ data: entry });
+    res.json({ data: threads.publicView(thread) });
   });
 
-  app.delete('/api/v1/admin/messages/:id', async (req, res) => {
-    const removed = await messages.remove(req.params.id);
-    if (!removed) throw notFound('Message not found.');
+  app.post('/api/v1/admin/threads/:id/messages', async (req, res) => {
+    const body = validate(threadMessageSchema, req.body);
+    const thread = await threads.addAdminMessage(req.params.id, body.message);
+    if (!thread) throw notFound('Conversation not found.');
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: threads.publicView(thread) });
+  });
+
+  app.patch('/api/v1/admin/threads/:id', async (req, res) => {
+    const body = validate(adminThreadPatchSchema, req.body);
+    const thread = await threads.setStatus(req.params.id, body.status);
+    if (!thread) throw notFound('Conversation not found.');
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: threads.publicView(thread) });
+  });
+
+  app.delete('/api/v1/admin/threads/:id', async (req, res) => {
+    const removed = await threads.remove(req.params.id);
+    if (!removed) throw notFound('Conversation not found.');
     res.status(204).end();
   });
 
@@ -483,6 +529,6 @@ export async function createApp({
   });
 
   app.locals.library = library;
-  app.locals.messages = messages;
+  app.locals.threads = threads;
   return app;
 }
