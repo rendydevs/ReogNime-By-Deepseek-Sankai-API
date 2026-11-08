@@ -31,8 +31,8 @@ function PlayerSkeleton() {
   );
 }
 
-// Mega is the cleanest embed we have tested; keep every mirror visible as a fallback.
-const SERVER_PREFERENCE = ['mega', 'filelions', 'vidhide', 'filedon'];
+// VidHide plays reliably on mobile; Mega remains available as a manual fallback.
+const SERVER_PREFERENCE = ['vidhide', 'filelions', 'filedon', 'mega'];
 
 function serverPreference(name: string): number {
   const normalized = name.toLowerCase().trim();
@@ -45,14 +45,14 @@ function qualityNumber(quality: string): number {
 }
 
 function initialServer(data: EpisodePayload): FlatServer | null {
-  const groups = data.servers
-    .filter((group) => group.servers.length > 0)
-    .sort((a, b) => qualityNumber(b.quality) - qualityNumber(a.quality));
-  for (const group of groups) {
-    const sorted = [...group.servers].sort((a, b) => serverPreference(b.name) - serverPreference(a.name));
-    if (sorted[0]) return { ...sorted[0], quality: group.quality };
-  }
-  return null;
+  const candidates = data.servers
+    .flatMap((group) => group.servers.map((server) => ({ ...server, quality: group.quality })))
+    .sort(
+      (a, b) =>
+        serverPreference(b.name) - serverPreference(a.name) ||
+        qualityNumber(b.quality) - qualityNumber(a.quality),
+    );
+  return candidates[0] ?? null;
 }
 
 function blocksEmbedding(url: string): boolean {
@@ -212,7 +212,7 @@ export function WatchEpisodePage() {
                 <div className="player-placeholder player-placeholder-error">
                   <AlertCircle size={23} />
                   <strong>{streamError ? 'This mirror could not be loaded.' : framedBlocked ? 'This mirror blocks embedded playback.' : offline ? 'This mirror is offline.' : 'No playable mirror found.'}</strong>
-                  <span>{streamError ?? (framedBlocked ? 'Choose a filedon, vidhide or mega mirror, or open this mirror in a new tab.' : offline ? 'Pick another server below or open the episode on the source site.' : 'Try another mirror from the list below.')}</span>
+                  <span>{streamError ?? (framedBlocked ? 'Choose a VidHide, FileLions or Filedon mirror, or open this mirror in a new tab.' : offline ? 'Pick another server below or open the episode on the source site.' : 'Try another mirror from the list below.')}</span>
                   <div className="player-placeholder-actions">
                     <button className="button button-paper" onClick={() => setReloadKey((value) => value + 1)}>
                       <RotateCw size={14} /> Retry
@@ -258,7 +258,7 @@ export function WatchEpisodePage() {
             </div>
             <p className="player-disclaimer">
               Streams are embedded from third-party servers. ReogNime does not host video files.
-              Mega is selected first when available for a cleaner player; all mirrors above remain available.
+              VidHide is selected first when available for mobile-friendly playback; all mirrors above remain available, including Mega as a manual fallback.
             </p>
           </section>
 
