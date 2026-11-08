@@ -13,7 +13,7 @@ import {
   Trash2,
   UserRound,
 } from 'lucide-react';
-import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { API_BASE } from '../lib/api';
 import { useDocumentTitle } from '../lib/hooks';
 
@@ -61,6 +61,16 @@ interface ThreadPayload {
 
 class AdminAuthError extends Error {}
 
+class AdminRequestError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = 'AdminRequestError';
+    this.status = status;
+  }
+}
+
 const FILTERS: { value: Filter; label: string }[] = [
   { value: 'all', label: 'Semua' },
   { value: 'open', label: 'Terbuka' },
@@ -90,7 +100,7 @@ async function adminRequest<T>(path: string, auth: string, options: RequestInit 
   });
   if (response.status === 401) throw new AdminAuthError('AUTH');
   const body = response.status === 204 ? null : await response.json().catch(() => null);
-  if (!response.ok) throw new Error(body?.error?.message ?? 'Permintaan admin gagal.');
+  if (!response.ok) throw new AdminRequestError(body?.error?.message ?? 'Permintaan admin gagal.', response.status);
   return body as T;
 }
 
@@ -111,6 +121,9 @@ export function AdminPage() {
   const [error, setError] = useState<string | null>(null);
   const [reply, setReply] = useState('');
   const [busy, setBusy] = useState(false);
+  const detailAbort = useRef<AbortController | null>(null);
+  const detailRequest = useRef(0);
+  const busyRef = useRef(false);
 
   const loadList = useCallback(async (nextAuth: string, nextFilter: Filter, selectMissing = true) => {
     setLoading(true);
@@ -138,22 +151,38 @@ export function AdminPage() {
   }, []);
 
   const loadDetail = useCallback(async (nextAuth: string, id: string, quiet = false) => {
+    if (quiet && busyRef.current) return;
+    detailAbort.current?.abort();
+    const controller = new AbortController();
+    detailAbort.current = controller;
+    const requestId = detailRequest.current + 1;
+    detailRequest.current = requestId;
     if (!quiet) setDetailLoading(true);
     try {
-      const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${id}`, nextAuth);
+      const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${id}`, nextAuth, { signal: controller.signal });
+      if (requestId !== detailRequest.current) return;
       setDetail(result.data);
+      setError(null);
     } catch (reason) {
+      if (controller.signal.aborted || requestId !== detailRequest.current) return;
       if (reason instanceof AdminAuthError) {
         setAuth(null);
         setDetail(null);
         setLoginError('Sesi admin tidak valid. Masukkan password lagi.');
-      } else if (!quiet) {
-        setError(reason instanceof Error ? reason.message : 'Tidak bisa memuat percakapan.');
+        return;
       }
+      if (reason instanceof AdminRequestError && reason.status === 404) {
+        setDetail(null);
+        setSelectedId(null);
+        return;
+      }
+      if (!quiet) setError(reason instanceof Error ? reason.message : 'Tidak bisa memuat percakapan.');
     } finally {
-      if (!quiet) setDetailLoading(false);
+      if (detailAbort.current === controller && !quiet) setDetailLoading(false);
     }
-  }, []);
+  }, [busy]);
+
+  useEffect(() => () => detailAbort.current?.abort(), []);
 
   useEffect(() => {
     if (!auth) return;
@@ -167,6 +196,8 @@ export function AdminPage() {
     }
     void loadDetail(auth, selectedId);
   }, [auth, selectedId, loadDetail]);
+
+  useEffect(() => { setReply(''); }, [selectedId]);
 
   useEffect(() => {
     if (!auth) return;
@@ -203,21 +234,39 @@ export function AdminPage() {
     }
   };
 
+  const handleReplyKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+      event.preventDefault();
+      event.currentTarget.form?.requestSubmit();
+    }
+  };
+
   const handleReply = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!auth || !detail || !reply.trim() || busy) return;
     setBusy(true);
     setError(null);
+    detailAbort.current?.abort();
+    detailRequest.current += 1;
     try {
       const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${detail.id}/messages`, auth, {
         method: 'POST',
         body: JSON.stringify({ message: reply.trim() }),
       });
+      detailRequest.current += 1;
       setDetail(result.data);
       setReply('');
       await loadList(auth, filter, false);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Balasan tidak terkirim.');
+      if (reason instanceof AdminRequestError && reason.status === 404) {
+        setDetail(null);
+        setSelectedId(null);
+        void loadList(auth, filter);
+      } else if (reason instanceof AdminAuthError) {
+        setAuth(null);
+      } else {
+        setError(reason instanceof Error ? reason.message : 'Balasan tidak terkirim.');
+      }
     } finally {
       setBusy(false);
     }
@@ -227,15 +276,26 @@ export function AdminPage() {
     if (!auth || !detail || busy) return;
     setBusy(true);
     setError(null);
+    detailAbort.current?.abort();
+    detailRequest.current += 1;
     try {
       const result = await adminRequest<{ data: ThreadDetail }>(`/admin/threads/${detail.id}`, auth, {
         method: 'PATCH',
         body: JSON.stringify({ status }),
       });
+      detailRequest.current += 1;
       setDetail(result.data);
       await loadList(auth, filter, false);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Status tidak bisa diubah.');
+      if (reason instanceof AdminRequestError && reason.status === 404) {
+        setDetail(null);
+        setSelectedId(null);
+        void loadList(auth, filter);
+      } else if (reason instanceof AdminAuthError) {
+        setAuth(null);
+      } else {
+        setError(reason instanceof Error ? reason.message : 'Status tidak bisa diubah.');
+      }
     } finally {
       setBusy(false);
     }
@@ -244,13 +304,23 @@ export function AdminPage() {
   const removeThread = async () => {
     if (!auth || !detail || !window.confirm('Hapus seluruh percakapan ini?')) return;
     setBusy(true);
+    detailAbort.current?.abort();
+    detailRequest.current += 1;
     try {
       await adminRequest(`/admin/threads/${detail.id}`, auth, { method: 'DELETE' });
       setDetail(null);
       setSelectedId(null);
       await loadList(auth, filter);
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : 'Percakapan tidak bisa dihapus.');
+      if (reason instanceof AdminRequestError && reason.status === 404) {
+        setDetail(null);
+        setSelectedId(null);
+        await loadList(auth, filter);
+      } else if (reason instanceof AdminAuthError) {
+        setAuth(null);
+      } else {
+        setError(reason instanceof Error ? reason.message : 'Percakapan tidak bisa dihapus.');
+      }
     } finally {
       setBusy(false);
     }
@@ -440,14 +510,18 @@ export function AdminPage() {
                   </div>
                 ) : (
                   <form className="admin-thread-reply" onSubmit={handleReply}>
-                    <textarea
-                      value={reply}
-                      onChange={(event) => setReply(event.target.value)}
-                      placeholder="Tulis balasan untuk pengunjung…"
-                      rows={3}
-                      maxLength={1000}
-                      disabled={busy}
-                    />
+                    <div className="admin-thread-reply-field">
+                      <textarea
+                        value={reply}
+                        onChange={(event) => setReply(event.target.value)}
+                        onKeyDown={handleReplyKeyDown}
+                        placeholder="Tulis balasan untuk pengunjung…"
+                        rows={3}
+                        maxLength={1000}
+                        disabled={busy}
+                      />
+                      <span className="admin-thread-reply-hint">Enter untuk kirim · Shift + Enter untuk baris baru</span>
+                    </div>
                     <button type="submit" className="button button-primary" disabled={!reply.trim() || busy}>
                       {busy ? <LoaderCircle size={14} className="spin" /> : <Send size={14} />}
                       Kirim balasan

@@ -5,7 +5,7 @@ import { OtakuCard } from '../components/OtakuCard';
 import { OtakuPoster } from '../components/OtakuPoster';
 import { Reveal } from '../components/Reveal';
 import { TitleMarquee } from '../components/TitleMarquee';
-import { api } from '../lib/api';
+import { API_HEALTH_URL, api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 
 function HomeSkeleton() {
@@ -66,6 +66,27 @@ export function HomePage() {
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [apiStatus, setApiStatus] = useState<{ phase: 'checking' | 'online' | 'offline'; ms: number | null }>({ phase: 'checking', ms: null });
+
+  useEffect(() => {
+    let active = true;
+    const ping = async () => {
+      const startedAt = performance.now();
+      try {
+        const response = await fetch(API_HEALTH_URL, { cache: 'no-store' });
+        const ms = Math.round(performance.now() - startedAt);
+        if (active) setApiStatus({ phase: response.ok ? 'online' : 'offline', ms });
+      } catch {
+        if (active) setApiStatus({ phase: 'offline', ms: null });
+      }
+    };
+    void ping();
+    const timer = window.setInterval(ping, 60_000);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+    };
+  }, []);
 
   const ongoing = home.data?.data.ongoing ?? [];
   const completed = home.data?.data.completed ?? [];
@@ -115,7 +136,19 @@ export function HomePage() {
       <header className="container watch-masthead home-watch-masthead">
         <div className="watch-masthead-bar">
           <p className="eyebrow"><span className="watch-live-dot" /> Streaming · Subtitle Indonesia</p>
-          <Link to="/schedule" className="text-link">Airing schedule <ArrowRight size={14} /></Link>
+          <div className="watch-masthead-actions">
+            <span
+              className={`server-status is-${apiStatus.phase}`}
+              title={apiStatus.phase === 'offline' ? 'API server tidak terjangkau' : 'Latensi API server'}
+              aria-label={apiStatus.phase === 'online' ? `API online, ${apiStatus.ms} milidetik` : apiStatus.phase === 'offline' ? 'API offline' : 'Memeriksa API'}
+              aria-live="polite"
+            >
+              <i aria-hidden="true" />
+              <span className="server-status-label">API</span>
+              <b>{apiStatus.phase === 'online' ? `${apiStatus.ms} ms` : apiStatus.phase === 'offline' ? 'offline' : '…'}</b>
+            </span>
+            <Link to="/schedule" className="text-link">Airing schedule <ArrowRight size={14} /></Link>
+          </div>
         </div>
         <div className="home-watch-title-row">
           <div>

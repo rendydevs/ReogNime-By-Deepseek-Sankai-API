@@ -13684,3 +13684,122 @@ body {
     min-height: 440px;
   }
 }
+
+/* Minimal API latency indicator in the home masthead */
+.watch-masthead-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 17px;
+  white-space: nowrap;
+}
+
+.server-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 8.5px;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.server-status i {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--muted-light);
+}
+
+.server-status b {
+  color: var(--muted-light);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.server-status.is-online i {
+  background: #6f9b74;
+  box-shadow: 0 0 0 3px rgba(111, 155, 116, 0.12);
+}
+
+.server-status.is-online b {
+  color: var(--ink-soft);
+}
+
+.server-status.is-offline i {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.server-status.is-offline b {
+  color: var(--accent-deep);
+}
+
+.server-status.is-checking i {
+  animation: server-status-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes server-status-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 560px) {
+  .watch-masthead-actions {
+    gap: 10px;
+  }
+
+  .server-status {
+    gap: 4px;
+    font-size: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .server-status b {
+    font-size: 8.5px;
+  }
+}
+
+@media (max-width: 359px) {
+  .server-status-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .server-status.is-checking i {
+    animation: none;
+  }
+}
+
+.admin-thread-reply-field {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-thread-reply-field textarea {
+  width: 100%;
+}
+
+.admin-thread-reply-hint {
+  color: var(--muted-light);
+  font-size: 8.5px;
+  letter-spacing: 0.01em;
+  text-align: right;
+}
+
+@media (max-width: 560px) {
+  .admin-thread-reply-hint {
+    text-align: left;
+  }
+}
