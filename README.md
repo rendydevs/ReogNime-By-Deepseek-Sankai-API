@@ -136,7 +136,7 @@ npx vercel dev --local
 
 **Provider network note:** the public Otakudesu API sometimes returns HTTP 403 to datacenter IPs such as Vercel Functions. The SPA handles this automatically: if the server-side watch request fails, the visitor's browser fetches the public provider payload directly and posts it to `POST /api/v1/otakudesu/relay`, where the normal server normalizers (including artwork repair) run. The relay accepts only known endpoint names, has a 2 MB body limit, and is rate-limited. To disable this fallback, point `OTAKUDESU_API_BASE` at a reachable proxy or host the API where the provider is accessible.
 
-**Vercel storage caveat:** the archive library is a single local JSON profile. On Vercel it is written to `/tmp/reognime-library.json`, seeded with the six demo entries on each fresh function instance. It resets on a cold start or redeploy. For a persistent personal library, point `LIBRARY_FILE` at a writable persistent volume or move `LibraryStore` to a database/KV; alternatively host the Express API on a persistent service and set `VITE_API_BASE_URL` to it. The in-memory upstream cache also resets with the function instance.
+**Vercel storage caveat:** the archive library is a single local JSON profile. On Vercel it is written to `/tmp/reognime-library.json`, starts empty on each fresh function instance; a one-time seed marker clears legacy demo entries from `/tmp`. It resets on a cold start or redeploy. For a persistent personal library, point `LIBRARY_FILE` at a writable persistent volume or move `LibraryStore` to a database/KV; alternatively host the Express API on a persistent service and set `VITE_API_BASE_URL` to it. The in-memory upstream cache also resets with the function instance.
 
 ### Analytics & monitoring
 
@@ -160,7 +160,7 @@ If the container already sends GA4 page views on All Pages, remove that duplicat
 
 ### A fresh archive list
 
-The archive ships with six demo entries. To begin empty, remove `server/data/library.json` and restart the server; it recreates the file as an empty library. Streaming usage is stateless and is not stored in the library.
+The archive now starts with an empty library. `server/data/library.json` contains no demo entries; a fresh server creates the file as an empty library. Streaming usage is stateless and is not stored in the library.
 
 ## Otakudesu API
 

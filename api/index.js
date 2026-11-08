@@ -1,9 +1,11 @@
-import { access, copyFile, mkdir } from 'node:fs/promises';
+import { access, copyFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createApp } from '../server/app.js';
 
 const TMP_LIBRARY = '/tmp/reognime-library.json';
+const TMP_LIBRARY_SEED_MARKER = '/tmp/reognime-library-empty-v2';
+const EMPTY_LIBRARY = `${JSON.stringify({ version: 1, entries: [] }, null, 2)}\n`;
 const TMP_MESSAGES = '/tmp/reognime-messages.json';
 const libraryFile = process.env.LIBRARY_FILE || TMP_LIBRARY;
 const messagesFile = process.env.MESSAGES_FILE || TMP_MESSAGES;
@@ -21,17 +23,23 @@ function normalizeRequestUrl(req) {
   req.url = `${url.pathname}${url.search}`;
 }
 
-function seedLibrary() {
+async function seedLibrary() {
   if (process.env.LIBRARY_FILE) return Promise.resolve();
-  return mkdir(path.dirname(TMP_LIBRARY), { recursive: true })
-    .then(() => access(TMP_LIBRARY))
-    .catch(async (error) => {
-      if (error.code !== 'ENOENT') throw error;
-      const seed = fileURLToPath(new URL('../server/data/library.json', import.meta.url));
-      await copyFile(seed, TMP_LIBRARY).catch((copyError) => {
-        console.warn('Could not seed the demo library:', copyError.message);
-      });
-    });
+  await mkdir(path.dirname(TMP_LIBRARY), { recursive: true });
+  try {
+    await access(TMP_LIBRARY_SEED_MARKER);
+    return;
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  // The public demo starts with an empty personal library. This one-time marker
+  // also clears the old six-entry demo file left in /tmp by earlier deployments.
+  await writeFile(TMP_LIBRARY, EMPTY_LIBRARY, 'utf8').catch((error) => {
+    console.warn('Could not reset the demo library:', error.message);
+  });
+  await writeFile(TMP_LIBRARY_SEED_MARKER, new Date().toISOString(), 'utf8').catch((error) => {
+    console.warn('Could not write the library seed marker:', error.message);
+  });
 }
 
 function seedMessages() {
