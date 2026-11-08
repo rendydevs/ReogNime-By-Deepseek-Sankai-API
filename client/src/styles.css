@@ -14770,3 +14770,66 @@ body {
     gap: 0;
   }
 }
+
+.footer-partners {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-top: 17px;
+}
+
+.footer-partner {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(251, 247, 238, 0.5);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  line-height: 1.15;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.footer-partner:hover {
+  color: var(--hero-ink);
+}
+
+.footer-partner img {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  object-fit: contain;
+  filter: grayscale(0.15) saturate(0.9);
+  opacity: 0.8;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-partner:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+.footer-partner-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.footer-partner-copy small {
+  color: rgba(251, 247, 238, 0.32);
+  font-size: 6.5px;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+}
+
+@media (max-width: 560px) {
+  .footer-partners {
+    gap: 10px 16px;
+  }
+
+  .footer-partner {
+    font-size: 8.5px;
+  }
+}

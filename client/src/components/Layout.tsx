@@ -8,7 +8,7 @@ import { useOnlineStatus } from '../lib/hooks';
 import { ChatWidget } from './ChatWidget';
 import { CommandSearch } from './CommandSearch';
 import { Logo } from './Logo';
-import { HeaderCredits, MobileCredits } from './PartnerCredits';
+import { FooterCredits, HeaderCredits, MobileCredits } from './PartnerCredits';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Beranda', end: true },
@@ -172,6 +172,7 @@ export function Layout() {
             <Logo />
             <p className="footer-made">made by aldi with love</p>
             <p className="footer-source">Data streaming dari <a href="https://otakudesu.or.at" target="_blank" rel="noreferrer">Otakudesu API</a>.</p>
+            <FooterCredits />
           </div>
           <div className="footer-links">
             <div>
