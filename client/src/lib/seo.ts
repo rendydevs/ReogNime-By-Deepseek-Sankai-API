@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export const SITE_URL = 'https://www.reognime.site';
+let managedPath: string | null = null;
 const DEFAULT_IMAGE = `${SITE_URL}/og-reognime.jpg`;
 
 type SeoInput = {
@@ -68,6 +69,10 @@ export function applySeo({ title, description, image, type = 'website', noindex 
   setMeta('name', 'twitter:title', pageTitle);
   if (description) setMeta('name', 'twitter:description', description);
   setMeta('name', 'twitter:image', ogImage);
+  setMeta('property', 'og:site_name', 'ReogNime');
+  setMeta('property', 'og:locale', 'id_ID');
+  setMeta('property', 'og:image:alt', pageTitle);
+  setMeta('name', 'twitter:image:alt', pageTitle);
   setJsonLd(jsonLd);
 }
 
@@ -76,6 +81,7 @@ export function usePageSeo(input: SeoInput = {}) {
   useEffect(() => {
     if (!input.title && !input.description && !input.image && !input.jsonLd) return;
     applySeo(input);
+    managedPath = location.pathname;
     // The path is part of the dependency list so canonical stays current.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, location.search, input.title, input.description, input.image, input.type, input.noindex, input.jsonLd]);
@@ -136,6 +142,10 @@ const ROUTE_META: Record<string, { title: string; description: string; noindex?:
     description: 'Antrean pesan privat admin ReogNime.',
     noindex: true,
   },
+  '/tentang': {
+    title: 'Tentang ReogNime — Katalog Anime Sub Indo',
+    description: 'Tentang ReogNime, sumber data, daftar tontonan, dan kebijakan video pihak ketiga.',
+  },
   '/developers': {
     title: 'Referensi API — ReogNime',
     description: 'Dokumentasi API ReogNime dan OpenAPI 3.1.',
@@ -147,13 +157,15 @@ function SeoManager() {
   const location = useLocation();
 
   useEffect(() => {
+    // A page-level usePageSeo hook owns dynamic anime/genre metadata. Avoid
+    // overwriting it when that hook has already run for this path.
+    if (managedPath === location.pathname) return;
     const meta = ROUTE_META[location.pathname];
     applySeo({
       title: meta?.title ?? document.title,
       description: meta?.description ?? ROUTE_META['/'].description,
       noindex: meta?.noindex,
     });
-    // A page-specific hook can replace this with dynamic anime metadata later.
     document.head.querySelector('script[data-page-jsonld]')?.remove();
   }, [location.pathname]);
 
@@ -161,3 +173,26 @@ function SeoManager() {
 }
 
 export { SeoManager };
+
+
+export type BreadcrumbItem = { name: string; path: string };
+
+export function breadcrumbJsonLd(items: BreadcrumbItem[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.path}`,
+    })),
+  };
+}
+
+export function pageGraph(...nodes: Record<string, unknown>[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': nodes,
+  };
+}

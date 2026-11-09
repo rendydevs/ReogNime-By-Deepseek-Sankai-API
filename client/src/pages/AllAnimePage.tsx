@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, usePageSeo } from '../lib/seo';
 import type { OtakuUnlimitedGroup } from '../types';
 
 function groupId(index: number) {
@@ -11,6 +12,18 @@ function groupId(index: number) {
 
 export function AllAnimePage() {
   useDocumentTitle('Semua Anime A–Z Sub Indo');
+  usePageSeo({
+    title: 'Semua Anime A–Z Sub Indo — ReogNime',
+    description: 'Katalog lengkap anime subtitle Indonesia dari A sampai Z. Telusuri semua judul dan temukan tontonan berikutnya di ReogNime.',
+    image: '/og-reognime.jpg',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Semua Anime A–Z Sub Indo',
+      description: 'Katalog anime subtitle Indonesia di ReogNime.',
+      url: `${SITE_URL}/all`,
+    },
+  });
   const all = useApi((signal) => api.otaku.unlimited(signal), []);
   const [query, setQuery] = useState('');
 

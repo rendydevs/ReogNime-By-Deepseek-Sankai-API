@@ -51,7 +51,10 @@ export function useApi<T>(loader: (signal: AbortSignal) => Promise<T>, deps: Dep
 export function useDocumentTitle(title: string) {
   useEffect(() => {
     const previous = document.title;
-    document.title = title ? `${title} — ReogNime` : 'ReogNime — Nonton anime, tanpa ribet.';
+    const nextTitle = title
+      ? title.includes('ReogNime') ? title : `${title} — ReogNime`
+      : 'ReogNime — Nonton anime, tanpa ribet.';
+    document.title = nextTitle;
     return () => {
       document.title = previous;
     };

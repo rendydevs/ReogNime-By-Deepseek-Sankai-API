@@ -182,6 +182,7 @@ export function Layout() {
               <p className="footer-heading">Jelajah</p>
               <Link to="/genres">Genre</Link>
               <Link to="/all">Semua anime A–Z</Link>
+              <Link to="/tentang">Tentang ReogNime</Link>
               <Link to="/developers">Referensi API</Link>
               <a href={OPENAPI_URL} target="_blank" rel="noreferrer">Spesifikasi OpenAPI</a>
             </div>

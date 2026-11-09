@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { OtakuPoster } from '../components/OtakuPoster';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, usePageSeo } from '../lib/seo';
 
 const DAY_ORDER = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu', 'Random'];
 
@@ -13,6 +14,18 @@ function todayName() {
 
 export function WatchSchedulePage() {
   useDocumentTitle('Jadwal Rilis Anime Sub Indo');
+  usePageSeo({
+    title: 'Jadwal Rilis Anime Sub Indo — ReogNime',
+    description: 'Jadwal rilis anime mingguan subtitle Indonesia di ReogNime. Lihat anime yang tayang setiap hari, lengkap dengan jam dan daftar judul.',
+    image: '/og-reognime.jpg',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Jadwal Rilis Anime Sub Indo',
+      description: 'Jadwal anime tayang mingguan subtitle Indonesia.',
+      url: `${SITE_URL}/schedule`,
+    },
+  });
   const schedule = useApi((signal) => api.otaku.schedule(signal), []);
   const today = todayName();
 

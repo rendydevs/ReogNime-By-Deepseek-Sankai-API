@@ -23,6 +23,7 @@ import {
   genreLabel,
 } from '../lib/format';
 import { useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import { mediaUrl } from '../lib/media';
 import type { LibraryEntry, LibraryStatus } from '../types';
 
@@ -33,6 +34,11 @@ const TABS: Tab[] = ['ALL', ...STATUS_ORDER];
 
 export function LibraryPage() {
   useDocumentTitle('Daftar Saya');
+  usePageSeo({
+    title: 'Daftar Saya — ReogNime',
+    description: 'Daftar tontonan pribadi ReogNime.',
+    noindex: true,
+  });
   const { entries, stats, loading, refreshing, error, refresh, addEntry, updateEntry, removeEntry } = useLibrary();
   const { open } = useLibraryDialog();
   const { notify } = useToast();

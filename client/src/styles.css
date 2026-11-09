@@ -14694,3 +14694,142 @@ body {
     font-size: 8.5px;
   }
 }
+
+/* ---------- About / trust page ---------- */
+
+.about-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 36px;
+  max-width: 820px;
+  padding-top: 54px;
+  padding-bottom: 110px;
+}
+
+.about-content section {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.about-content section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.about-content h2 {
+  max-width: 460px;
+  margin: 10px 0 18px;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.5vw, 40px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.about-content section > p:not(.section-index) {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.home-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr);
+  gap: 48px;
+  padding: 30px 0 32px;
+  border-top: 1px solid var(--line);
+}
+
+.home-faq-head h2 {
+  margin-top: 5px;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.home-faq-list {
+  border-top: 1px solid var(--line);
+}
+
+.home-faq-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.home-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 550;
+  list-style: none;
+  cursor: pointer;
+}
+
+.home-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.home-faq-item summary::after {
+  content: '+';
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.home-faq-item[open] summary::after {
+  content: '−';
+}
+
+.home-faq-item p {
+  max-width: 690px;
+  padding: 0 28px 17px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+@media (max-width: 900px) {
+  .home-faq {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .about-content {
+    padding-top: 36px;
+    padding-bottom: 76px;
+  }
+
+  .home-faq {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-content {
+    gap: 22px;
+  }
+
+  .home-faq-item summary {
+    font-size: 11px;
+  }
+
+  .home-faq-item p {
+    font-size: 11px;
+  }
+}

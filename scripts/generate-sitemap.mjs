@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 
 const SITE = 'https://www.reognime.site';
 const API = 'https://www.sankavollerei.web.id/anime';
@@ -12,9 +12,9 @@ const staticPages = [
   ['/schedule', '0.8', 'weekly'],
   ['/genres', '0.7', 'weekly'],
   ['/all', '0.7', 'weekly'],
-  ['/search', '0.5', 'monthly'],
   ['/archive', '0.6', 'monthly'],
   ['/discover', '0.6', 'monthly'],
+  ['/tentang', '0.5', 'monthly'],
 ];
 
 const escapeXml = (value) =>
@@ -38,6 +38,16 @@ for (const group of unlimited.data?.list ?? []) {
 }
 for (const genre of genres.data?.genreList ?? []) {
   if (genre.genreId) entries.add(`/genre/${encodeURIComponent(genre.genreId)}`);
+}
+
+// Archive entries are local AniList-backed pages; include them when present.
+try {
+  const archive = JSON.parse(await readFile(new URL('../server/data/anime.json', import.meta.url), 'utf8'));
+  for (const anime of archive.anime ?? []) {
+    if (anime.id) entries.add(`/anime/${encodeURIComponent(anime.id)}`);
+  }
+} catch (error) {
+  console.warn('Could not read archive data for sitemap:', error.message);
 }
 
 const urls = [...entries].map((path) => {

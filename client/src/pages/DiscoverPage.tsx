@@ -6,6 +6,7 @@ import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { FORMAT_LABELS, SEASON_LABELS, genreLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import type { AnimeSummary, DiscoverFilters, DiscoverSort, PageMeta } from '../types';
 
 const DEFAULT_SORT: DiscoverSort = 'popularity';
@@ -31,7 +32,12 @@ function filtersFromParams(params: URLSearchParams): DiscoverFilters {
 }
 
 export function DiscoverPage() {
-  useDocumentTitle('Indeks');
+  useDocumentTitle('Temukan Anime Baru');
+  usePageSeo({
+    title: 'Temukan Anime Baru — ReogNime',
+    description: 'Jelajahi katalog anime berdasarkan genre, tahun, musim, format, status, dan skor. Temukan tontonan berikutnya di ReogNime.',
+    image: '/og-reognime.jpg',
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { notify } = useToast();

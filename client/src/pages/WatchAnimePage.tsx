@@ -19,9 +19,9 @@ import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { formatDurationLabel, formatProviderDate, genreLabel, otakuStatusLabel, seasonName } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 import { shareCurrentPage } from '../lib/share';
 import { rememberSeriesMeta } from '../lib/watchHistory';
-import { usePageSeo } from '../lib/seo';
 import type { OtakuBatch } from '../types';
 
 function WatchDetailSkeleton() {
@@ -58,26 +58,33 @@ export function WatchAnimePage() {
     setBatch(null);
   }, [slug]);
 
-  useDocumentTitle(anime ? `${anime.title} Sub Indo` : 'Nonton Anime Sub Indo');
+  useDocumentTitle(anime ? `Nonton ${anime.title} Sub Indo` : 'Nonton Anime Sub Indo');
   usePageSeo({
-    title: anime ? `${anime.title} Sub Indo — ReogNime` : 'Tonton seri — ReogNime',
+    title: anime ? `Nonton ${anime.title} Sub Indo — ReogNime` : 'Tonton seri — ReogNime',
     description: anime
-      ? `Nonton ${anime.title} subtitle Indonesia di ReogNime. ${anime.synopsis.join(' ').slice(0, 150)}`
+      ? `Nonton ${anime.title} subtitle Indonesia di ReogNime. ${anime.synopsis.join(' ').slice(0, 100)}`
       : 'Nonton anime subtitle Indonesia di ReogNime.',
     image: anime?.banner || anime?.poster || null,
     type: 'video.tv_show',
     jsonLd: anime
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'TVSeries',
-          name: anime.title,
-          ...(anime.japanese ? { alternateName: anime.japanese } : {}),
-          description: anime.synopsis.join(' ').slice(0, 600),
-          image: anime.banner || anime.poster || undefined,
-          genre: anime.genres.map((genre) => genre.name),
-          ...(anime.episodes ? { numberOfEpisodes: anime.episodes } : {}),
-          inLanguage: 'id-ID',
-        }
+      ? pageGraph(
+          {
+            '@type': 'TVSeries',
+            name: anime.title,
+            ...(anime.japanese ? { alternateName: anime.japanese } : {}),
+            description: anime.synopsis.join(' ').slice(0, 600),
+            image: anime.banner || anime.poster || undefined,
+            url: `${SITE_URL}/watch/anime/${encodeURIComponent(anime.slug || slug || '')}`,
+            genre: anime.genres.map((genre) => genre.name),
+            ...(anime.episodes ? { numberOfEpisodes: anime.episodes } : {}),
+            inLanguage: 'id-ID',
+          },
+          breadcrumbJsonLd([
+            { name: 'Beranda', path: '/' },
+            { name: /completed|finished/i.test(anime.status ?? '') ? 'Tamat' : 'Tayang', path: /completed|finished/i.test(anime.status ?? '') ? '/completed' : '/ongoing' },
+            { name: anime.title, path: `/watch/anime/${encodeURIComponent(anime.slug || slug || '')}` },
+          ]),
+        )
       : null,
   });
 

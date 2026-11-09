@@ -45,6 +45,7 @@ export function OtakuPoster({ title, poster, className = '', eager = false }: Ot
           src={poster}
           alt={`Poster ${title}`}
           loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
           referrerPolicy="no-referrer"
           onError={() => setFailed(true)}
         />

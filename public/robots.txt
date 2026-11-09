@@ -4,6 +4,6 @@ Disallow: /api/
 Disallow: /library
 Disallow: /admin
 Disallow: /developers
-Disallow: /search?
+Disallow: /search
 
 Sitemap: https://www.reognime.site/sitemap.xml

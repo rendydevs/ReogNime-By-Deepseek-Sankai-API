@@ -17,6 +17,7 @@ import {
   truncate,
 } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import { mediaUrl } from '../lib/media';
 import type { LibraryEntry } from '../types';
 
@@ -67,7 +68,12 @@ function ShelfRow({ entry }: { entry: LibraryEntry }) {
 }
 
 export function ArchivePage() {
-  useDocumentTitle('Arsip');
+  useDocumentTitle('Arsip Anime Pilihan');
+  usePageSeo({
+    title: 'Arsip Anime Pilihan — ReogNime',
+    description: 'Arsip editorial ReogNime: rekomendasi anime pilihan, kanon, daftar tayangan, dan katalog AniList untuk menemukan cerita baru.',
+    image: '/og-reognime.jpg',
+  });
   const { data: response, loading, error, reload } = useApi((signal) => api.home(signal), []);
   const data = response?.data ?? null;
   const [active, setActive] = useState(0);
@@ -132,7 +138,7 @@ export function ArchivePage() {
         <div className="hero-media">
           {data.spotlight.map((anime, index) => (
             <div className={`hero-slide ${index === active ? 'is-active' : ''}`} key={anime.id} aria-hidden={index !== active}>
-              <img src={mediaUrl(anime.banner ?? anime.cover)} alt={`Ilustrasi ${anime.title}`} />
+              <img src={mediaUrl(anime.banner ?? anime.cover)} alt={`Ilustrasi ${anime.title}`} loading={index === active ? 'eager' : 'lazy'} decoding="async" />
             </div>
           ))}
           <div className="hero-vignette" />

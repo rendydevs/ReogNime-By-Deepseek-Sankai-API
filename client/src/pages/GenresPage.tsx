@@ -6,6 +6,7 @@ import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { genreLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 import type { OtakuCard as OtakuCardType, OtakuListMeta } from '../types';
 
 function titleFromSlug(slug: string) {
@@ -17,6 +18,18 @@ function titleFromSlug(slug: string) {
 
 export function GenresPage() {
   useDocumentTitle('Genre Anime Sub Indo');
+  usePageSeo({
+    title: 'Genre Anime Sub Indo — ReogNime',
+    description: 'Jelajahi genre anime subtitle Indonesia di ReogNime: aksi, petualangan, drama, fantasi, romansa, dan banyak lagi.',
+    image: '/og-reognime.jpg',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'Genre Anime Sub Indo',
+      description: 'Katalog genre anime subtitle Indonesia di ReogNime.',
+      url: `${SITE_URL}/genres`,
+    },
+  });
   const genres = useApi((signal) => api.otaku.genres(signal), []);
 
   return (
@@ -70,7 +83,25 @@ export function GenresPage() {
 export function GenrePage() {
   const { slug = '' } = useParams();
   const label = genreLabel(titleFromSlug(slug));
-  useDocumentTitle(`${label} Sub Indo`);
+  useDocumentTitle(`Anime ${label} Sub Indo`);
+  usePageSeo({
+    title: `Anime ${label} Sub Indo — ReogNime`,
+    description: `Daftar anime genre ${label} subtitle Indonesia di ReogNime. Jelajahi judul, poster, dan episode terbaru dalam satu rak.`,
+    image: '/og-reognime.jpg',
+    jsonLd: pageGraph(
+      {
+        '@type': 'CollectionPage',
+        name: `Anime ${label} Sub Indo`,
+        description: `Daftar anime genre ${label} subtitle Indonesia.`,
+        url: `${SITE_URL}/genre/${encodeURIComponent(slug)}`,
+      },
+      breadcrumbJsonLd([
+        { name: 'Beranda', path: '/' },
+        { name: 'Genre', path: '/genres' },
+        { name: label, path: `/genre/${encodeURIComponent(slug)}` },
+      ]),
+    ),
+  });
   const initial = useApi((signal) => api.otaku.genre(slug, 1, signal), [slug]);
   const { notify } = useToast();
   const [items, setItems] = useState<OtakuCardType[]>([]);

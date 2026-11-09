@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { AppErrorBoundary } from './components/AppErrorBoundary';
 import { Layout } from './components/Layout';
 import { LibraryDialogProvider } from './components/LibraryDialog';
+import { AboutPage } from './pages/AboutPage';
 import { AdminPage } from './pages/AdminPage';
 import { AllAnimePage } from './pages/AllAnimePage';
 import { AnimeDetailPage } from './pages/AnimeDetailPage';
@@ -57,6 +58,7 @@ export function App() {
           <Route path="anime/:id" element={<AnimeDetailPage />} />
           <Route path="library" element={<LibraryPage />} />
           <Route path="admin" element={<AdminPage />} />
+          <Route path="tentang" element={<AboutPage />} />
           <Route path="developers" element={<ApiPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

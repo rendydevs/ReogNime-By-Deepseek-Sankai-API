@@ -4,10 +4,16 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { OtakuCard } from '../components/OtakuCard';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import { addRecentSearch, useRecentSearches } from '../lib/searchHistory';
 
 export function SearchPage() {
   useDocumentTitle('Cari Anime Sub Indo');
+  usePageSeo({
+    title: 'Cari Anime Sub Indo — ReogNime',
+    description: 'Cari anime subtitle Indonesia berdasarkan judul di katalog ReogNime.',
+    noindex: true,
+  });
   const [params, setParams] = useSearchParams();
   const q = params.get('q')?.trim() ?? '';
   const recentSearches = useRecentSearches();

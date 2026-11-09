@@ -30,8 +30,10 @@ import {
   formatMinutes,
   formatScore,
   genreLabel,
+  truncate,
 } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 import { mediaUrl } from '../lib/media';
 import type { Anime, Episode } from '../types';
 
@@ -200,7 +202,35 @@ export function AnimeDetailPage() {
   const { notify } = useToast();
   const [favoriteBusy, setFavoriteBusy] = useState(false);
   const anime = data?.data ?? null;
-  useDocumentTitle(anime ? `${anime.title} Sub Indo` : 'Anime Sub Indo');
+  useDocumentTitle(anime ? `Nonton ${anime.title} Sub Indo` : 'Anime Sub Indo');
+  usePageSeo(anime ? {
+    title: `Nonton ${anime.title} Sub Indo — ReogNime`,
+    description: `Sinopsis anime ${anime.title}: ${truncate(anime.synopsis, 100)}`,
+    image: anime.banner || anime.cover,
+    type: 'video.tv_show',
+    jsonLd: pageGraph(
+      {
+        '@type': 'TVSeries',
+        name: anime.title,
+        alternateName: anime.nativeTitle || anime.originalTitle || undefined,
+        description: anime.synopsis.slice(0, 600),
+        image: anime.banner || anime.cover || undefined,
+        url: `${SITE_URL}/anime/${anime.id}`,
+        genre: anime.genres,
+        numberOfEpisodes: anime.episodes || undefined,
+        inLanguage: 'id-ID',
+      },
+      breadcrumbJsonLd([
+        { name: 'Beranda', path: '/' },
+        { name: 'Indeks', path: '/discover' },
+        { name: anime.title, path: `/anime/${anime.id}` },
+      ]),
+    ),
+  } : {
+    title: 'Anime Tidak Ditemukan — ReogNime',
+    description: 'Judul anime yang kamu cari tidak ditemukan di indeks ReogNime.',
+    noindex: true,
+  });
 
   if (loading) return <DetailSkeleton />;
 
@@ -250,7 +280,7 @@ export function AnimeDetailPage() {
     <div className="detail-page">
       <section className="detail-hero">
         <div className="detail-hero-media">
-          <img src={mediaUrl(anime.banner ?? anime.cover)} alt="" />
+          <img src={mediaUrl(anime.banner ?? anime.cover)} alt="" loading="eager" decoding="async" />
         </div>
         <div className="detail-hero-shade" />
         <div className="container detail-hero-inner">

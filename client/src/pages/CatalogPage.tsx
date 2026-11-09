@@ -5,6 +5,7 @@ import { OtakuCard } from '../components/OtakuCard';
 import { useToast } from '../context/ToastContext';
 import { api } from '../lib/api';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, usePageSeo } from '../lib/seo';
 import type { OtakuCard as OtakuCardType, OtakuListMeta } from '../types';
 
 interface CatalogPageProps {
@@ -28,7 +29,24 @@ const COPY = {
 
 export function CatalogPage({ kind }: CatalogPageProps) {
   const copy = COPY[kind];
-  useDocumentTitle(kind === 'ongoing' ? 'Anime Tayang Sub Indo' : 'Anime Tamat Sub Indo');
+  const pageTitle = kind === 'ongoing' ? 'Anime Tayang Sub Indo' : 'Anime Tamat Sub Indo';
+  const pageDescription = kind === 'ongoing'
+    ? 'Daftar anime tayang subtitle Indonesia terbaru di ReogNime, lengkap dengan episode baru, poster, dan jadwal mingguan.'
+    : 'Daftar anime tamat subtitle Indonesia pilihan di ReogNime. Temukan seri lengkap yang bisa ditonton sampai akhir.';
+  useDocumentTitle(pageTitle);
+  usePageSeo({
+    title: `${pageTitle} — ReogNime`,
+    description: pageDescription,
+    image: '/og-reognime.jpg',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: pageTitle,
+      description: pageDescription,
+      url: `${SITE_URL}/${kind}`,
+      isPartOf: { '@type': 'WebSite', name: 'ReogNime', url: SITE_URL },
+    },
+  });
   const initial = useApi((signal) => api.otaku.list(kind, 1, signal), [kind]);
   const { notify } = useToast();
   const [items, setItems] = useState<OtakuCardType[]>([]);

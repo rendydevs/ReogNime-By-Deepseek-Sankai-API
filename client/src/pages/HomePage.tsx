@@ -9,7 +9,28 @@ import { TitleMarquee } from '../components/TitleMarquee';
 import { API_HEALTH_URL, api } from '../lib/api';
 import { formatRelativeTime, otakuStatusLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { usePageSeo } from '../lib/seo';
 import { useWatchHistory } from '../lib/watchHistory';
+
+
+const HOME_FAQ = [
+  {
+    question: 'Apa itu ReogNime?',
+    answer: 'ReogNime adalah katalog anime subtitle Indonesia dengan daftar tayang, anime tamat, jadwal rilis, genre, pencarian judul, dan pemutar episode dari penyedia pihak ketiga.',
+  },
+  {
+    question: 'Apakah perlu akun untuk menyimpan daftar tontonan?',
+    answer: 'Tidak perlu akun. Daftar tontonan tersimpan di profil lokal ReogNime dan bisa diekspor sebagai JSON. Pada deployment Vercel, profil lokal dapat direset saat instance restart.',
+  },
+  {
+    question: 'Dari mana data anime di ReogNime berasal?',
+    answer: 'Data streaming berasal dari Otakudesu API. ReogNime tidak menghosting atau mengunggah file video; pemutar diambil dari server video pihak ketiga.',
+  },
+  {
+    question: 'Bagaimana cara menonton anime di ReogNime?',
+    answer: 'Pilih judul dari beranda, halaman tayang, atau pencarian. Buka halaman seri, pilih episode, lalu pilih salah satu mirror yang tersedia.',
+  },
+];
 
 function HomeSkeleton() {
   return (
@@ -71,6 +92,21 @@ export function HomePage() {
   const [paused, setPaused] = useState(false);
   const [apiStatus, setApiStatus] = useState<{ phase: 'checking' | 'online' | 'offline'; ms: number | null }>({ phase: 'checking', ms: null });
   const watchHistory = useWatchHistory();
+
+  usePageSeo({
+    title: 'Nonton Anime Sub Indo Tanpa Ribet — ReogNime',
+    description: 'Nonton anime subtitle Indonesia di ReogNime: jadwal tayang, anime tamat, genre, dan pencarian judul. Streaming sub indo ringan tanpa ribet.',
+    image: '/og-reognime.jpg',
+    jsonLd: {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: HOME_FAQ.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  });
 
   useEffect(() => {
     let active = true;
@@ -203,6 +239,8 @@ export function HomePage() {
                   src={image}
                   alt=""
                   className={`screening-ambient-image ${index === active ? 'is-active' : ''}`}
+                  loading={index === active ? 'eager' : 'lazy'}
+                  decoding="async"
                   referrerPolicy="no-referrer"
                 />
               ) : null;
@@ -392,6 +430,21 @@ export function HomePage() {
           <div className="home-archive-actions">
             <Link to="/archive" className="text-link">Masuk arsip <ChevronRight size={14} /></Link>
             <Link to="/library" className="text-link">Daftar saya <Sparkles size={13} /></Link>
+          </div>
+        </Reveal>
+
+        <Reveal className="home-faq" delay={20}>
+          <div className="home-faq-head">
+            <p className="section-index">Pertanyaan</p>
+            <h2>Sebelum mulai.</h2>
+          </div>
+          <div className="home-faq-list">
+            {HOME_FAQ.map((item) => (
+              <details key={item.question} className="home-faq-item">
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
           </div>
         </Reveal>
 

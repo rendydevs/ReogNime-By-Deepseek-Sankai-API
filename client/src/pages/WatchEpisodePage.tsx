@@ -16,9 +16,9 @@ import { api } from '../lib/api';
 import { formatDurationLabel, formatReleaseTime, genreLabel } from '../lib/format';
 import { useToast } from '../context/ToastContext';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 import { shareCurrentPage } from '../lib/share';
 import { getSeriesMeta, recordWatch } from '../lib/watchHistory';
-import { usePageSeo } from '../lib/seo';
 import type { OtakuEpisodeServer, OtakuEpisodePage as EpisodePayload } from '../types';
 
 interface FlatServer extends OtakuEpisodeServer {
@@ -81,20 +81,38 @@ export function WatchEpisodePage() {
   const [streamError, setStreamError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
 
-  useDocumentTitle(data ? `${data.title} Sub Indo` : 'Nonton Episode Anime Sub Indo');
+  useDocumentTitle(data ? `Nonton ${data.title} Sub Indo` : 'Nonton Episode Anime Sub Indo');
   usePageSeo({
-    title: data ? `${data.title} — ReogNime` : 'Tonton episode — ReogNime',
+    title: data ? `Nonton ${data.title} Sub Indo — ReogNime` : 'Tonton episode — ReogNime',
     description: data
       ? `${data.title} subtitle Indonesia. Pilih mirror video, unduh episode, dan lanjutkan ke episode berikutnya di ReogNime.`
       : 'Nonton episode anime subtitle Indonesia di ReogNime.',
     type: 'video.episode',
     jsonLd: data
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'TVEpisode',
-          name: data.title,
-          inLanguage: 'id-ID',
-        }
+      ? (() => {
+          const seriesTitle = data.title.replace(/\s+(Episode|Eps?\.?)\s*\d+.*$/i, '').trim() || data.title;
+          const episodeNumber = Number(data.title.match(/Episode\s*(\d+)/i)?.[1] ?? '');
+          return pageGraph(
+            {
+              '@type': 'TVEpisode',
+              name: data.title,
+              description: `${data.title} subtitle Indonesia di ReogNime.`,
+              url: `${SITE_URL}/watch/episode/${encodeURIComponent(data.slug)}`,
+              inLanguage: 'id-ID',
+              ...(Number.isFinite(episodeNumber) ? { episodeNumber } : {}),
+              partOfSeries: {
+                '@type': 'TVSeries',
+                name: seriesTitle,
+                url: `${SITE_URL}/watch/anime/${encodeURIComponent(data.animeSlug)}`,
+              },
+            },
+            breadcrumbJsonLd([
+              { name: 'Beranda', path: '/' },
+              { name: seriesTitle, path: `/watch/anime/${encodeURIComponent(data.animeSlug)}` },
+              { name: data.title, path: `/watch/episode/${encodeURIComponent(data.slug)}` },
+            ]),
+          );
+        })()
       : null,
   });
 
