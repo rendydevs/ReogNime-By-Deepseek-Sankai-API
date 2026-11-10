@@ -2,6 +2,8 @@ import type {
   Anime,
   AnimeSummary,
   DiscoverFilters,
+  EditionPayload,
+  EditorialMood,
   EpisodesPayload,
   FilterOptions,
   HomePayload,
@@ -158,6 +160,14 @@ export interface ListOptions extends Partial<DiscoverFilters> {
 export const api = {
   home(signal?: AbortSignal) {
     return request<{ data: HomePayload }>('/home', { signal });
+  },
+
+  edition(signal?: AbortSignal) {
+    return request<{ data: EditionPayload }>('/edition', { signal });
+  },
+
+  moods(signal?: AbortSignal) {
+    return request<{ data: EditorialMood[] }>('/moods', { signal });
   },
 
   list(options: ListOptions = {}, signal?: AbortSignal) {

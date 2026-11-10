@@ -72,6 +72,21 @@ test('home payload has editorial sections and stats', async () => {
   assert.ok(body.data.genres.length >= 6);
 });
 
+test('daily edition and mood clusters respond', async () => {
+  const edition = await get('/api/v1/edition');
+  assert.equal(edition.response.status, 200);
+  assert.ok(edition.body.data.date);
+  assert.ok(edition.body.data.mood.key);
+  assert.ok(edition.body.data.pick.title);
+  assert.ok(edition.body.data.top.length >= 3);
+
+  const moods = await get('/api/v1/moods');
+  assert.equal(moods.response.status, 200);
+  assert.equal(moods.body.data.length, 4);
+  assert.ok(moods.body.data.every((mood) => mood.anime.length > 0));
+  assert.ok(moods.body.data.every((mood) => mood.count >= mood.anime.length));
+});
+
 test('anime search, filters, and pagination work together', async () => {
   const mood = await get('/api/v1/anime?q=romance');
   assert.equal(mood.response.status, 200);

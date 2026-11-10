@@ -65,6 +65,9 @@ The documented upstream home is `GET /anime/home`. A `/anime/homez` URL returns 
 - Discovery index at `/discover` with search, formats, seasons, statuses and sorting.
 - AniList title pages with cast, characters, related titles and episode tracker.
 - Personal library at `/library` with statuses, scores, progress, notes, favourites, statistics, export and undo.
+- **Edisi Hari Ini** at `/hari-ini`: deterministic daily pick, mood of the day, top titles and today's schedule.
+- **Peta Suasana** at `/suasana/:mood`: four mood-first discovery shelves with unique SEO landing pages.
+- **Mode fokus** on the episode player: full-viewport playback, hidden chrome, Esc to exit.
 - The streaming navigation stays clean; archive links live in the footer.
 
 ### Backend
@@ -232,6 +235,8 @@ The original archive API is still available for the `/archive`, `/discover`, `/a
 | `GET` | `/api/v1/anime/:id/related` | Related titles |
 | `GET` | `/api/v1/search/suggestions` | Archive typeahead |
 | `GET` | `/api/v1/random` | Random archive title |
+| `GET` | `/api/v1/edition` | Daily edition: greeting, mood, pick, top titles |
+| `GET` | `/api/v1/moods` | Four mood clusters with curated archive recommendations |
 | `GET` | `/api/v1/genres`, `/filters`, `/meta` | Reference data |
 | `GET/POST` | `/api/v1/library` | Read/create personal archive list |
 | `GET/PATCH/DELETE` | `/api/v1/library/:animeId` | Read/update/remove an entry |

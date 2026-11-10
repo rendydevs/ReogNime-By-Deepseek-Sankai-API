@@ -8,6 +8,7 @@ import {
   LoaderCircle,
   Play,
   Search,
+  Sparkles,
   X,
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -29,6 +30,8 @@ const QUICK_LINKS = [
   { label: 'Genre', description: 'Jelajahi sesuai suasana', to: '/genres', Icon: Compass },
   { label: 'Semua anime A–Z', description: 'Katalog lengkap', to: '/all', Icon: ListFilter },
   { label: 'Jadwal rilis', description: 'Yang tayang minggu ini', to: '/schedule', Icon: CalendarDays },
+  { label: 'Edisi hari ini', description: 'Pilihan dan jadwal hari ini', to: '/hari-ini', Icon: Sparkles },
+  { label: 'Peta suasana', description: 'Pilih anime sesuai rasa', to: '/suasana/tenang', Icon: Compass },
 ];
 
 function ResultCover({ anime }: { anime: OtakuCard }) {

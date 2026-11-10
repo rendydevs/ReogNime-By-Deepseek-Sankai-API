@@ -22,6 +22,7 @@ import {
   toSummary,
 } from './lib/catalog.js';
 import { ADMIN_USERNAME, requireAdmin } from './lib/adminAuth.js';
+import { getEdition, getMoods } from './lib/editorial.js';
 import { ApiError, notFound } from './lib/errors.js';
 import { LIBRARY_STATUSES, LibraryStore } from './lib/library.js';
 import { THREAD_STATUSES, ThreadStore } from './lib/threads.js';
@@ -246,6 +247,16 @@ export async function createApp({
   app.get('/api/v1/home', (req, res) => {
     res.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     res.json({ data: getHome() });
+  });
+
+  app.get('/api/v1/edition', (req, res) => {
+    res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=1800');
+    res.json({ data: getEdition(), meta: { cacheSeconds: 300, timezone: 'Asia/Jakarta' } });
+  });
+
+  app.get('/api/v1/moods', (req, res) => {
+    res.set('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+    res.json({ data: getMoods(), meta: { total: getMoods().length } });
   });
 
   app.get('/api/v1/anime', (req, res) => {

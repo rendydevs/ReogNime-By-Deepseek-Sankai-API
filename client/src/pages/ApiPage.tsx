@@ -24,6 +24,8 @@ const ENDPOINT_GROUPS: { label: string; note: string; endpoints: Endpoint[] }[] 
       { method: 'GET', path: '/anime/:id/related', title: 'Judul terkait', description: 'Kedekatan genre, studio, dan era, diurutkan berdasarkan relevansi.' },
       { method: 'GET', path: '/search/suggestions', title: 'Saran pencarian', description: 'Saran ringan untuk palet perintah. q kosong mengembalikan pilihan populer.' },
       { method: 'GET', path: '/random', title: 'Pilihan acak', description: 'Menerima filter yang sama dengan /anime dan mengembalikan satu judul.' },
+      { method: 'GET', path: '/edition', title: 'Edisi harian', description: 'Pilihan anime harian, suasana hari ini, dan daftar unggulan. Dihitung dari arsip lokal dengan cache lima menit.' },
+      { method: 'GET', path: '/moods', title: 'Peta suasana', description: 'Empat kelompok suasana dengan rekomendasi anime dan jumlah judulnya.' },
     ],
   },
   {

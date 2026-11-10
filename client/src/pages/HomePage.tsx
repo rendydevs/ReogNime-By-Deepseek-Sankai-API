@@ -86,6 +86,7 @@ function CatalogHead({
 export function HomePage() {
   useDocumentTitle('Nonton Anime Sub Indo Tanpa Ribet');
   const home = useApi((signal) => api.otaku.home(signal), []);
+  const edition = useApi((signal) => api.edition(signal), []);
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
@@ -218,6 +219,14 @@ export function HomePage() {
           <Link to="/all"><span>04</span> Semua anime A–Z</Link>
           <Link to="/schedule"><span>05</span> Minggu ini</Link>
         </div>
+        {edition.data?.data ? (
+          <Link to="/hari-ini" className="home-edition-line">
+            <span className="home-edition-kicker">Edisi hari ini · {edition.data.data.weekday}</span>
+            <span className="home-edition-mood">{edition.data.data.mood.label}</span>
+            <span className="home-edition-pick">{edition.data.data.pick?.title ?? 'Pilihan harian'}</span>
+            <ArrowRight size={14} />
+          </Link>
+        ) : null}
       </header>
 
       {feature ? (

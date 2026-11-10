@@ -11,9 +11,11 @@ import { ApiPage } from './pages/ApiPage';
 import { ArchivePage } from './pages/ArchivePage';
 import { CatalogPage } from './pages/CatalogPage';
 import { DiscoverPage } from './pages/DiscoverPage';
+import { EditionPage } from './pages/EditionPage';
 import { GenrePage, GenresPage } from './pages/GenresPage';
 import { HomePage } from './pages/HomePage';
 import { LibraryPage } from './pages/LibraryPage';
+import { MoodPage } from './pages/MoodPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SearchPage } from './pages/SearchPage';
 import { WatchAnimePage } from './pages/WatchAnimePage';
@@ -55,6 +57,9 @@ export function App() {
           <Route path="watch/episode/:slug" element={<WatchEpisodePage />} />
           <Route path="archive" element={<ArchivePage />} />
           <Route path="discover" element={<DiscoverPage />} />
+          <Route path="hari-ini" element={<EditionPage />} />
+          <Route path="suasana" element={<Navigate to="/suasana/tenang" replace />} />
+          <Route path="suasana/:mood" element={<MoodPage />} />
           <Route path="anime/:id" element={<AnimeDetailPage />} />
           <Route path="library" element={<LibraryPage />} />
           <Route path="admin" element={<AdminPage />} />

@@ -308,6 +308,22 @@ export function openApiDocument() {
           responses: { 200: { description: 'Home payload', content: json({ type: 'object', properties: { data: { type: 'object' } } }) } },
         },
       },
+      '/edition': {
+        get: {
+          tags: ['Discovery'],
+          summary: 'Daily editorial edition',
+          description: 'Daily pick, current mood, greeting, top titles and archive statistics, derived from the local editorial catalog.',
+          responses: { 200: { description: 'Daily edition payload', content: json({ type: 'object', properties: { data: { type: 'object' }, meta: { type: 'object' } } }) } },
+        },
+      },
+      '/moods': {
+        get: {
+          tags: ['Discovery'],
+          summary: 'Mood discovery groups',
+          description: 'Four mood buckets with related genres, title counts and curated anime summaries.',
+          responses: { 200: { description: 'Mood groups', content: json({ type: 'object', properties: { data: { type: 'array', items: { type: 'object' } }, meta: { type: 'object' } } }) } },
+        },
+      },
       '/anime': {
         get: {
           tags: ['Discovery'],

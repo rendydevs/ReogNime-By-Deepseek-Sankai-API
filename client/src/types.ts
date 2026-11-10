@@ -159,6 +159,31 @@ export interface FilterOptions {
 }
 
 export type DiscoverSort = 'popularity' | 'score' | 'newest' | 'favorites' | 'title';
+export interface EditorialMood {
+  key: string;
+  label: string;
+  genres: string[];
+  description: string;
+  count: number;
+  anime: AnimeSummary[];
+}
+
+export interface EditionPick extends AnimeSummary {
+  synopsis: string;
+  reason: string;
+}
+
+export interface EditionPayload {
+  date: string;
+  dateLabel: string;
+  weekday: string;
+  greeting: string;
+  mood: Omit<EditorialMood, 'anime'>;
+  pick: EditionPick | null;
+  top: AnimeSummary[];
+  stats: { archive: number; moods: number; genres: number };
+}
+
 
 export interface DiscoverFilters {
   q: string;

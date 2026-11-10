@@ -4,6 +4,8 @@ import {
   ArrowRight,
   ExternalLink,
   LoaderCircle,
+  Maximize2,
+  Minimize2,
   Play,
   RotateCw,
   Share2,
@@ -80,6 +82,7 @@ export function WatchEpisodePage() {
   const [streamLoading, setStreamLoading] = useState(false);
   const [streamError, setStreamError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
+  const [focusMode, setFocusMode] = useState(false);
 
   useDocumentTitle(data ? `Nonton ${data.title} Sub Indo` : 'Nonton Episode Anime Sub Indo');
   usePageSeo({
@@ -121,6 +124,18 @@ export function WatchEpisodePage() {
     setStreamUrl(null);
     setStreamError(null);
   }, [data?.slug]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('is-focus-mode', focusMode);
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && focusMode) setFocusMode(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.documentElement.classList.remove('is-focus-mode');
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [focusMode]);
 
   useEffect(() => {
     if (!data) return;
@@ -203,6 +218,11 @@ export function WatchEpisodePage() {
 
   return (
     <div className="player-page">
+      {focusMode && (
+        <button type="button" className="focus-exit" onClick={() => setFocusMode(false)}>
+          <Minimize2 size={15} /> Keluar mode fokus
+        </button>
+      )}
       <div className="container player-header">
         <div className="player-header-top">
           <Link to={data.animeSlug ? `/watch/anime/${data.animeSlug}` : '/'} className="back-link-dark">
@@ -232,6 +252,16 @@ export function WatchEpisodePage() {
           </div>
           <div className="player-title-side">
             <span className="player-release">{formatReleaseTime(data.releaseTime)}</span>
+            <button
+              type="button"
+              className={`player-share ${focusMode ? 'is-active' : ''}`}
+              onClick={() => setFocusMode((value) => !value)}
+              aria-label={focusMode ? 'Keluar mode fokus' : 'Masuk mode fokus'}
+              aria-pressed={focusMode}
+              title={focusMode ? 'Keluar mode fokus' : 'Mode fokus'}
+            >
+              {focusMode ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+            </button>
             <button
               type="button"
               className="player-share"

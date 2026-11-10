@@ -14,6 +14,11 @@ const staticPages = [
   ['/all', '0.7', 'weekly'],
   ['/archive', '0.6', 'monthly'],
   ['/discover', '0.6', 'monthly'],
+  ['/hari-ini', '0.8', 'daily'],
+  ['/suasana/tenang', '0.7', 'weekly'],
+  ['/suasana/hangat', '0.7', 'weekly'],
+  ['/suasana/seru', '0.7', 'weekly'],
+  ['/suasana/gelap', '0.7', 'weekly'],
   ['/tentang', '0.5', 'monthly'],
 ];
 
