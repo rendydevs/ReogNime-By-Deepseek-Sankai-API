@@ -121,7 +121,7 @@ export function SearchPage() {
             </div>
             {results.length ? (
               <div className="watch-grid">
-                {results.map((anime) => <OtakuCard key={anime.slug} anime={anime} />)}
+                {results.map((anime, index) => <OtakuCard key={anime.slug} anime={anime} eager={index < 5} />)}
               </div>
             ) : (
               <div className="empty-state">

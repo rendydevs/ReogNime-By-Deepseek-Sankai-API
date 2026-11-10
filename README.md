@@ -165,6 +165,18 @@ If the container already sends GA4 page views on All Pages, remove that duplicat
 
 The archive now starts with an empty library. `server/data/library.json` contains no demo entries; a fresh server creates the file as an empty library. Streaming usage is stateless and is not stored in the library.
 
+## The Nocturne interface
+
+The 2026 art direction moves ReogNime from a paper editorial grid to a warm, cinematic room:
+
+- floating glass navigation that keeps the catalog close without boxing it in;
+- a single immersive home stage that combines the masthead, daily edition, search and featured screening;
+- a four-item mobile dock for Beranda, Tayang, Cari and Daftar;
+- glass surfaces, ember accents, jade ambient light, and poster-first cards;
+- a restrained light counterpart that keeps the same typography and spacing.
+
+Core design tokens live at the end of [`client/src/styles.css`](client/src/styles.css). The mobile dock is intentionally hidden on the episode player so the video and focus mode remain uninterrupted.
+
 ## Otakudesu API
 
 All watch responses are normalized and cached. The global API rate limit is separate from the upstream guard.

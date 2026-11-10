@@ -1,4 +1,4 @@
-import { ArrowUp, BookMarked, Menu, Moon, Search, Sun, WifiOff, X } from 'lucide-react';
+import { ArrowUp, BookMarked, House, Menu, Moon, Play, Search, Sun, WifiOff, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useLibrary } from '../context/LibraryContext';
@@ -38,6 +38,11 @@ export function Layout() {
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('is-mobile-menu-open', menuOpen);
+    return () => document.documentElement.classList.remove('is-mobile-menu-open');
+  }, [menuOpen]);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 760);
@@ -210,6 +215,34 @@ export function Layout() {
           <span className="footer-colophon">Dibuat dengan cinta di Ponorogo.</span>
         </div>
       </footer>
+
+      {!menuOpen && location.pathname !== '/admin' && !location.pathname.startsWith('/watch/episode') && (
+        <nav className="mobile-dock" aria-label="Navigasi cepat seluler">
+          <NavLink to="/" end className="mobile-dock-link">
+            <House size={18} strokeWidth={1.7} />
+            <span>Beranda</span>
+          </NavLink>
+          <NavLink to="/ongoing" className="mobile-dock-link">
+            <Play size={18} strokeWidth={1.7} />
+            <span>Tayang</span>
+          </NavLink>
+          <button
+            type="button"
+            className="mobile-dock-link"
+            onClick={() => {
+              setMenuOpen(false);
+              setSearchOpen(true);
+            }}
+          >
+            <Search size={18} strokeWidth={1.7} />
+            <span>Cari</span>
+          </button>
+          <NavLink to="/library" className="mobile-dock-link">
+            <BookMarked size={18} strokeWidth={1.7} />
+            <span>Daftar</span>
+          </NavLink>
+        </nav>
+      )}
 
       <CommandSearch open={searchOpen} onClose={() => setSearchOpen(false)} />
       {location.pathname !== '/admin' && <ChatWidget />}

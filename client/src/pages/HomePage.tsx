@@ -175,142 +175,125 @@ export function HomePage() {
   return (
     <div className="watch-page home-watch-page">
       <LandingAtmosphere />
-      <header className="container watch-masthead home-watch-masthead">
-        <div className="watch-masthead-bar">
-          <p className="eyebrow"><span className="watch-live-dot" /> Streaming · Subtitle Indonesia</p>
-          <div className="watch-masthead-actions">
-            <span
-              className={`server-status is-${apiStatus.phase}`}
-              title={apiStatus.phase === 'offline' ? 'API server tidak terjangkau' : 'Latensi API server'}
-              aria-label={apiStatus.phase === 'online' ? `API online, ${apiStatus.ms} milidetik` : apiStatus.phase === 'offline' ? 'API offline' : 'Memeriksa API'}
-              aria-live="polite"
-            >
-              <i aria-hidden="true" />
-              <span className="server-status-label">API</span>
-              <b>{apiStatus.phase === 'online' ? `${apiStatus.ms} ms` : apiStatus.phase === 'offline' ? 'offline' : '…'}</b>
-            </span>
-            <Link to="/schedule" className="text-link">Jadwal tayang <ArrowRight size={14} /></Link>
+      <section
+        className={`nocturne-stage ${paused ? 'is-paused' : ''}`}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocusCapture={() => setPaused(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
+        }}
+      >
+        <div className="container nocturne-stage-inner">
+          <div className="nocturne-topline">
+            <p className="eyebrow"><span className="watch-live-dot" /> ReogNime / Ruang tayang</p>
+            <div className="nocturne-top-actions">
+              <span
+                className={`server-status is-${apiStatus.phase}`}
+                title={apiStatus.phase === 'offline' ? 'API server tidak terjangkau' : 'Latensi API server'}
+                aria-label={apiStatus.phase === 'online' ? `API online, ${apiStatus.ms} milidetik` : apiStatus.phase === 'offline' ? 'API offline' : 'Memeriksa API'}
+                aria-live="polite"
+              >
+                <i aria-hidden="true" />
+                <span className="server-status-label">API</span>
+                <b>{apiStatus.phase === 'online' ? `${apiStatus.ms} ms` : apiStatus.phase === 'offline' ? 'offline' : '…'}</b>
+              </span>
+              <Link to="/schedule" className="text-link">Jadwal tayang <ArrowRight size={14} /></Link>
+            </div>
           </div>
-        </div>
-        <div className="home-watch-title-row">
-          <div>
-            <h1>Nonton anime,<br /><em>tenang.</em></h1>
-            <p>
-              Jadwal mingguan, tanpa kebisingan. Temukan yang sedang tayang,
-              yang sudah tamat, atau yang sempat terlewat.
-            </p>
-          </div>
-          <form className="watch-search home-search" onSubmit={search}>
-            <Search size={19} strokeWidth={1.6} />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Cari judul anime…"
-              aria-label="Cari anime"
-              type="search"
-            />
-            <button type="submit" className="watch-search-submit">Cari</button>
-          </form>
-        </div>
-        <div className="home-quick-links">
-          <Link to="/ongoing"><span>01</span> Tayang <small>{ongoing.length}</small></Link>
-          <Link to="/completed"><span>02</span> Tamat <small>{completed.length}</small></Link>
-          <Link to="/genres"><span>03</span> Genre</Link>
-          <Link to="/all"><span>04</span> Semua anime A–Z</Link>
-          <Link to="/schedule"><span>05</span> Minggu ini</Link>
-        </div>
-        {edition.data?.data ? (
-          <Link to="/hari-ini" className="home-edition-line">
-            <span className="home-edition-kicker">Edisi hari ini · {edition.data.data.weekday}</span>
-            <span className="home-edition-mood">{edition.data.data.mood.label}</span>
-            <span className="home-edition-pick">{edition.data.data.pick?.title ?? 'Pilihan harian'}</span>
-            <ArrowRight size={14} />
-          </Link>
-        ) : null}
-      </header>
 
-      {feature ? (
-        <section
-          className={`screening-hero container home-screening-hero ${paused ? 'is-paused' : ''}`}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false);
-          }}
-        >
-          <div className="screening-ambient" aria-hidden="true">
-            {features.map((item, index) => {
-              const image = item.banner || item.poster;
-              return image ? (
-                <img
-                  key={item.slug}
-                  src={image}
-                  alt=""
-                  className={`screening-ambient-image ${index === active ? 'is-active' : ''}`}
-                  loading={index === active ? 'eager' : 'lazy'}
-                  decoding="async"
-                  referrerPolicy="no-referrer"
+          <div className="nocturne-main">
+            <div className="nocturne-copy">
+              <p className="nocturne-kicker"><span className="accent-dot" /> Streaming · Subtitle Indonesia</p>
+              <h1>Nonton anime,<br /><em>tenang.</em></h1>
+              <p className="nocturne-lede">
+                Satu ruang untuk jadwal mingguan, anime tamat, dan cerita yang sempat terlewat.
+                Tanpa riuh, tanpa lupa.
+              </p>
+              <form className="nocturne-search" onSubmit={search}>
+                <Search size={19} strokeWidth={1.6} />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Cari judul anime…"
+                  aria-label="Cari anime"
+                  type="search"
                 />
-              ) : null;
-            })}
-            <div className="screening-ambient-shade" />
-          </div>
-          <div className="screening-visual">
-            <div className="screening-visual-veil" />
-            <div className="screening-poster-frame" key={feature.slug}>
-              <OtakuPoster title={feature.title} poster={feature.poster} className="screening-poster" eager />
+                <button type="submit" className="nocturne-search-submit">Cari</button>
+              </form>
+              <nav className="nocturne-quick" aria-label="Jelajahi katalog">
+                <Link to="/ongoing"><span>01</span> Tayang <small>{ongoing.length}</small></Link>
+                <Link to="/completed"><span>02</span> Tamat <small>{completed.length}</small></Link>
+                <Link to="/genres"><span>03</span> Genre</Link>
+                <Link to="/all"><span>04</span> A–Z</Link>
+                <Link to="/schedule"><span>05</span> Minggu ini</Link>
+              </nav>
             </div>
-            <span className="screening-poster-caption">SUB INDO</span>
-            <span className="screening-live"><span className="marquee-dot" /> Tayang</span>
+
+            {feature ? (
+              <aside className="nocturne-feature" aria-label="Sorotan tayang">
+                <div className="nocturne-feature-head">
+                  <span><span className="marquee-dot" /> Sedang tayang</span>
+                  <span>{String(active + 1).padStart(2, '0')} / {String(features.length).padStart(2, '0')}</span>
+                </div>
+                <div className="nocturne-feature-body">
+                  <div className="nocturne-poster">
+                    <OtakuPoster title={feature.title} poster={feature.poster} eager />
+                    <span>SUB INDO</span>
+                  </div>
+                  <div className="nocturne-feature-copy">
+                    <p className="nocturne-feature-kicker">Pilihan ruang tayang</p>
+                    <h2>{feature.title}</h2>
+                    <div className="nocturne-meta">
+                      <span>{otakuStatusLabel(feature.status)}</span>
+                      {feature.episodes !== null && <span>{feature.episodes} episode</span>}
+                      {feature.releaseDay && <span>{feature.releaseDay}</span>}
+                    </div>
+                    <p>{feature.latestReleaseDate ? `Diperbarui ${feature.latestReleaseDate}.` : 'Subtitle Indonesia, daftar episode lengkap, dan semua mirror dalam satu tempat.'}</p>
+                    <div className="nocturne-feature-actions">
+                      <Link to={`/watch/anime/${feature.slug}`} className="button button-paper">
+                        <Play size={15} fill="currentColor" /> Lihat seri
+                      </Link>
+                      <Link to="/schedule" className="nocturne-arrow-link" aria-label="Jadwal rilis">
+                        <CalendarDays size={16} />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                {features.length > 1 ? (
+                  <div className="nocturne-pager" aria-label="Anime tayang pilihan">
+                    {features.map((item, index) => (
+                      <button
+                        key={item.slug}
+                        type="button"
+                        className={index === active ? 'is-active' : ''}
+                        onClick={() => setActive(index)}
+                        aria-label={`Sorotan ${item.title}`}
+                        aria-current={index === active}
+                      >
+                        <span>{String(index + 1).padStart(2, '0')}</span>
+                        <span className="nocturne-pager-line"><span /></span>
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </aside>
+            ) : null}
           </div>
-          <div className="screening-copy" key={feature.slug}>
-            <p className="eyebrow"><span className="accent-dot" /> Sedang tayang</p>
-            <h2>{feature.title}</h2>
-            <div className="screening-meta">
-              <span>{otakuStatusLabel(feature.status)}</span>
-              {feature.episodes !== null && <span>Episode {feature.episodes}</span>}
-              {feature.releaseDay && <span>{feature.releaseDay}</span>}
-              {feature.latestReleaseDate && <span>Diperbarui {feature.latestReleaseDate}</span>}
-            </div>
-            <p className="screening-lede">
-              Baru dari rak mingguan. Subtitle Indonesia, daftar episode lengkap,
-              dan semua mirror dalam satu tempat.
-            </p>
-            <div className="screening-actions">
-              <Link to={`/watch/anime/${feature.slug}`} className="button button-paper">
-                <Play size={15} fill="currentColor" /> Lihat seri
+
+          <div className="nocturne-stage-foot">
+            {edition.data?.data ? (
+              <Link to="/hari-ini" className="nocturne-edition">
+                <span className="nocturne-edition-label">Edisi hari ini · {edition.data.data.weekday}</span>
+                <span className="nocturne-edition-mood">{edition.data.data.mood.label}</span>
+                <span className="nocturne-edition-pick">{edition.data.data.pick?.title ?? 'Pilihan harian'}</span>
+                <ArrowRight size={14} />
               </Link>
-              <Link to="/schedule" className="button button-ghost-light">
-                <CalendarDays size={15} /> Jadwal rilis
-              </Link>
-            </div>
+            ) : <span />}
+            <p className="nocturne-signature">ReogNime / 2026 <span>·</span> Sub Indo <span>·</span> Tanpa ribet</p>
           </div>
-          <div className="screening-aside home-feature-aside">
-            {features.length > 1 ? (
-              <div className="home-feature-pager" aria-label="Anime tayang pilihan">
-                {features.map((item, index) => (
-                  <button
-                    key={item.slug}
-                    className={index === active ? 'is-active' : ''}
-                    onClick={() => setActive(index)}
-                    aria-label={`Sorotan ${item.title}`}
-                    aria-current={index === active}
-                  >
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <span className="home-feature-line"><span /></span>
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <span className="screening-aside-label">Tayangan 01</span>
-            )}
-            <div className="screening-aside-index">{String(active + 1).padStart(2, '0')}</div>
-            <span className="screening-aside-rule" />
-            <span className="screening-aside-note">Subtitle Indonesia.<br />Setiap minggu.</span>
-          </div>
-        </section>
-      ) : null}
+        </div>
+      </section>
 
       {watchHistory.items.length > 0 ? (
         <div className="container home-continue-wrap">

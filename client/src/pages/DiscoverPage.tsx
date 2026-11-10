@@ -272,7 +272,7 @@ export function DiscoverPage() {
         ) : items.length ? (
           <>
             <div className="poster-grid poster-grid-five">
-              {items.map((anime) => <AnimeCard key={anime.id} anime={anime} />)}
+              {items.map((anime, index) => <AnimeCard key={anime.id} anime={anime} eager={index < 10} />)}
             </div>
             {meta?.hasNextPage && (
               <div className="load-more-wrap">

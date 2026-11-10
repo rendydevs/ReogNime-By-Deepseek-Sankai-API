@@ -320,8 +320,22 @@ export function ChatWidget() {
       setNudgeVisible(false);
       return;
     }
+    if (notification.title === 'Pesan selesai') {
+      setNudgeVisible(true);
+      return;
+    }
+    if (notification.title === 'Ada keluhan?') {
+      // Keep the welcome nudge out of the first paint. The floating button
+      // already carries the unread dot; the full nudge can arrive later.
+      setNudgeVisible(false);
+      const showTimer = window.setTimeout(() => setNudgeVisible(true), 5_000);
+      const hideTimer = window.setTimeout(() => setNudgeVisible(false), 16_000);
+      return () => {
+        window.clearTimeout(showTimer);
+        window.clearTimeout(hideTimer);
+      };
+    }
     setNudgeVisible(true);
-    if (notification.title === 'Pesan selesai') return;
     const timer = window.setTimeout(() => setNudgeVisible(false), 12_000);
     return () => window.clearTimeout(timer);
   }, [notification?.title, notification?.body]);

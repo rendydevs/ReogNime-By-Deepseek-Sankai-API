@@ -154,7 +154,7 @@ export function EditionPage() {
             <Link to="/archive" className="text-link">Jelajahi arsip <ArrowRight size={14} /></Link>
           </div>
           <div className="poster-grid poster-grid-four">
-            {data.top.map((anime) => <AnimeCard key={anime.id} anime={anime} />)}
+            {data.top.map((anime, index) => <AnimeCard key={anime.id} anime={anime} eager={index < 4} />)}
           </div>
         </section>
 

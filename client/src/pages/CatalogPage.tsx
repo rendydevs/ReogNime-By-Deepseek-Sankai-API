@@ -125,7 +125,7 @@ export function CatalogPage({ kind }: CatalogPageProps) {
         ) : (
           <>
             <div className="watch-grid">
-              {items.map((anime) => <OtakuCard key={anime.slug} anime={anime} />)}
+              {items.map((anime, index) => <OtakuCard key={anime.slug} anime={anime} eager={index < 5} />)}
             </div>
             {meta?.pagination?.hasNextPage && (
               <div className="load-more-wrap">

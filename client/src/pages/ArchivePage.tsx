@@ -217,8 +217,8 @@ export function ArchivePage() {
           action="Lihat semua judul"
         />
         <div className="poster-grid poster-grid-six home-trending">
-          {data.trending.slice(0, 6).map((anime) => (
-            <AnimeCard key={anime.id} anime={anime} />
+          {data.trending.slice(0, 6).map((anime, index) => (
+            <AnimeCard key={anime.id} anime={anime} eager={index < 6} />
           ))}
         </div>
       </section>

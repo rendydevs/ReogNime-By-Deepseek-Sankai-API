@@ -40,6 +40,10 @@ export function OtakuPoster({ title, poster, className = '', eager = false }: Ot
 
   return (
     <div className={`otaku-poster ${className}`} style={style}>
+      <span className="otaku-poster-placeholder" aria-hidden="true">
+        <span>{title.slice(0, 1).toUpperCase()}</span>
+        <small>ReogNime</small>
+      </span>
       {poster && !failed ? (
         <img
           src={poster}

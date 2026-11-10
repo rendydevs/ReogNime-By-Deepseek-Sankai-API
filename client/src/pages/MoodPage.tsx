@@ -106,7 +106,7 @@ export function MoodPage() {
             </section>
 
             <div className="poster-grid poster-grid-six mood-grid">
-              {selected.anime.map((anime) => <AnimeCard key={anime.id} anime={anime} />)}
+              {selected.anime.map((anime, index) => <AnimeCard key={anime.id} anime={anime} eager={index < 3} />)}
             </div>
 
             <div className="mood-footer">

@@ -11,9 +11,10 @@ interface AnimeCardProps {
   anime: AnimeSummary;
   rank?: number;
   compact?: boolean;
+  eager?: boolean;
 }
 
-export function AnimeCard({ anime, rank, compact = false }: AnimeCardProps) {
+export function AnimeCard({ anime, rank, compact = false, eager = false }: AnimeCardProps) {
   const { getEntry } = useLibrary();
   const { open } = useLibraryDialog();
   const entry = getEntry(anime.id);
@@ -24,7 +25,7 @@ export function AnimeCard({ anime, rank, compact = false }: AnimeCardProps) {
       <div className="poster-wrap" style={{ '--anime-accent': anime.accent } as CSSProperties}>
         <Link to={`/anime/${anime.id}`} className="poster-link" aria-label={`Lihat ${anime.title}`}>
           {anime.cover ? (
-            <img src={mediaUrl(anime.cover)} alt={`Sampul ${anime.title}`} className="poster-image" loading="lazy" />
+            <img src={mediaUrl(anime.cover)} alt={`Sampul ${anime.title}`} className="poster-image" loading={eager ? 'eager' : 'lazy'} />
           ) : (
             <span className="poster-fallback">{anime.title.slice(0, 1)}</span>
           )}
