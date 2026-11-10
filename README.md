@@ -58,7 +58,7 @@ The documented upstream home is `GET /anime/home`. A `/anime/homez` URL returns 
 - **Airing schedule** grouped by day, with today highlighted.
 - Auto-rotating hero, animated progress rails, a quiet title ticker, scroll reveals, soft card motion and page transitions.
 - Light/dark themes, responsive layouts from 390px up.
-- Self-hosted **Plus Ponorogo Sans** and **Instrument Serif** — no external font requests.
+- Self-hosted **Plus Jakarta Sans** and **Fraunces** — no external font requests.
 
 ### The archive
 - Original editorial homepage at `/archive` with AniList showcases, moods and a top-rated canon.
@@ -370,7 +370,7 @@ npm run build
 
 ## Design notes
 
-- **Plus Ponorogo Sans** for interface and editorial display, with **Instrument Serif** italic accents. Both self-hosted.
+- **Plus Jakarta Sans** for interface and editorial display, with **Fraunces** italic accents. Both self-hosted.
 - Warm paper, ink and vermilion palette with a soft gold secondary accent.
 - Rounded poster cards and panel surfaces, hairline rules, generous negative space.
 - The home page is alive without being loud: an auto-advancing featured pick (pauses on hover/focus), animated progress rails, a moving on-air ticker, staggered card entrances and scroll reveals.
@@ -390,4 +390,4 @@ npm run build
 
 ---
 
-Made by aldi with love. Set in Plus Ponorogo Sans & Instrument Serif.
+Made by aldi with love. Set in Plus Jakarta Sans & Fraunces.
