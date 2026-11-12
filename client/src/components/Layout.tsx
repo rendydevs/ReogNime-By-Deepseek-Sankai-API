@@ -1,5 +1,5 @@
 import { ArrowUp, BookMarked, House, Menu, Moon, Play, Search, Sun, WifiOff, X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useLibrary } from '../context/LibraryContext';
 import { useTheme } from '../context/ThemeContext';
@@ -32,6 +32,8 @@ export function Layout() {
   const [showTop, setShowTop] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -49,6 +51,17 @@ export function Layout() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const node = footerRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') return;
+    const observer = new IntersectionObserver(
+      (entries) => setFooterVisible(entries.some((entry) => entry.isIntersecting)),
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.04 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -163,7 +176,7 @@ export function Layout() {
         <Outlet />
       </main>
 
-      {showTop && !menuOpen && (
+      {showTop && !menuOpen && !footerVisible && (
         <button
           type="button"
           className="back-to-top"
@@ -175,7 +188,7 @@ export function Layout() {
         </button>
       )}
 
-      <footer className="site-footer">
+      <footer className="site-footer" ref={footerRef}>
         <div className="footer-inner">
           <div className="footer-brand">
             <Logo />
