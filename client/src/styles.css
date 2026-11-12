@@ -19924,3 +19924,576 @@ h2 {
   border-radius: 0;
   overflow: visible;
 }
+
+/* =========================================================
+   READABILITY — the interface should be read, not squinted at
+   ========================================================= */
+
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.logo-kana {
+  font-size: 11px !important;
+}
+
+.logo-tag {
+  font-size: 9.5px !important;
+}
+
+.nav-link {
+  font-size: 13px !important;
+}
+
+.search-trigger {
+  font-size: 12px !important;
+}
+
+.search-trigger kbd {
+  font-size: 9px !important;
+}
+
+.eyebrow {
+  font-size: 11.5px !important;
+  line-height: 1.5;
+}
+
+.section-index {
+  font-size: 11.5px !important;
+  line-height: 1.5;
+}
+
+.masthead-edition,
+.catalog-count {
+  font-size: 11px !important;
+}
+
+.issue-meta {
+  font-size: 11.5px !important;
+  line-height: 1.5;
+}
+
+.issue-lede {
+  font-size: 16px !important;
+  line-height: 1.7;
+}
+
+.issue-search input {
+  font-size: 15px !important;
+}
+
+.issue-search button {
+  font-size: 13px !important;
+}
+
+.issue-quick {
+  font-size: 12px !important;
+}
+
+.issue-quick span {
+  font-size: 10px !important;
+}
+
+.issue-feature-head {
+  font-size: 11.5px !important;
+}
+
+.issue-feature-head > span:last-child {
+  font-size: 10px !important;
+}
+
+.issue-feature-kicker {
+  font-size: 11px !important;
+}
+
+.issue-feature-meta {
+  font-size: 11px !important;
+  line-height: 1.5;
+}
+
+.issue-feature-note {
+  font-size: 13px !important;
+  line-height: 1.55;
+}
+
+.issue-feature-actions .button {
+  font-size: 12px !important;
+}
+
+.issue-pager button {
+  font-size: 10px !important;
+}
+
+.watch-section-head > p,
+.home-browse-head > p {
+  font-size: 14.5px !important;
+  line-height: 1.6;
+}
+
+.home-section-link,
+.text-link,
+.catalog-search-link {
+  font-size: 12.5px !important;
+}
+
+.otaku-kicker,
+.card-kicker,
+.otaku-card-meta {
+  font-size: 11px !important;
+  line-height: 1.45;
+}
+
+.otaku-card-copy h3,
+.anime-card h3 {
+  font-size: 15px !important;
+  line-height: 1.35;
+}
+
+.otaku-score,
+.otaku-state {
+  font-size: 10px !important;
+}
+
+.otaku-hover-cue {
+  font-size: 10px !important;
+}
+
+.continue-copy > span {
+  font-size: 12px !important;
+}
+
+.continue-copy strong {
+  font-size: 14px !important;
+  line-height: 1.35;
+}
+
+.continue-copy small {
+  font-size: 11px !important;
+}
+
+.home-browse-card p {
+  font-size: 13px !important;
+  line-height: 1.55;
+}
+
+.home-browse-index {
+  font-size: 10px !important;
+}
+
+.home-archive-cta p {
+  font-size: 14px !important;
+}
+
+.home-faq-item summary {
+  font-size: 15px !important;
+  line-height: 1.45;
+}
+
+.home-faq-item p {
+  font-size: 14px !important;
+  line-height: 1.7;
+}
+
+.button {
+  font-size: 13px !important;
+}
+
+.home-continue-head .text-button {
+  font-size: 12px !important;
+}
+
+.footer-heading {
+  font-size: 11px !important;
+}
+
+.footer-links a {
+  font-size: 13px !important;
+}
+
+.footer-source,
+.footer-bottom {
+  font-size: 11px !important;
+  line-height: 1.6;
+}
+
+.footer-partner-copy {
+  font-size: 10px !important;
+}
+
+.footer-partner-copy small {
+  font-size: 8.5px !important;
+}
+
+.footer-colophon {
+  font-size: 11px !important;
+}
+
+.mobile-dock-link {
+  font-size: 10px !important;
+}
+
+.mobile-nav-link {
+  font-size: 15px !important;
+}
+
+.catalog-tabs a,
+.library-tab {
+  font-size: 13px !important;
+}
+
+.library-tab span {
+  font-size: 10px !important;
+}
+
+.catalog-title-aside p,
+.search-title-row > p,
+.schedule-title-row > p,
+.library-subtitle {
+  font-size: 14.5px !important;
+  line-height: 1.65;
+}
+
+.library-search input,
+.select-wrap select,
+.search-field input,
+.discover-controls input {
+  font-size: 13px !important;
+}
+
+.stat-label {
+  font-size: 11px !important;
+}
+
+.stat-note {
+  font-size: 11.5px !important;
+}
+
+.stat-value {
+  font-size: 38px !important;
+}
+
+.schedule-day-head > div > span {
+  font-size: 11px !important;
+}
+
+.schedule-anime span {
+  font-size: 12.5px !important;
+  line-height: 1.4;
+}
+
+.schedule-title-row .eyebrow {
+  font-size: 11.5px !important;
+}
+
+.genre-index-number,
+.genre-index {
+  font-size: 10px !important;
+}
+
+.genre-count {
+  font-size: 11.5px !important;
+}
+
+.genre-index-name {
+  font-size: 24px !important;
+}
+
+.mood-switch {
+  font-size: 12.5px !important;
+}
+
+.mood-feature-copy > p {
+  font-size: 14.5px !important;
+  line-height: 1.65;
+}
+
+.mood-genres span,
+.mood-result-head span {
+  font-size: 11px !important;
+}
+
+.edition-facts span {
+  font-size: 11px !important;
+}
+
+.edition-reason {
+  font-size: 14px !important;
+  line-height: 1.65;
+}
+
+.search-empty-copy p {
+  font-size: 14px !important;
+  line-height: 1.65;
+}
+
+.search-empty-links a {
+  font-size: 13.5px !important;
+}
+
+.recent-search-chip {
+  font-size: 12px !important;
+}
+
+.empty-state p {
+  font-size: 14px !important;
+  line-height: 1.65;
+}
+
+.empty-index {
+  font-size: 11px !important;
+}
+
+.about-content p,
+.watch-detail-synopsis,
+.detail-synopsis,
+.anime-detail-synopsis {
+  font-size: 15px !important;
+  line-height: 1.75;
+}
+
+.watch-detail-meta,
+.detail-meta-line,
+.player-release {
+  font-size: 11.5px !important;
+}
+
+.watch-detail-japanese {
+  font-size: 11.5px !important;
+}
+
+.player-server {
+  font-size: 11px !important;
+}
+
+.chat-fab-badge {
+  font-size: 10px !important;
+}
+
+.back-to-top {
+  font-size: 11px !important;
+}
+
+@media (max-width: 1180px) {
+  .nav-link {
+    font-size: 12px !important;
+    padding-inline: 9px;
+  }
+
+  .logo-tag {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .issue-lede {
+    font-size: 15px !important;
+  }
+
+  .issue-quick {
+    font-size: 11.5px !important;
+  }
+
+  .issue-feature-head {
+    font-size: 11px !important;
+  }
+
+  .otaku-card-copy h3,
+  .anime-card h3 {
+    font-size: 14px !important;
+  }
+
+  .footer-links a {
+    font-size: 12.5px !important;
+  }
+
+  .chat-nudge > div {
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .issue-meta {
+    font-size: 10.5px !important;
+  }
+
+  .issue-lede {
+    font-size: 14.5px !important;
+  }
+
+  .issue-search input {
+    font-size: 14px !important;
+  }
+
+  .issue-feature-meta {
+    font-size: 10.5px !important;
+  }
+
+  .issue-feature-actions .button {
+    font-size: 11px !important;
+  }
+
+  .otaku-kicker,
+  .otaku-card-meta {
+    font-size: 10.5px !important;
+  }
+
+  .otaku-card-copy h3,
+  .anime-card h3 {
+    font-size: 14px !important;
+  }
+
+  .stat-value {
+    font-size: 34px !important;
+  }
+
+  .genre-index-name {
+    font-size: 21px !important;
+  }
+}
+
+/* Readability, second pass: keep metadata legible without shouting. */
+.eyebrow,
+.section-index {
+  font-size: 12px !important;
+}
+
+.issue-meta,
+.issue-feature-head,
+.catalog-count,
+.masthead-edition {
+  font-size: 12px !important;
+}
+
+.issue-feature-head > span:last-child {
+  font-size: 11px !important;
+}
+
+.issue-feature-meta {
+  font-size: 12px !important;
+}
+
+.issue-quick {
+  font-size: 12.5px !important;
+}
+
+.issue-feature-kicker {
+  font-size: 12px !important;
+}
+
+.otaku-kicker,
+.card-kicker,
+.otaku-card-meta {
+  font-size: 12px !important;
+}
+
+.otaku-state,
+.otaku-score {
+  font-size: 10.5px !important;
+}
+
+.otaku-hover-cue {
+  font-size: 11px !important;
+}
+
+.stat-label,
+.stat-note {
+  font-size: 12px !important;
+}
+
+.footer-source,
+.footer-bottom {
+  font-size: 12px !important;
+}
+
+.footer-heading {
+  font-size: 11.5px !important;
+}
+
+.footer-links a {
+  font-size: 13.5px !important;
+}
+
+.schedule-anime span {
+  font-size: 13.5px !important;
+}
+
+.schedule-day-head > div > span {
+  font-size: 12px !important;
+}
+
+.library-search input,
+.select-wrap select,
+.search-field input,
+.discover-controls input {
+  font-size: 14px !important;
+}
+
+.chat-nudge > div {
+  font-size: 11px !important;
+}
+
+@media (max-width: 900px) {
+  .issue-meta {
+    font-size: 11px !important;
+  }
+
+  .issue-feature-meta {
+    font-size: 11px !important;
+  }
+
+  .issue-quick {
+    font-size: 12px !important;
+  }
+
+  .otaku-kicker,
+  .otaku-card-meta {
+    font-size: 11px !important;
+  }
+
+  .mobile-dock-link {
+    font-size: 10.5px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .section-index,
+  .eyebrow {
+    font-size: 11.5px !important;
+  }
+
+  .issue-quick {
+    font-size: 11.5px !important;
+  }
+
+  .issue-feature-meta {
+    font-size: 10.5px !important;
+  }
+
+  .otaku-kicker,
+  .otaku-card-meta {
+    font-size: 11px !important;
+  }
+
+  .stat-label,
+  .stat-note {
+    font-size: 11px !important;
+  }
+}
+
+.issue-feature-poster > span {
+  font-size: 10px !important;
+  padding: 5px 7px;
+}
+
+.issue-pager button {
+  font-size: 11px !important;
+}
+
+.marquee-label {
+  font-size: 11px !important;
+}
+
+.title-marquee a {
+  font-size: 13px !important;
+}
