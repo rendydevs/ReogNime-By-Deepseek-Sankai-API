@@ -14,14 +14,14 @@ interface CatalogPageProps {
 
 const COPY = {
   ongoing: {
-    eyebrow: 'ReogNime / Sedang tayang',
-    description: 'Semua seri di rak mingguan, dengan subtitle Indonesia dan episode baru.',
+    eyebrow: 'ReogNime / Tayang',
+    description: 'Daftar seri yang sedang tayang. Subtitle Indonesia, episode baru tiap minggu.',
     other: 'completed',
     otherLabel: 'Anime tamat',
   },
   completed: {
     eyebrow: 'ReogNime / Tamat',
-    description: 'Semua seri tamat di rak—yang bisa kamu mulai tanpa menunggu akhir.',
+    description: 'Daftar seri yang sudah tamat. Bisa ditonton sampai akhir.',
     other: 'ongoing',
     otherLabel: 'Sedang tayang',
   },
@@ -84,8 +84,8 @@ export function CatalogPage({ kind }: CatalogPageProps) {
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">Seluruh rak</p>
-            <h1>{kind === 'ongoing' ? <>Masih <em>tayang.</em></> : <>Tamat, <em>tanpa tunggu.</em></>}</h1>
+            <p className="section-index">Katalog</p>
+            <h1>{kind === 'ongoing' ? <>Tayang <em>sekarang.</em></> : <>Sudah <em>tamat.</em></>}</h1>
           </div>
           <div className="catalog-title-aside">
             <p>{copy.description}</p>
@@ -101,7 +101,7 @@ export function CatalogPage({ kind }: CatalogPageProps) {
           <span className="catalog-count">
             {meta?.pagination
               ? `Halaman ${meta.pagination.currentPage} dari ${meta.pagination.totalPages} · ${items.length} tampil`
-              : 'Memuat rak'}
+              : 'Memuat katalog'}
           </span>
         </div>
       </header>
@@ -138,8 +138,8 @@ export function CatalogPage({ kind }: CatalogPageProps) {
             {!items.length && (
               <div className="empty-state">
                 <p className="empty-index">No. 00</p>
-                <h2>Belum ada di rak ini.</h2>
-                <p>Provider belum mengirim judul. Coba lagi sebentar.</p>
+                <h2>Belum ada judul.</h2>
+                <p>Provider belum mengirim daftar. Coba lagi nanti.</p>
               </div>
             )}
           </>

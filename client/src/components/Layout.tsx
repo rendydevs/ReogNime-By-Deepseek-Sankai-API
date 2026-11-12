@@ -142,11 +142,11 @@ export function Layout() {
             </NavLink>
             <NavLink to="/hari-ini" className="mobile-nav-link">
               <span className="mobile-nav-index">09</span>
-              Edisi hari ini
+              Pilihan hari ini
             </NavLink>
             <NavLink to="/suasana/tenang" className="mobile-nav-link">
               <span className="mobile-nav-index">10</span>
-              Peta suasana
+              Rekomendasi
             </NavLink>
           </nav>
         )}
@@ -195,8 +195,8 @@ export function Layout() {
               <p className="footer-heading">Jelajah</p>
               <Link to="/genres">Genre</Link>
               <Link to="/all">Semua anime A–Z</Link>
-              <Link to="/hari-ini">Edisi hari ini</Link>
-              <Link to="/suasana/tenang">Peta suasana</Link>
+              <Link to="/hari-ini">Pilihan hari ini</Link>
+              <Link to="/suasana/tenang">Rekomendasi suasana</Link>
               <Link to="/tentang">Tentang ReogNime</Link>
               <Link to="/developers">Referensi API</Link>
               <a href={OPENAPI_URL} target="_blank" rel="noreferrer">Spesifikasi OpenAPI</a>
@@ -204,7 +204,7 @@ export function Layout() {
             <div>
               <p className="footer-heading">Arsip</p>
               <Link to="/archive">Arsip ReogNime</Link>
-              <Link to="/discover">Indeks penemuan</Link>
+              <Link to="/discover">Cari anime</Link>
               <Link to="/library">Daftar saya</Link>
               <a href="https://anilist.co" target="_blank" rel="noreferrer">AniList</a>
             </div>

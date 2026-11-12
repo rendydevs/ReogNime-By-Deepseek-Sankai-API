@@ -130,7 +130,7 @@ export function LibraryPage() {
   if (error && !entries.length) {
     return (
       <div className="container error-page">
-        <p className="eyebrow">Rakmu</p>
+        <p className="eyebrow">Daftar saya</p>
         <h1>Daftar tidak bisa dibuka.</h1>
         <p>{error}</p>
         <button className="button button-primary" onClick={() => void refresh()}>Coba lagi</button>
@@ -146,14 +146,14 @@ export function LibraryPage() {
     <div className="library-page">
       <header className="page-masthead library-masthead container">
         <div className="page-masthead-meta">
-          <p className="eyebrow">Rakmu</p>
-          <p className="masthead-edition">Privat · file lokal</p>
+          <p className="eyebrow">Daftar saya</p>
+          <p className="masthead-edition">Tersimpan di perangkat</p>
         </div>
         <div className="library-title-row">
           <div>
-            <h1>Simpan yang dekat.</h1>
+            <h1>Daftar tontonan.</h1>
             <p className="library-subtitle">
-              Daftar yang sedang ditonton, disimpan, dan masih dipikirkan.
+              Judul yang sedang ditonton, disimpan, atau ingin ditonton.
               {refreshing && <span className="saving-indicator"><LoaderCircle size={12} className="spin" /> menyimpan</span>}
             </p>
           </div>
@@ -170,7 +170,7 @@ export function LibraryPage() {
 
       <section className="library-stats container">
         <div className="library-stat">
-          <span className="stat-label">Di rak</span>
+          <span className="stat-label">Total judul</span>
           <strong className="stat-value">{stats.total}</strong>
           <span className="stat-note">{stats.favorites} favorit</span>
         </div>
@@ -197,7 +197,7 @@ export function LibraryPage() {
 
       {stats.topGenres.length > 0 && (
         <div className="mood-strip container">
-          <span className="eyebrow">Suasana kamu</span>
+          <span className="eyebrow">Genre tersimpan</span>
           <div className="mood-list">
             {stats.topGenres.map((genre) => (
               <Link key={genre.name} to={`/discover?genre=${encodeURIComponent(genre.name)}`} className="mood-chip">
@@ -243,14 +243,14 @@ export function LibraryPage() {
         {visibleEntries.length === 0 ? (
           <div className="empty-state library-empty">
             <p className="empty-index">{tab === 'ALL' && !query ? 'No. 00' : 'Tidak ada'}</p>
-            <h2>{tab === 'ALL' && !query ? 'Rak kosong adalah awal.' : 'Belum ada di sini.'}</h2>
+            <h2>{tab === 'ALL' && !query ? 'Daftar masih kosong.' : 'Belum ada di sini.'}</h2>
             <p>
               {tab === 'ALL' && !query
-                ? 'Temukan judul yang cocok malam ini, lalu tambahkan ke daftar.'
+                ? 'Cari anime, lalu tambahkan ke daftar.'
                 : 'Coba status lain atau bersihkan saringan.'}
             </p>
             <div className="empty-actions">
-              <Link to="/discover" className="button button-primary">Jelajahi indeks <ArrowRight size={15} /></Link>
+              <Link to="/discover" className="button button-primary">Cari anime <ArrowRight size={15} /></Link>
               {(tab !== 'ALL' || query) && (
                 <button className="button button-quiet" onClick={() => { setTab('ALL'); setQuery(''); }}>Bersihkan saringan</button>
               )}

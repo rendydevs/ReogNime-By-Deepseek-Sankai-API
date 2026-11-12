@@ -8,7 +8,7 @@ import { useApi, useDocumentTitle } from '../lib/hooks';
 import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 
 export function EditionPage() {
-  useDocumentTitle('Anime Hari Ini');
+  useDocumentTitle('Pilihan Hari Ini');
   const edition = useApi((signal) => api.edition(signal), []);
   const moods = useApi((signal) => api.moods(signal), []);
   const schedule = useApi((signal) => api.otaku.schedule(signal), []);
@@ -16,10 +16,10 @@ export function EditionPage() {
   const moodList = moods.data?.data ?? [];
 
   usePageSeo({
-    title: 'Anime Hari Ini — Edisi Harian ReogNime',
+    title: 'Pilihan Hari Ini — ReogNime',
     description: data
-      ? `Edisi ${data.dateLabel}: suasana ${data.mood.label.toLowerCase()}, pilihan ${data.pick?.title ?? 'anime hari ini'}, dan jadwal tayang.`
-      : 'Edisi harian ReogNime: pilihan anime, suasana, dan jadwal tayang hari ini.',
+      ? `Pilihan anime untuk ${data.dateLabel}, dengan suasana ${data.mood.label.toLowerCase()} dan jadwal tayang.`
+      : 'Pilihan anime hari ini, rekomendasi suasana, dan jadwal tayang di ReogNime.',
     image: data?.pick?.banner || data?.pick?.cover || '/og-reognime.jpg',
     jsonLd: data
       ? pageGraph(
@@ -66,8 +66,8 @@ export function EditionPage() {
   if (edition.error || !data) {
     return (
       <div className="container error-page">
-        <p className="eyebrow">Edisi hari ini</p>
-        <h1>Edisi belum siap.</h1>
+        <p className="eyebrow">Pilihan hari ini</p>
+        <h1>Pilihan hari ini belum siap.</h1>
         <p>{edition.error ?? 'Pilihan hari ini belum bisa dimuat.'}</p>
         <div className="empty-actions">
           <button className="button button-primary" onClick={edition.reload}>Coba lagi</button>
@@ -81,18 +81,18 @@ export function EditionPage() {
     <div className="watch-page edition-page">
       <header className="container catalog-masthead">
         <div className="watch-masthead-bar">
-          <p className="eyebrow"><CalendarDays size={13} /> Edisi harian · {data.dateLabel}</p>
-          <Link to={`/suasana/${data.mood.key}`} className="text-link" aria-label="Buka peta suasana">Suasana <ArrowRight size={14} /></Link>
+          <p className="eyebrow"><CalendarDays size={13} /> Pilihan hari ini · {data.dateLabel}</p>
+          <Link to={`/suasana/${data.mood.key}`} className="text-link" aria-label="Buka rekomendasi suasana">Rekomendasi <ArrowRight size={14} /></Link>
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">{data.greeting}</p>
-            <h1>Hari ini,<br /><em>{data.mood.label.toLowerCase()}.</em></h1>
+            <p className="section-index">Dari arsip</p>
+            <h1>Pilihan <em>hari ini.</em></h1>
           </div>
           <div className="catalog-title-aside">
             <p>{data.mood.description}</p>
             <Link to={`/suasana/${data.mood.key}`} className="catalog-search-link">
-              <Sparkles size={15} /> Lihat suasana {data.mood.label.toLowerCase()}
+              <Sparkles size={15} /> Lihat rekomendasi {data.mood.label.toLowerCase()}
             </Link>
           </div>
         </div>
@@ -105,7 +105,7 @@ export function EditionPage() {
               <OtakuPoster title={data.pick.title} poster={data.pick.cover} className="edition-pick-poster" eager />
             </div>
             <div className="edition-pick-copy">
-              <p className="section-index">Pilihan hari ini</p>
+              <p className="section-index">Pilihan dari arsip</p>
               <h2>{data.pick.title}</h2>
               {data.pick.originalTitle && data.pick.originalTitle.toLowerCase() !== data.pick.title.toLowerCase() && (
                 <p className="edition-native">{data.pick.originalTitle}</p>
@@ -119,7 +119,7 @@ export function EditionPage() {
               <p className="edition-reason">{data.pick.reason}</p>
               <div className="edition-actions">
                 <Link to={`/anime/${data.pick.id}`} className="button button-primary">Lihat detail <ArrowRight size={15} /></Link>
-                <Link to={`/suasana/${data.mood.key}`} className="button button-quiet">Suasana {data.mood.label.toLowerCase()}</Link>
+                <Link to={`/suasana/${data.mood.key}`} className="button button-quiet">Lihat suasana</Link>
               </div>
             </div>
           </section>
@@ -129,9 +129,9 @@ export function EditionPage() {
           <div className="edition-section-head">
             <div>
               <p className="section-index">01 — Suasana</p>
-              <h2>Empat pintu masuk.</h2>
+              <h2>Pilih suasana.</h2>
             </div>
-            <p>Pilih rasa yang paling cocok dengan malam ini.</p>
+            <p>Pilih salah satu untuk melihat daftar judulnya.</p>
           </div>
           <div className="edition-mood-grid">
             {moodList.map((mood) => (
@@ -148,8 +148,8 @@ export function EditionPage() {
         <section className="edition-section">
           <div className="edition-section-head">
             <div>
-              <p className="section-index">02 — Pilihan redaksi</p>
-              <h2>Yang layak dikejar.</h2>
+              <p className="section-index">02 — Rekomendasi</p>
+              <h2>Pilihan lain.</h2>
             </div>
             <Link to="/archive" className="text-link">Jelajahi arsip <ArrowRight size={14} /></Link>
           </div>

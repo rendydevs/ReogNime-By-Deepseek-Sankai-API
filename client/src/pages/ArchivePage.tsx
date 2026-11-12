@@ -14,7 +14,6 @@ import {
   formatScore,
   formatYear,
   genreLabel,
-  truncate,
 } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import { usePageSeo } from '../lib/seo';
@@ -116,7 +115,7 @@ export function ArchivePage() {
     return (
       <div className="container error-page">
         <p className="eyebrow">Koneksi terputus</p>
-        <h1>Rak ini tidak terjangkau.</h1>
+        <h1>Arsip belum bisa dimuat.</h1>
         <p>{error ?? 'Katalog tidak bisa dimuat.'}</p>
         <button className="button button-primary" onClick={reload}>Coba lagi</button>
       </div>
@@ -164,7 +163,6 @@ export function ArchivePage() {
               <span>{episodeLabel(feature.episodes)}</span>
               {feature.studios[0] && <span>{feature.studios[0]}</span>}
             </div>
-            <p className="hero-synopsis">{truncate(feature.synopsis, 235)}</p>
             <div className="hero-actions">
               <Link to={`/anime/${feature.id}`} className="button button-paper">
                 Jelajahi judul <ArrowUpRight size={16} />
@@ -198,21 +196,20 @@ export function ArchivePage() {
       </section>
 
       <section className="dispatch container">
-        <span className="eyebrow">Catatan / 001</span>
+        <span className="eyebrow">Arsip / 001</span>
         <p>
-          Indeks pilihan berisi {data.stats.titles} film dan seri, dari {data.stats.earliestYear} sampai hari ini.
-          Tanpa feed tanpa akhir. Tanpa skor seratus. Hanya yang layak, dengan pertimbangan.
+          Arsip berisi {data.stats.titles} film dan seri, dari {data.stats.earliestYear} sampai sekarang. Pilih berdasarkan genre, tahun, atau skor.
         </p>
         <Link to="/discover" className="text-link">
-          Masuk ke indeks <ArrowRight size={14} />
+          Buka indeks <ArrowRight size={14} />
         </Link>
       </section>
 
       <section className="section container">
         <SectionHead
-          index="01 — Sedang tampil"
-          title="Layak diperhatikan"
-          description="Rak bergilir berisi tontonan, tontonan ulang, dan bahan perdebatan."
+          index="01 — Pilihan"
+          title="Pilihan arsip"
+          description="Judul yang sedang banyak dibuka di arsip."
           to="/discover?sort=popularity"
           action="Lihat semua judul"
         />
@@ -227,13 +224,12 @@ export function ArchivePage() {
         <div className="container">
           <div className="canon-head">
             <div>
-              <p className="section-index light">02 — Kanon</p>
-              <h2>Yang terus<br />kita kembali.</h2>
+              <p className="section-index light">02 — Skor</p>
+              <h2>Peringkat<br />tertinggi.</h2>
             </div>
             <div className="canon-head-aside">
               <p>
-                Skor hanyalah ringkasan. Ini judul yang tinggal setelah kredit—
-                akhir cerita yang diperdebatkan, frame yang terus diingat.
+                Daftar ini diurutkan berdasarkan skor AniList. Skor membantu, tetapi bukan penilaian akhir.
               </p>
               <Link to="/discover?sort=score" className="text-link light">
                 Lihat peringkat teratas <ArrowRight size={14} />
@@ -262,11 +258,11 @@ export function ArchivePage() {
             <aside className="canon-note">
               <span className="canon-quote-mark">“</span>
               <p className="canon-quote">
-                Kanon itu pribadi. Yang ini milik kami—dibentuk larut malam, tontonan ulang, dan akhir yang enggan pergi.
+                Skor adalah ringkasan dari penonton, bukan satu-satunya alasan untuk menonton.
               </p>
               <div className="canon-note-bottom">
                 <span className="canon-rule" />
-                <span>Catatan dari rak<br />Vol. 01 / 2026</span>
+                <span>Arsip ReogNime<br />2026</span>
               </div>
               <Sparkles size={20} strokeWidth={1.2} className="canon-spark" />
             </aside>
@@ -276,9 +272,9 @@ export function ArchivePage() {
 
       <section className="section container">
         <SectionHead
-          index="03 — Sesuai suasana"
-          title="Ikuti suasana, bukan algoritma."
-          description="Delapan pintu masuk. Pilih yang paling cocok malam ini."
+          index="03 — Genre"
+          title="Pilih genre."
+          description="Lihat katalog berdasarkan genre yang kamu suka."
           to="/discover"
           action="Buka semua saringan"
         />
@@ -296,9 +292,9 @@ export function ArchivePage() {
 
       <section className="section container section-last">
         <SectionHead
-          index="04 — Baru tiba"
-          title="Baru di rak"
-          description="Tambahan terbaru, film, dan musim yang layak dikejar."
+          index="04 — Terbaru"
+          title="Baru ditambahkan"
+          description="Film dan seri yang baru masuk ke arsip."
           to="/discover?sort=newest"
           action="Jelajahi rilisan baru"
         />
@@ -311,14 +307,11 @@ export function ArchivePage() {
 
       <section className="library-band container">
         <div className="library-band-copy">
-          <p className="section-index">Rakmu</p>
-          <h2>Daftar<br />milikmu.</h2>
-          <p>
-            Catat episode, simpan catatan pribadi, beri skor saat siap.
-            Semua tetap di perangkatmu—tanpa akun, feed, atau kebisingan.
-          </p>
+          <p className="section-index">Daftar saya</p>
+          <h2>Daftar<br />tontonan.</h2>
+          <p>Simpan judul, catat episode, dan beri skor. Tersimpan di perangkat, tanpa akun.</p>
           <Link to="/library" className="button button-ink">
-            Buka daftar saya <ArrowRight size={16} />
+            Buka daftar <ArrowRight size={16} />
           </Link>
         </div>
         <div className="shelf-preview">

@@ -34,12 +34,11 @@ export function AboutPage() {
         <div className="catalog-title-row">
           <div>
             <p className="section-index">Tentang ReogNime</p>
-            <h1>Ruang tenang<br /><em>untuk anime.</em></h1>
+            <h1>Tentang <em>ReogNime.</em></h1>
           </div>
           <div className="catalog-title-aside">
             <p>
-              Katalog anime subtitle Indonesia yang ringkas: jadwal tayang, daftar tamat,
-              pencarian, dan pemutar episode dalam satu tempat.
+              Katalog anime subtitle Indonesia: jadwal tayang, daftar tamat, pencarian, dan pemutar episode.
             </p>
           </div>
         </div>
@@ -48,7 +47,7 @@ export function AboutPage() {
       <div className="container about-content">
         <section>
           <p className="section-index">01 — Apa ini</p>
-          <h2>Katalog, bukan penyimpanan video.</h2>
+          <h2>Apa itu ReogNime?</h2>
           <p>
             ReogNime membantu kamu menemukan anime, membaca sinopsis, melihat jadwal,
             dan memilih episode. Video di-embed dari server pihak ketiga; ReogNime tidak
@@ -58,7 +57,7 @@ export function AboutPage() {
 
         <section>
           <p className="section-index">02 — Sumber data</p>
-          <h2>Data dari penyedia, arsip dari AniList.</h2>
+          <h2>Sumber data.</h2>
           <p>
             Data streaming berasal dari Otakudesu API. Arsip editorial dan katalog
             tambahan menggunakan data AniList. Hak atas judul, artwork, dan video tetap
@@ -68,7 +67,7 @@ export function AboutPage() {
 
         <section>
           <p className="section-index">03 — Daftar & privasi</p>
-          <h2>Tanpa akun, tetap bisa dicatat.</h2>
+          <h2>Daftar tanpa akun.</h2>
           <p>
             Daftar tontonan tidak memerlukan akun. Data tersimpan di profil lokal ReogNime
             dan bisa diekspor sebagai JSON. Pada deployment Vercel, profil lokal dapat
@@ -79,13 +78,13 @@ export function AboutPage() {
 
         <section>
           <p className="section-index">04 — Koreksi</p>
-          <h2>Ada yang perlu diperbaiki?</h2>
+          <h2>Ada data yang salah?</h2>
           <p>
             Kalau ada judul, jadwal, mirror, atau informasi yang keliru, sampaikan lewat
             chat admin di kanan bawah. Jangan mengirim data pribadi atau sensitif ke chat.
           </p>
           <div className="about-actions">
-            <Link to="/ongoing" className="button button-primary">Jelajahi anime tayang <ArrowRight size={15} /></Link>
+            <Link to="/ongoing" className="button button-primary">Lihat anime tayang <ArrowRight size={15} /></Link>
             <Link to="/archive" className="button button-quiet">Buka arsip</Link>
           </div>
         </section>

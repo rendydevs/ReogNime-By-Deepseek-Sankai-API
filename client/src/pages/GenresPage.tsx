@@ -41,15 +41,14 @@ export function GenresPage() {
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">Cari suasana</p>
-            <h1>Setiap jenis<br /><em>cerita.</em></h1>
+            <p className="section-index">Genre</p>
+            <h1>Pilih <em>genre.</em></h1>
           </div>
           <div className="catalog-title-aside">
             <p>
-              {genres.data?.data.length ?? ''} genre, masing-masing berupa rak
-              lengkap dengan halaman dari API tontonan.
+              {genres.data?.data.length ?? ''} genre. Pilih satu untuk melihat daftar judulnya.
             </p>
-            <Link to="/search" className="catalog-search-link"><Search size={15} /> Cari saja</Link>
+            <Link to="/search" className="catalog-search-link"><Search size={15} /> Cari anime</Link>
           </div>
         </div>
       </header>

@@ -46,17 +46,17 @@ export function SearchPage() {
         </div>
         <div className="search-title-row">
           <div>
-            <p className="section-index">Cari tontonan berikutnya</p>
-            <h1>Cari di<br /><em>ruang ini.</em></h1>
+            <p className="section-index">Pencarian</p>
+            <h1>Cari <em>anime.</em></h1>
           </div>
-          <p>Satu pencarian untuk semua judul, dengan subtitle Indonesia dan mirror episode di dalamnya.</p>
+          <p>Cari berdasarkan judul dari seluruh katalog. Hasil mencakup seri tayang dan tamat.</p>
         </div>
         <form className="watch-search search-page-field" onSubmit={submit}>
           <Search size={19} strokeWidth={1.6} />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Ketik judul, musim, atau suasana…"
+            placeholder="Cari judul atau musim…"
             aria-label="Cari anime"
             autoFocus
           />
@@ -91,20 +91,20 @@ export function SearchPage() {
             )}
             <div className="search-empty">
               <div className="search-empty-copy">
-                <p className="section-index">Mulai dari sini</p>
-                <h2>Mau nonton apa?</h2>
-                <p>Cari lewat judul romaji Jepang, atau langsung pilih raknya.</p>
+                <p className="section-index">Belum tahu mau nonton apa?</p>
+                <h2>Mulai dari daftar.</h2>
+                <p>Pilih tayang, tamat, genre, atau lihat semua judul A–Z.</p>
               </div>
               <div className="search-empty-links">
-                <Link to="/ongoing"><Compass size={18} /><span>Sedang tayang</span><ArrowRight size={14} /></Link>
-                <Link to="/completed"><Compass size={18} /><span>Seri tamat</span><ArrowRight size={14} /></Link>
-                <Link to="/genres"><Compass size={18} /><span>Semua genre</span><ArrowRight size={14} /></Link>
-                <Link to="/all"><Compass size={18} /><span>Semua A–Z</span><ArrowRight size={14} /></Link>
+                <Link to="/ongoing"><Compass size={18} /><span>Tayang</span><ArrowRight size={14} /></Link>
+                <Link to="/completed"><Compass size={18} /><span>Tamat</span><ArrowRight size={14} /></Link>
+                <Link to="/genres"><Compass size={18} /><span>Genre</span><ArrowRight size={14} /></Link>
+                <Link to="/all"><Compass size={18} /><span>Semua anime</span><ArrowRight size={14} /></Link>
               </div>
             </div>
           </>
         ) : searching ? (
-          <div className="searching-indicator"><LoaderCircle size={18} className="spin" /> Mencari di rak…</div>
+          <div className="searching-indicator"><LoaderCircle size={18} className="spin" /> Mencari…</div>
         ) : search.error ? (
           <div className="inline-error">
             <p>{search.error}</p>
@@ -126,10 +126,10 @@ export function SearchPage() {
             ) : (
               <div className="empty-state">
                 <p className="empty-index">No. 00</p>
-                <h2>Tidak ada di ruang ini.</h2>
-                <p>Coba kata kunci lebih pendek, judul Jepangnya, atau jelajahi katalog lengkap.</p>
+                <h2>Tidak ditemukan.</h2>
+                <p>Coba kata kunci lebih pendek, judul Jepangnya, atau lihat katalog lengkap.</p>
                 <div className="empty-actions">
-                  <Link to="/all" className="button button-primary">Jelajahi A–Z</Link>
+                  <Link to="/all" className="button button-primary">Lihat A–Z</Link>
                   <button className="button button-quiet" onClick={() => { setQuery(''); setParams({}); }}>Bersihkan pencarian</button>
                 </div>
               </div>

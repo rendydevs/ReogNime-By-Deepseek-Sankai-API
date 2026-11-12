@@ -14,12 +14,12 @@ export function MoodPage() {
   const moods = useApi((signal) => api.moods(signal), []);
   const data = moods.data?.data ?? [];
   const selected = data.find((mood) => mood.key === activeKey) ?? data[0] ?? null;
-  useDocumentTitle(selected ? `Anime ${selected.label} Sub Indo` : 'Peta Suasana');
+  useDocumentTitle(selected ? `Anime ${selected.label} Sub Indo` : 'Rekomendasi Suasana');
   usePageSeo({
-    title: selected ? `Anime ${selected.label} Sub Indo — Peta Suasana — ReogNime` : 'Peta Suasana — ReogNime',
+    title: selected ? `Anime ${selected.label} Sub Indo — Rekomendasi — ReogNime` : 'Rekomendasi Suasana — ReogNime',
     description: selected
       ? `Rekomendasi anime ${selected.label.toLowerCase()} subtitle Indonesia: ${selected.description}`
-      : 'Peta suasana ReogNime: temukan anime berdasarkan rasa, bukan algoritma.',
+      : 'Rekomendasi anime ReogNime berdasarkan suasana dan genre.',
     image: '/og-reognime.jpg',
     jsonLd: selected
       ? pageGraph(
@@ -46,15 +46,15 @@ export function MoodPage() {
       <header className="container catalog-masthead">
         <div className="watch-masthead-bar">
           <Link to="/" className="text-link"><ArrowLeft size={14} /> Beranda</Link>
-          <Link to="/hari-ini" className="text-link">Edisi hari ini <ArrowRight size={14} /></Link>
+          <Link to="/hari-ini" className="text-link">Pilihan hari ini <ArrowRight size={14} /></Link>
         </div>
         <div className="catalog-title-row">
           <div>
-            <p className="section-index">Peta suasana</p>
-            <h1>Pilih rasa,<br /><em>bukan algoritma.</em></h1>
+            <p className="section-index">Rekomendasi suasana</p>
+            <h1>Cari sesuai<br /><em>suasana.</em></h1>
           </div>
           <div className="catalog-title-aside">
-            <p>Empat pintu masuk ke arsip ReogNime. Pilih suasana, lalu biarkan judul-judulnya menemukanmu.</p>
+            <p>Pilih satu suasana untuk melihat rekomendasi dari arsip ReogNime.</p>
             <Link to="/discover" className="catalog-search-link"><Compass size={15} /> Jelajahi semua filter</Link>
           </div>
         </div>
@@ -92,7 +92,7 @@ export function MoodPage() {
 
             <section className="mood-feature">
               <div className="mood-feature-copy">
-                <p className="section-index">Suasana terpilih</p>
+                <p className="section-index">Pilihan suasana</p>
                 <h2>{selected.label}.</h2>
                 <p>{selected.description}</p>
                 <div className="mood-genres">

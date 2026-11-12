@@ -5,25 +5,25 @@ export const MOODS = [
     key: 'tenang',
     label: 'Tenang',
     genres: ['Slice of Life', 'Drama'],
-    description: 'Cerita yang tidak terburu-buru, untuk malam yang ingin kamu habiskan pelan-pelan.',
+    description: 'Anime dengan tempo lambat dan cerita sehari-hari.',
   },
   {
     key: 'hangat',
     label: 'Hangat',
     genres: ['Romance', 'Comedy'],
-    description: 'Tawa kecil, rasa nyaman, dan cerita yang membuat rumah terasa lebih dekat.',
+    description: 'Romansa dan komedi ringan.',
   },
   {
     key: 'seru',
     label: 'Seru',
     genres: ['Action', 'Adventure', 'Sports'],
-    description: 'Energi tinggi, ambisi, dan episode yang membuatmu ingin langsung menekan next.',
+    description: 'Aksi, petualangan, dan olahraga.',
   },
   {
     key: 'gelap',
     label: 'Gelap',
     genres: ['Thriller', 'Psychological', 'Horror', 'Mystery'],
-    description: 'Misteri dan ketegangan yang pelan-pelan mengubah cara kamu melihat cerita.',
+    description: 'Misteri, thriller, dan cerita psikologis.',
   },
 ];
 
@@ -130,7 +130,7 @@ export function getEdition(date = new Date()) {
       ? {
           ...toSummary(pick),
           synopsis: pick.synopsis.slice(0, 600),
-          reason: `Dipilih untuk suasana ${mood.label.toLowerCase()} hari ini.`,
+          reason: `Pilihan dari arsip untuk suasana ${mood.label.toLowerCase()}.`,
         }
       : null,
     top,

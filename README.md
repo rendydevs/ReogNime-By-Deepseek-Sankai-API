@@ -57,16 +57,16 @@ The documented upstream home is `GET /anime/home`. A `/anime/homez` URL returns 
 - **Player pages** with quality/server selection, embed resolution, next/previous navigation, episode downloads, and safe fallbacks for offline or frame-blocked mirrors.
 - **Airing schedule** grouped by day, with today highlighted.
 - Auto-rotating hero, animated progress rails, a quiet title ticker, scroll reveals, soft card motion and page transitions.
-- Light/dark themes, responsive layouts from 390px up.
-- Self-hosted **Plus Jakarta Sans** and **Fraunces** — no external font requests.
+- Light/dark themes, responsive layouts from 320px up.
+- Self-hosted **Bricolage Grotesque** and **Barlow** — no external font requests.
 
 ### The archive
 - Original editorial homepage at `/archive` with AniList showcases, moods and a top-rated canon.
 - Discovery index at `/discover` with search, formats, seasons, statuses and sorting.
 - AniList title pages with cast, characters, related titles and episode tracker.
 - Personal library at `/library` with statuses, scores, progress, notes, favourites, statistics, export and undo.
-- **Edisi Hari Ini** at `/hari-ini`: deterministic daily pick, mood of the day, top titles and today's schedule.
-- **Peta Suasana** at `/suasana/:mood`: four mood-first discovery shelves with unique SEO landing pages.
+- **Pilihan Hari Ini** at `/hari-ini`: deterministic daily pick, mood of the day, top titles and today's schedule.
+- **Rekomendasi Suasana** at `/suasana/:mood`: four mood-first discovery shelves with unique SEO landing pages.
 - **Mode fokus** on the episode player: full-viewport playback, hidden chrome, Esc to exit.
 - The streaming navigation stays clean; archive links live in the footer.
 
@@ -165,15 +165,16 @@ If the container already sends GA4 page views on All Pages, remove that duplicat
 
 The archive now starts with an empty library. `server/data/library.json` contains no demo entries; a fresh server creates the file as an empty library. Streaming usage is stateless and is not stored in the library.
 
-## The Nocturne interface
+## The Lembut interface
 
-The 2026 art direction moves ReogNime from a paper editorial grid to a warm, cinematic room:
+The current interface is a soft paper layout with a few clear rules:
 
-- floating glass navigation that keeps the catalog close without boxing it in;
-- a single immersive home stage that combines the masthead, daily edition, search and featured screening;
+- **Bricolage Grotesque** for display, **Barlow** for reading, **IBM Plex Mono** for small metadata;
+- warm paper by default, with a full dark palette available from the header;
+- generous spacing, gentle cards, thin rules, and no glass or hard offset frames;
+- a large but quiet home title, one featured title, a small ticker, and the catalog below;
 - a four-item mobile dock for Beranda, Tayang, Cari and Daftar;
-- glass surfaces, ember accents, jade ambient light, and poster-first cards;
-- a restrained light counterpart that keeps the same typography and spacing.
+- a faint peacock-feather line drawing in the hero as the ReogNime watermark.
 
 Core design tokens live at the end of [`client/src/styles.css`](client/src/styles.css). The mobile dock is intentionally hidden on the episode player so the video and focus mode remain uninterrupted.
 
@@ -363,21 +364,22 @@ The metadata is applied client-side because this is a Vite SPA. Google renders J
 ## Tests
 
 ```bash
-npm test        # 17 API, provider, relay, artwork, and Vercel-adapter tests
+npm test        # 19 API, provider, relay, artwork, and Vercel-adapter tests
 npm run typecheck
 npm run build
 ```
 
 ## Design notes
 
-- **Plus Jakarta Sans** for interface and editorial display, with **Fraunces** italic accents. Both self-hosted.
-- Warm paper, ink and vermilion palette with a soft gold secondary accent.
-- Rounded poster cards and panel surfaces, hairline rules, generous negative space.
-- The home page is alive without being loud: an auto-advancing featured pick (pauses on hover/focus), animated progress rails, a moving on-air ticker, staggered card entrances and scroll reveals.
+- **Bricolage Grotesque** for display, **Barlow** for the interface, and **IBM Plex Mono** for small labels. All self-hosted.
+- Warm paper, ink and terracotta palette with a muted sage secondary.
+- Rounded poster cards, soft panels, hairline rules, generous negative space.
+- An auto-advancing featured pick (pauses on hover/focus), progress rails, a moving on-air ticker, staggered card entrances and scroll reveals.
 - All motion respects `prefers-reduced-motion`; content remains fully visible without animation.
 - AniList artwork enrichment upgrades streaming cards to high-resolution covers and wide hero banners, with provider artwork as the fallback.
 - Dedicated typographic cover fallback so missing provider artwork never looks broken.
 - Dark mode is a complete palette, not an inverted filter.
+- The default is light paper; the header toggle switches to the dark palette.
 - Footer signature: **made by aldi with love**. The Otakudesu API data credit is intentionally retained.
 
 ## Security & scope
@@ -390,4 +392,4 @@ npm run build
 
 ---
 
-Made by aldi with love. Set in Plus Jakarta Sans & Fraunces.
+Made by aldi with love. Set in Bricolage Grotesque & Barlow.

@@ -48,14 +48,14 @@ export function WatchSchedulePage() {
   return (
     <div className="watch-page schedule-page">
       <header className="container watch-sub-masthead">
-        <Link to="/" className="back-link-dark"><ArrowLeft size={15} /> Ruang tayang</Link>
+        <Link to="/" className="back-link-dark"><ArrowLeft size={15} /> Beranda</Link>
         <div className="schedule-title-row">
           <div>
-            <p className="eyebrow"><CalendarDays size={13} /> ReogNime / mingguan</p>
-            <h1>Apa yang tayang<br /><em>minggu ini.</em></h1>
+            <p className="eyebrow"><CalendarDays size={13} /> Jadwal tayang</p>
+            <h1>Jadwal <em>minggu ini.</em></h1>
           </div>
           <p>
-            Ritme mingguan, sesuai daftar provider. {totalTitles ? `${totalTitles} judul` : 'Seminggu penuh'} di seluruh rak.
+            Jadwal rilis dari provider. {totalTitles ? `${totalTitles} judul` : 'Seminggu penuh'} di seluruh rak.
           </p>
         </div>
       </header>

@@ -32,10 +32,10 @@ function filtersFromParams(params: URLSearchParams): DiscoverFilters {
 }
 
 export function DiscoverPage() {
-  useDocumentTitle('Temukan Anime Baru');
+  useDocumentTitle('Cari Anime');
   usePageSeo({
-    title: 'Temukan Anime Baru — ReogNime',
-    description: 'Jelajahi katalog anime berdasarkan genre, tahun, musim, format, status, dan skor. Temukan tontonan berikutnya di ReogNime.',
+    title: 'Cari Anime — ReogNime',
+    description: 'Cari anime berdasarkan judul, genre, tahun, musim, format, status, dan skor di ReogNime.',
     image: '/og-reognime.jpg',
   });
   const [searchParams, setSearchParams] = useSearchParams();
@@ -138,10 +138,9 @@ export function DiscoverPage() {
           <p className="masthead-edition">Edisi 01 / {new Date().getFullYear()}</p>
         </div>
         <div className="discover-title-row">
-          <h1>Temukan<br />dunia berikutnya.</h1>
+          <h1>Cari <em>anime.</em></h1>
           <p>
-            Cari di seluruh rak lewat judul, studio, tahun, atau suasana.
-            Setiap entri ada di sini dengan alasan.
+            Cari berdasarkan judul, studio, tahun, genre, atau status tayang.
           </p>
         </div>
       </header>
@@ -286,7 +285,7 @@ export function DiscoverPage() {
         ) : (
           <div className="empty-state">
             <p className="empty-index">No. 00</p>
-            <h2>Tidak ada di rak ini.</h2>
+            <h2>Tidak ada hasil.</h2>
             <p>Coba suasana lain, tahun yang lebih luas, atau bersihkan saringan.</p>
             <div className="empty-actions">
               <button className="button button-primary" onClick={resetFilters}>Bersihkan semua saringan</button>

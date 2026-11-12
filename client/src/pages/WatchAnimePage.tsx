@@ -158,7 +158,7 @@ export function WatchAnimePage() {
           <span />
         </div>
         <div className="container watch-detail-hero-inner">
-          <Link to="/" className="back-link"><ArrowLeft size={15} /> Ruang tayang</Link>
+          <Link to="/" className="back-link"><ArrowLeft size={15} /> Beranda</Link>
           <div className="watch-detail-grid">
             <OtakuPoster title={anime.title} poster={anime.poster} className="watch-detail-poster" eager />
             <div className="watch-detail-copy">

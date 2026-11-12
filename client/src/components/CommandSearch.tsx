@@ -27,11 +27,11 @@ interface CommandSearchProps {
 const QUICK_LINKS = [
   { label: 'Sedang tayang', description: 'Semua seri yang tayang', to: '/ongoing', Icon: Play },
   { label: 'Anime tamat', description: 'Seri yang sudah selesai', to: '/completed', Icon: LayoutGrid },
-  { label: 'Genre', description: 'Jelajahi sesuai suasana', to: '/genres', Icon: Compass },
+  { label: 'Genre', description: 'Daftar genre anime', to: '/genres', Icon: Compass },
   { label: 'Semua anime A–Z', description: 'Katalog lengkap', to: '/all', Icon: ListFilter },
   { label: 'Jadwal rilis', description: 'Yang tayang minggu ini', to: '/schedule', Icon: CalendarDays },
-  { label: 'Edisi hari ini', description: 'Pilihan dan jadwal hari ini', to: '/hari-ini', Icon: Sparkles },
-  { label: 'Peta suasana', description: 'Pilih anime sesuai rasa', to: '/suasana/tenang', Icon: Compass },
+  { label: 'Pilihan hari ini', description: 'Rekomendasi dan jadwal hari ini', to: '/hari-ini', Icon: Sparkles },
+  { label: 'Rekomendasi suasana', description: 'Cari anime sesuai suasana', to: '/suasana/tenang', Icon: Compass },
 ];
 
 function ResultCover({ anime }: { anime: OtakuCard }) {
