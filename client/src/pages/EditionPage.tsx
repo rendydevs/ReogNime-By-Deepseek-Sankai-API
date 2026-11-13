@@ -81,7 +81,7 @@ export function EditionPage() {
     <div className="watch-page edition-page">
       <header className="container catalog-masthead">
         <div className="watch-masthead-bar">
-          <p className="eyebrow"><CalendarDays size={13} /> Pilihan hari ini · {data.dateLabel}</p>
+          <p className="eyebrow"><CalendarDays size={13} /> Pilihan hari ini <span className="edition-date">· {data.dateLabel}</span></p>
           <Link to={`/suasana/${data.mood.key}`} className="text-link" aria-label="Buka rekomendasi suasana">Rekomendasi <ArrowRight size={14} /></Link>
         </div>
         <div className="catalog-title-row">

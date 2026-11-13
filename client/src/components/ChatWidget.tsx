@@ -168,6 +168,12 @@ function latestMessageAt(thread: CachedThread | null) {
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const openFromMenu = () => setOpen(true);
+    window.addEventListener('reognime:open-chat', openFromMenu);
+    return () => window.removeEventListener('reognime:open-chat', openFromMenu);
+  }, []);
   const [closing, setClosing] = useState(false);
   const [hasOpened, setHasOpened] = useState(false);
   const [nudgeVisible, setNudgeVisible] = useState(true);

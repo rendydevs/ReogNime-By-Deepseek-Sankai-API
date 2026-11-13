@@ -185,11 +185,11 @@ export function HomePage() {
         <div className="issue-halftone" aria-hidden="true" />
         <ReogMotif className="issue-motif" />
         <div className="container issue-hero-grid">
+          <div className="issue-meta">
+            <span>ReogNime / Edisi 11 · 2026</span>
+            <span>Anime sub Indo</span>
+          </div>
           <div className="issue-hero-copy">
-            <div className="issue-meta">
-              <span>ReogNime / Edisi 11 · 2026</span>
-              <span>Anime sub Indo</span>
-            </div>
             <h1>Nonton anime,<br /><span>nggak usah ribet.</span></h1>
             <p className="issue-lede">
               Katalog tayang dan tamat, jadwal mingguan, dan pemutar episode.

@@ -161,6 +161,17 @@ export function Layout() {
               <span className="mobile-nav-index">10</span>
               Rekomendasi
             </NavLink>
+            <button
+              type="button"
+              className="mobile-nav-link mobile-chat-link"
+              onClick={() => {
+                setMenuOpen(false);
+                window.dispatchEvent(new CustomEvent('reognime:open-chat'));
+              }}
+            >
+              <span className="mobile-nav-index">11</span>
+              Chat admin
+            </button>
           </nav>
         )}
       </header>

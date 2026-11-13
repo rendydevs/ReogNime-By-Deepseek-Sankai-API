@@ -52,7 +52,7 @@ export function WatchSchedulePage() {
         <div className="schedule-title-row">
           <div>
             <p className="eyebrow"><CalendarDays size={13} /> Jadwal tayang</p>
-            <h1>Jadwal <em>minggu ini.</em></h1>
+            <h1>Jadwal <span className="schedule-title-rest"><em>minggu ini.</em></span></h1>
           </div>
           <p>
             Jadwal rilis dari provider. {totalTitles ? `${totalTitles} judul` : 'Seminggu penuh'} di seluruh rak.
