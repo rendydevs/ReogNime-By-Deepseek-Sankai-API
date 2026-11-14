@@ -238,15 +238,6 @@ export function WatchEpisodePage() {
           <Link to={data.animeSlug ? `/watch/anime/${data.animeSlug}` : '/'} className="back-link-dark">
             <ArrowLeft size={15} /> {data.animeSlug ? 'Kembali ke seri' : 'Kembali ke tontonan'}
           </Link>
-          <div className="player-header-nav">
-            {data.previous ? (
-              <Link to={`/watch/episode/${data.previous.slug}`} className="player-nav-button" title="Episode sebelumnya">
-                <ArrowLeft size={14} /> Sebelumnya
-              </Link>
-            ) : (
-              <span className="player-nav-button is-disabled"><ArrowLeft size={14} /> Sebelumnya</span>
-            )}
-          </div>
         </div>
         <div className="player-title-line">
           <div>
