@@ -21194,3 +21194,80 @@ body {
 .player-title-line h1 {
   text-wrap: balance;
 }
+
+/* Next-episode card follows the active theme instead of being always cream. */
+.player-next {
+  margin: 12px 12px 14px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 16px;
+  background: var(--bg-elevated);
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+}
+
+.player-next:hover {
+  border-color: var(--line-strong);
+  background: var(--bg-elevated);
+}
+
+.player-next-kicker {
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.player-next-copy strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.player-next-note {
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.player-next-cta {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+}
+
+.player-next:hover .player-next-cta {
+  background: var(--accent-deep);
+}
+
+@media (max-width: 560px) {
+  .player-next {
+    margin: 10px 10px 12px;
+    padding: 13px 14px;
+    border-radius: 14px;
+  }
+
+  .player-next-kicker {
+    font-size: 10px;
+  }
+
+  .player-next-copy strong {
+    font-size: 21px;
+  }
+
+  .player-next-note {
+    font-size: 11px;
+  }
+
+  .player-next-cta {
+    min-height: 42px;
+    border-radius: 9px;
+    font-size: 12px;
+  }
+}

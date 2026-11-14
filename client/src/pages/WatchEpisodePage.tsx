@@ -246,13 +246,6 @@ export function WatchEpisodePage() {
             ) : (
               <span className="player-nav-button is-disabled"><ArrowLeft size={14} /> Sebelumnya</span>
             )}
-            {data.next ? (
-              <Link to={`/watch/episode/${data.next.slug}`} className="player-nav-button" title="Episode berikutnya">
-                Berikutnya <ArrowRight size={14} />
-              </Link>
-            ) : (
-              <span className="player-nav-button is-disabled">Berikutnya <ArrowRight size={14} /></span>
-            )}
           </div>
         </div>
         <div className="player-title-line">
