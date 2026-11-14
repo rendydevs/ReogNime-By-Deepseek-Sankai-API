@@ -71,6 +71,14 @@ function blocksEmbedding(url: string): boolean {
   }
 }
 
+function nextEpisodeLabel(nav: { slug: string; label: string } | null): string {
+  if (!nav) return '';
+  const label = nav.label.trim();
+  if (label && !/^(next|berikutnya|selanjutnya)$/i.test(label)) return label;
+  const numbered = nav.slug.match(/episode-(\d+)/i);
+  return numbered ? `Episode ${numbered[1]}` : 'Episode berikutnya';
+}
+
 export function WatchEpisodePage() {
   useDocumentTitle('Tonton episode');
   const { slug } = useParams();
@@ -216,6 +224,8 @@ export function WatchEpisodePage() {
     0,
   );
 
+  const nextLabel = nextEpisodeLabel(data.next);
+
   return (
     <div className="player-page">
       {focusMode && (
@@ -311,6 +321,23 @@ export function WatchEpisodePage() {
                 </div>
               )}
             </div>
+
+            {data.next ? (
+              <Link
+                to={`/watch/episode/${data.next.slug}`}
+                className="player-next"
+                aria-label={`Putar ${nextLabel}`}
+              >
+                <span className="player-next-copy">
+                  <span className="player-next-kicker">Selesai menonton?</span>
+                  <strong>{nextLabel}</strong>
+                  <span className="player-next-note">Lanjut ke episode berikutnya</span>
+                </span>
+                <span className="player-next-cta">
+                  <Play size={15} fill="currentColor" /> Putar berikutnya
+                </span>
+              </Link>
+            ) : null}
 
             <div className="player-server-bar">
               <div className="player-server-title">

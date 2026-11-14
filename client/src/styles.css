@@ -21089,3 +21089,108 @@ body {
     max-width: 228px;
   }
 }
+
+/* =========================================================
+   NEXT EPISODE — reachable immediately after the video
+   ========================================================= */
+
+.player-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f4ecdf;
+  color: #17130e;
+  text-decoration: none;
+  transition: background-color 0.18s ease;
+}
+
+.player-next:hover {
+  background: #fff8ec;
+}
+
+.player-next-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.player-next-kicker {
+  color: #b94b32;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.player-next-copy strong {
+  overflow: hidden;
+  color: #17130e;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-next-note {
+  color: #74695b;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.player-next-cta {
+  display: inline-flex;
+  min-height: 38px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: #17130e;
+  color: #fff8ec;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.player-next:hover .player-next-cta {
+  background: #b94b32;
+}
+
+.is-focus-mode .player-next {
+  display: none !important;
+}
+
+@media (max-width: 560px) {
+  .player-next {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    padding: 13px 14px;
+  }
+
+  .player-next-copy strong {
+    font-size: 21px;
+    white-space: normal;
+  }
+
+  .player-next-cta {
+    min-height: 42px;
+    justify-content: center;
+    font-size: 12px;
+  }
+}
+
+.player-title-line h1 {
+  text-wrap: balance;
+}
