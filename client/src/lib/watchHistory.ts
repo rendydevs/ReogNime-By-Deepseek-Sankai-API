@@ -62,9 +62,18 @@ function isHistoryEntry(value: unknown): value is WatchHistoryEntry {
   );
 }
 
+function dedupeBySeries(entries: WatchHistoryEntry[]): WatchHistoryEntry[] {
+  const seen = new Set<string>();
+  return entries.filter((entry) => {
+    if (seen.has(entry.animeSlug)) return false;
+    seen.add(entry.animeSlug);
+    return true;
+  });
+}
+
 export function getWatchHistory(): WatchHistoryEntry[] {
   const value = readJson<unknown>(HISTORY_KEY, []);
-  return Array.isArray(value) ? value.filter(isHistoryEntry).slice(0, 8) : [];
+  return Array.isArray(value) ? dedupeBySeries(value.filter(isHistoryEntry)).slice(0, 8) : [];
 }
 
 function emitHistoryChange() {
@@ -78,14 +87,17 @@ export function recordWatch(entry: Omit<WatchHistoryEntry, 'watchedAt'> & { watc
       ...entry,
       watchedAt: entry.watchedAt ?? new Date().toISOString(),
     },
-    ...getWatchHistory().filter((item) => item.episodeSlug !== entry.episodeSlug),
+    ...getWatchHistory().filter((item) => item.animeSlug !== entry.animeSlug),
   ].slice(0, 8);
   writeJson(HISTORY_KEY, next);
   emitHistoryChange();
 }
 
 export function removeWatchHistory(episodeSlug: string) {
-  writeJson(HISTORY_KEY, getWatchHistory().filter((item) => item.episodeSlug !== episodeSlug));
+  const history = getWatchHistory();
+  const target = history.find((item) => item.episodeSlug === episodeSlug);
+  if (!target) return;
+  writeJson(HISTORY_KEY, history.filter((item) => item.animeSlug !== target.animeSlug));
   emitHistoryChange();
 }
 

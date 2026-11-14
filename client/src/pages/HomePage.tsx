@@ -295,12 +295,15 @@ export function HomePage() {
             </div>
             <div className="home-continue-grid">
               {watchHistory.items.map((item) => (
-                <article className="continue-card" key={item.episodeSlug}>
-                  <Link to={`/watch/episode/${item.episodeSlug}`} className="continue-link">
+                <article className="continue-card" key={item.animeSlug}>
+                  <Link
+                    to={`/watch/episode/${item.episodeSlug}`}
+                    className="continue-link"
+                    aria-label={`Lanjutkan ${item.animeTitle}`}
+                  >
                     <OtakuPoster title={item.animeTitle} poster={item.poster} className="continue-poster" />
                     <div className="continue-copy">
-                      <span>{item.animeTitle}</span>
-                      <strong>{item.episodeTitle}</strong>
+                      <strong>{item.animeTitle}</strong>
                       <small>{formatRelativeTime(item.watchedAt)}</small>
                     </div>
                   </Link>
@@ -308,7 +311,7 @@ export function HomePage() {
                     type="button"
                     className="continue-remove"
                     onClick={() => watchHistory.remove(item.episodeSlug)}
-                    aria-label={`Hapus ${item.episodeTitle} dari riwayat`}
+                    aria-label={`Hapus ${item.animeTitle} dari riwayat`}
                   >
                     <X size={13} />
                   </button>
