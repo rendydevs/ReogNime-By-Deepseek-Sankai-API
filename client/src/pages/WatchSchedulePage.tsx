@@ -17,7 +17,7 @@ export function WatchSchedulePage() {
   usePageSeo({
     title: 'Jadwal Rilis Anime Sub Indo — ReogNime',
     description: 'Jadwal rilis anime mingguan subtitle Indonesia di ReogNime. Lihat anime yang tayang setiap hari, lengkap dengan jam dan daftar judul.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',

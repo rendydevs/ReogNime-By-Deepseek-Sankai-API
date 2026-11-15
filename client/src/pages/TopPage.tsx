@@ -45,7 +45,7 @@ export function TopPage() {
     description: selectedLabel
       ? `Peringkat anime genre ${selectedLabel} berdasarkan ${sort === 'popularity' ? 'popularitas' : 'skor'} AniList di ReogNime.`
       : 'Peringkat anime berdasarkan skor dan popularitas AniList. Pilih genre untuk peringkat khusus.',
-    image: items[0]?.banner ?? items[0]?.cover ?? '/og-reognime.jpg',
+    image: items[0]?.banner ?? items[0]?.cover ?? '/og-reognime-2026.jpg',
     jsonLd: pageGraph(
       {
         '@type': 'CollectionPage',

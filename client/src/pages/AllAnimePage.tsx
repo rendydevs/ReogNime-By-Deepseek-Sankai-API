@@ -15,7 +15,7 @@ export function AllAnimePage() {
   usePageSeo({
     title: 'Semua Anime A–Z Sub Indo — ReogNime',
     description: 'Katalog lengkap anime subtitle Indonesia dari A sampai Z. Telusuri semua judul dan temukan tontonan berikutnya di ReogNime.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',

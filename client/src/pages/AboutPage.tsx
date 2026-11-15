@@ -8,7 +8,7 @@ export function AboutPage() {
   usePageSeo({
     title: 'Tentang ReogNime — Katalog Anime Sub Indo',
     description: 'Tentang ReogNime: katalog anime subtitle Indonesia, sumber data Otakudesu API, kebijakan video pihak ketiga, daftar tontonan, dan privasi.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: pageGraph(
       {
         '@type': 'AboutPage',

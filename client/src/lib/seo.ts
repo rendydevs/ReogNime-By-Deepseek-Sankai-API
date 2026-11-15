@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 export const SITE_URL = 'https://www.reognime.site';
 let managedPath: string | null = null;
-const DEFAULT_IMAGE = `${SITE_URL}/og-reognime.jpg`;
+const DEFAULT_IMAGE = `${SITE_URL}/og-reognime-2026.jpg`;
 
 type SeoInput = {
   title?: string;

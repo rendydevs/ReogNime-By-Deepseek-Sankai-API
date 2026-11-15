@@ -96,7 +96,7 @@ export function HomePage() {
   usePageSeo({
     title: 'Nonton Anime Sub Indo Tanpa Ribet — ReogNime',
     description: 'Nonton anime subtitle Indonesia di ReogNime: jadwal tayang, anime tamat, genre, dan pencarian judul. Nonton sub indo ringan tanpa ribet.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',

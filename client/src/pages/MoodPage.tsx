@@ -20,7 +20,7 @@ export function MoodPage() {
     description: selected
       ? `Rekomendasi anime ${selected.label.toLowerCase()} subtitle Indonesia: ${selected.description}`
       : 'Rekomendasi anime ReogNime berdasarkan suasana dan genre.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: selected
       ? pageGraph(
           {

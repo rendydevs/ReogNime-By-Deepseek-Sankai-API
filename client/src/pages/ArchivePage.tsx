@@ -71,7 +71,7 @@ export function ArchivePage() {
   usePageSeo({
     title: 'Arsip Anime Pilihan — ReogNime',
     description: 'Arsip editorial ReogNime: rekomendasi anime pilihan, kanon, daftar tayangan, dan katalog AniList untuk menemukan cerita baru.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
   });
   const { data: response, loading, error, reload } = useApi((signal) => api.home(signal), []);
   const data = response?.data ?? null;

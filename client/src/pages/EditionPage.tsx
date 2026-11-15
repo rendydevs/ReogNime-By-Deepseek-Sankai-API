@@ -20,7 +20,7 @@ export function EditionPage() {
     description: data
       ? `Pilihan anime untuk ${data.dateLabel}, dengan suasana ${data.mood.label.toLowerCase()} dan jadwal tayang.`
       : 'Pilihan anime hari ini, rekomendasi suasana, dan jadwal tayang di ReogNime.',
-    image: data?.pick?.banner || data?.pick?.cover || '/og-reognime.jpg',
+    image: data?.pick?.banner || data?.pick?.cover || '/og-reognime-2026.jpg',
     jsonLd: data
       ? pageGraph(
           {

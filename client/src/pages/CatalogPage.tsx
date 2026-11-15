@@ -37,7 +37,7 @@ export function CatalogPage({ kind }: CatalogPageProps) {
   usePageSeo({
     title: `${pageTitle} — ReogNime`,
     description: pageDescription,
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',

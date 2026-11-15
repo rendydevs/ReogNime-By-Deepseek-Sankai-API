@@ -21,7 +21,7 @@ export function GenresPage() {
   usePageSeo({
     title: 'Genre Anime Sub Indo — ReogNime',
     description: 'Jelajahi genre anime subtitle Indonesia di ReogNime: aksi, petualangan, drama, fantasi, romansa, dan banyak lagi.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
@@ -86,7 +86,7 @@ export function GenrePage() {
   usePageSeo({
     title: `Anime ${label} Sub Indo — ReogNime`,
     description: `Daftar anime genre ${label} subtitle Indonesia di ReogNime. Jelajahi judul, poster, dan episode terbaru dalam satu rak.`,
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
     jsonLd: pageGraph(
       {
         '@type': 'CollectionPage',

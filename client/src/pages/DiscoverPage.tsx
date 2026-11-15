@@ -36,7 +36,7 @@ export function DiscoverPage() {
   usePageSeo({
     title: 'Cari Anime — ReogNime',
     description: 'Cari anime berdasarkan judul, genre, tahun, musim, format, status, dan skor di ReogNime.',
-    image: '/og-reognime.jpg',
+    image: '/og-reognime-2026.jpg',
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();

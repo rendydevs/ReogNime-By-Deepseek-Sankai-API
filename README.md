@@ -314,7 +314,7 @@ Admin can reply, mark a thread resolved, reopen it, or delete it. A resolved thr
 ├── public/media/            # local archive artwork
 ├── public/sitemap.xml       # generated SEO sitemap
 ├── public/robots.txt        # crawl rules
-├── public/og-reognime.jpg   # social preview image
+├── public/og-reognime-2026.jpg # social preview image
 ├── vercel.json              # Vercel build, function and SPA routing
 └── docs/                    # screenshots
 ```
