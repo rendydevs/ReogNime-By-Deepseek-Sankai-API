@@ -69,7 +69,7 @@ The documented upstream home is `GET /anime/home`. A `/anime/homez` URL returns 
 - **Rekomendasi Suasana** at `/suasana/:mood`: four mood-first discovery shelves with unique SEO landing pages.
 - **Top Anime** at `/top`: rating and most-watched rankings, all genres or one genre at a time, with rating badges on the spotlight and list banners.
 - **Mode fokus** on the episode player: full-viewport playback, hidden chrome, Esc to exit.
-- The streaming navigation stays clean; archive links live in the footer.
+- The streaming navigation keeps **Top** close at hand; the remaining archive links live in the footer.
 
 ### Backend
 - Express 5 REST API under `/api/v1`.
@@ -98,6 +98,7 @@ npm run dev
 | Streaming home | http://localhost:5173/ |
 | Ongoing / Completed | http://localhost:5173/ongoing · `/completed` |
 | Search | http://localhost:5173/search |
+| Top anime | http://localhost:5173/top |
 | REST API | http://localhost:8787/api/v1 |
 | Otakudesu API | http://localhost:8787/api/v1/otakudesu/home |
 | API docs | http://localhost:5173/developers |
@@ -295,8 +296,8 @@ Admin can reply, mark a thread resolved, reopen it, or delete it. A resolved thr
 │       ├── components/      # layout, Otaku cards/posters, command search, downloads, library dialog
 │       ├── context/         # theme, toast, archive library state
 │       ├── lib/             # API client, hooks, formatting, media helpers
-│       ├── pages/           # home, ongoing/completed, genres, A–Z, search, schedule,
-│       │                    # series, player, archive, discovery, library, admin, API reference
+│       ├── pages/           # home, ongoing/completed, genres, top, A–Z, search,
+│       │                    # schedule, series, player, archive, discovery, library, admin, API
 │       └── styles.css       # complete design system
 ├── server/
 │   ├── app.js               # Express factory and routes
@@ -323,9 +324,9 @@ Admin can reply, mark a thread resolved, reopen it, or delete it. A resolved thr
 The site ships with the technical SEO basics:
 
 - `public/robots.txt` allows public pages and points to the sitemap.
-- `public/sitemap.xml` contains the static pages, genres, and all current streaming series.
+- `public/sitemap.xml` contains the static pages, including `/top`, all current streaming series, genres, and archive titles.
 - `client/index.html` has the canonical site description, Open Graph/Twitter cards, and `WebSite`/`Organization` JSON-LD.
-- Each SPA route updates its `<title>`, description, canonical URL, Open Graph URL/image, and robots directive. Anime pages add `TVSeries` JSON-LD; episode pages add `TVEpisode`.
+- Each SPA route updates its `<title>`, description, canonical URL, Open Graph URL/image, and robots directive. Anime pages add `TVSeries` JSON-LD; episode pages add `TVEpisode`; the Top page adds an `ItemList`.
 - `client/src/lib/seo.ts` is the single place for per-route and dynamic metadata.
 
 ### Submit to Google
@@ -347,7 +348,7 @@ The sitemap is generated from the current provider catalog and committed as a st
 npm run seo:sitemap
 ```
 
-Run it when the catalog changes significantly, then commit `public/sitemap.xml`. It currently contains 1,946 URLs. The generator needs a network that can reach the Otakudesu API; your local Mac works.
+Run it when the catalog changes significantly, then commit `public/sitemap.xml`. It currently contains **1,997 URLs**, including `/top`. The generator needs a network that can reach the Otakudesu API; your local Mac works.
 
 ### What “muncul di kolom pencarian” means
 
@@ -376,6 +377,7 @@ npm run build
 - Warm paper, ink and terracotta palette with a muted sage secondary.
 - Rounded poster cards, soft panels, hairline rules, generous negative space.
 - An auto-advancing featured pick (pauses on hover/focus), progress rails, a moving on-air ticker, staggered card entrances and scroll reveals.
+- **Top Anime** presents rating and popularity leaderboards, with an accessible all-genre/per-genre filter and rating badges on banner artwork.
 - All motion respects `prefers-reduced-motion`; content remains fully visible without animation.
 - AniList artwork enrichment upgrades streaming cards to high-resolution covers and wide hero banners, with provider artwork as the fallback.
 - Dedicated typographic cover fallback so missing provider artwork never looks broken.
