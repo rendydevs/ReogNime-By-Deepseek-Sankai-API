@@ -67,6 +67,7 @@ The documented upstream home is `GET /anime/home`. A `/anime/homez` URL returns 
 - Personal library at `/library` with statuses, scores, progress, notes, favourites, statistics, export and undo.
 - **Pilihan Hari Ini** at `/hari-ini`: deterministic daily pick, mood of the day, top titles and today's schedule.
 - **Rekomendasi Suasana** at `/suasana/:mood`: four mood-first discovery shelves with unique SEO landing pages.
+- **Top Anime** at `/top`: rating and most-watched rankings, all genres or one genre at a time, with rating badges on the spotlight and list banners.
 - **Mode fokus** on the episode player: full-viewport playback, hidden chrome, Esc to exit.
 - The streaming navigation stays clean; archive links live in the footer.
 

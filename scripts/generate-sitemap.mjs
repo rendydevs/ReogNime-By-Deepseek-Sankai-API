@@ -12,6 +12,7 @@ const staticPages = [
   ['/schedule', '0.8', 'weekly'],
   ['/genres', '0.7', 'weekly'],
   ['/all', '0.7', 'weekly'],
+  ['/top', '0.8', 'weekly'],
   ['/archive', '0.6', 'monthly'],
   ['/discover', '0.6', 'monthly'],
   ['/hari-ini', '0.8', 'daily'],

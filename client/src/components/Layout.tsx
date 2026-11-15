@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { to: '/', label: 'Beranda', end: true },
   { to: '/ongoing', label: 'Tayang' },
   { to: '/completed', label: 'Tamat' },
+  { to: '/top', label: 'Top' },
   { to: '/schedule', label: 'Jadwal' },
   { to: '/genres', label: 'Genre' },
   { to: '/all', label: 'A–Z' },
@@ -146,19 +147,19 @@ export function Layout() {
                 setSearchOpen(true);
               }}
             >
-              <span className="mobile-nav-index">07</span>
+              <span className="mobile-nav-index">08</span>
               Cari
             </button>
             <NavLink to="/library" className="mobile-nav-link">
-              <span className="mobile-nav-index">08</span>
+              <span className="mobile-nav-index">09</span>
               Daftar Saya
             </NavLink>
             <NavLink to="/hari-ini" className="mobile-nav-link">
-              <span className="mobile-nav-index">09</span>
+              <span className="mobile-nav-index">10</span>
               Pilihan hari ini
             </NavLink>
             <NavLink to="/suasana/tenang" className="mobile-nav-link">
-              <span className="mobile-nav-index">10</span>
+              <span className="mobile-nav-index">11</span>
               Rekomendasi
             </NavLink>
             <button
@@ -169,7 +170,7 @@ export function Layout() {
                 window.dispatchEvent(new CustomEvent('reognime:open-chat'));
               }}
             >
-              <span className="mobile-nav-index">11</span>
+              <span className="mobile-nav-index">12</span>
               Chat admin
             </button>
           </nav>
@@ -212,6 +213,7 @@ export function Layout() {
               <p className="footer-heading">Tonton</p>
               <Link to="/ongoing">Sedang tayang</Link>
               <Link to="/completed">Tamat</Link>
+              <Link to="/top">Top anime</Link>
               <Link to="/schedule">Jadwal rilis</Link>
               <Link to="/search">Cari judul</Link>
             </div>

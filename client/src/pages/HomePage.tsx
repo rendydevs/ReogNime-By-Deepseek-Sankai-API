@@ -210,6 +210,7 @@ export function HomePage() {
               <Link to="/ongoing">Tayang <span>{ongoing.length}</span></Link>
               <Link to="/completed">Tamat <span>{completed.length}</span></Link>
               <Link to="/genres">Genre</Link>
+              <Link to="/top">Top</Link>
               <Link to="/all">Semua anime</Link>
               <Link to="/schedule">Jadwal</Link>
             </nav>

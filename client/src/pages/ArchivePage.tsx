@@ -231,7 +231,7 @@ export function ArchivePage() {
               <p>
                 Daftar ini diurutkan berdasarkan skor AniList. Skor membantu, tetapi bukan penilaian akhir.
               </p>
-              <Link to="/discover?sort=score" className="text-link light">
+              <Link to="/top" className="text-link light">
                 Lihat peringkat teratas <ArrowRight size={14} />
               </Link>
             </div>

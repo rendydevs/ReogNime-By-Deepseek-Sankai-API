@@ -18,6 +18,7 @@ import { LibraryPage } from './pages/LibraryPage';
 import { MoodPage } from './pages/MoodPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { SearchPage } from './pages/SearchPage';
+import { TopPage } from './pages/TopPage';
 import { WatchAnimePage } from './pages/WatchAnimePage';
 import { WatchEpisodePage } from './pages/WatchEpisodePage';
 import { WatchSchedulePage } from './pages/WatchSchedulePage';
@@ -49,6 +50,7 @@ export function App() {
           <Route path="schedule" element={<WatchSchedulePage />} />
           <Route path="genres" element={<GenresPage />} />
           <Route path="genre/:slug" element={<GenrePage />} />
+          <Route path="top" element={<TopPage />} />
           <Route path="all" element={<AllAnimePage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="watch" element={<Navigate to="/" replace />} />
