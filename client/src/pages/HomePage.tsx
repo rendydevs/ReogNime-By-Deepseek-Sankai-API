@@ -7,7 +7,7 @@ import { Reveal } from '../components/Reveal';
 import { TitleMarquee } from '../components/TitleMarquee';
 import { ReogMotif } from '../components/ReogMotif';
 import { API_HEALTH_URL, api } from '../lib/api';
-import { formatRelativeTime, otakuStatusLabel } from '../lib/format';
+import { dayLabel, formatRelativeTime, otakuStatusLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import { usePageSeo } from '../lib/seo';
 import { useWatchHistory } from '../lib/watchHistory';
@@ -24,11 +24,11 @@ const HOME_FAQ = [
   },
   {
     question: 'Dari mana data anime di ReogNime berasal?',
-    answer: 'Data streaming berasal dari Otakudesu API. ReogNime tidak menghosting atau mengunggah file video; pemutar diambil dari server video pihak ketiga.',
+    answer: 'Data tayangan berasal dari Otakudesu API. ReogNime tidak menghosting atau mengunggah file video; pemutar diambil dari server video pihak ketiga.',
   },
   {
     question: 'Bagaimana cara menonton anime di ReogNime?',
-    answer: 'Pilih judul dari beranda, halaman tayang, atau pencarian. Buka halaman seri, pilih episode, lalu pilih salah satu mirror yang tersedia.',
+    answer: 'Pilih judul dari beranda, halaman tayang, atau pencarian. Buka halaman seri, pilih episode, lalu pilih salah satu server yang tersedia.',
   },
 ];
 
@@ -95,7 +95,7 @@ export function HomePage() {
 
   usePageSeo({
     title: 'Nonton Anime Sub Indo Tanpa Ribet — ReogNime',
-    description: 'Nonton anime subtitle Indonesia di ReogNime: jadwal tayang, anime tamat, genre, dan pencarian judul. Streaming sub indo ringan tanpa ribet.',
+    description: 'Nonton anime subtitle Indonesia di ReogNime: jadwal tayang, anime tamat, genre, dan pencarian judul. Nonton sub indo ringan tanpa ribet.',
     image: '/og-reognime.jpg',
     jsonLd: {
       '@context': 'https://schema.org',
@@ -210,7 +210,7 @@ export function HomePage() {
               <Link to="/ongoing">Tayang <span>{ongoing.length}</span></Link>
               <Link to="/completed">Tamat <span>{completed.length}</span></Link>
               <Link to="/genres">Genre</Link>
-              <Link to="/top">Top</Link>
+              <Link to="/top">Peringkat</Link>
               <Link to="/all">Semua anime</Link>
               <Link to="/schedule">Jadwal</Link>
             </nav>
@@ -233,10 +233,10 @@ export function HomePage() {
                   <div className="issue-feature-meta">
                     <span>{otakuStatusLabel(feature.status)}</span>
                     {feature.episodes !== null && <span>{feature.episodes} episode</span>}
-                    {feature.releaseDay && <span>{feature.releaseDay}</span>}
+                    {feature.releaseDay && <span>{dayLabel(feature.releaseDay)}</span>}
                   </div>
                   <p className="issue-feature-note">
-                    {feature.latestReleaseDate ? `Update ${feature.latestReleaseDate}.` : 'Subtitle Indonesia dan daftar episode lengkap.'}
+                    {feature.latestReleaseDate ? `Diperbarui ${feature.latestReleaseDate}.` : 'Subtitle Indonesia dan daftar episode lengkap.'}
                   </p>
                   <div className="issue-feature-actions">
                     <Link to={`/watch/anime/${feature.slug}`} className="button button-primary">
@@ -267,7 +267,7 @@ export function HomePage() {
               ) : null}
               <a className="issue-status" href="/developers">
                 <span className={`issue-status-dot is-${apiStatus.phase}`} aria-hidden="true" />
-                API {apiStatus.phase === 'online' ? `${apiStatus.ms} ms` : apiStatus.phase === 'offline' ? 'offline' : 'cek'}
+                API {apiStatus.phase === 'online' ? `${apiStatus.ms} ms` : apiStatus.phase === 'offline' ? 'luring' : 'cek'}
                 <span className="issue-status-rule" />
                 <Link to="/schedule">Jadwal tayang</Link>
               </a>

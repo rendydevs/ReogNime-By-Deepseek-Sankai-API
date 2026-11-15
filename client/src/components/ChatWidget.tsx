@@ -76,10 +76,10 @@ function replyFor(raw: string): BotReply {
     return { text: 'Buka menu Genre. Ada 36 kategori, dari Aksi sampai Vampir, untuk menemukan tontonan sesuai suasana.', escalate: false };
   }
   if (/mirror|vidhide|mega|filelions|filedon|player|putar|loading/.test(text)) {
-    return { text: 'Mirror default-nya VidHide supaya ramah mobile. Kalau tidak bisa diputar, pilih FileLions atau Filedon di daftar mirror. Mega tetap tersedia sebagai pilihan manual.', escalate: false };
+    return { text: 'Server bawaan adalah VidHide supaya ramah ponsel. Kalau tidak bisa diputar, pilih FileLions atau Filedon di daftar server. Mega tetap tersedia sebagai pilihan manual.', escalate: false };
   }
   if (/cara nonton|nonton|streaming|episode/.test(text)) {
-    return { text: 'Pilih anime dari Beranda atau Tayang, buka halaman seri, lalu pilih episode. Setelah itu pilih mirror yang tersedia dan tekan putar.', escalate: false };
+    return { text: 'Pilih anime dari Beranda atau Tayang, buka halaman seri, lalu pilih episode. Setelah itu pilih server yang tersedia dan tekan putar.', escalate: false };
   }
   if (/ongoing|completed|tamat|selesai|rilisan/.test(text)) {
     return { text: 'Tayang berisi anime yang masih berjalan, sedangkan Tamat sudah selesai. Keduanya bisa dibuka dari menu utama.', escalate: false };
@@ -489,7 +489,7 @@ export function ChatWidget() {
               <span className="chat-avatar chat-avatar-admin chat-avatar-large" aria-hidden="true"><UserRound size={20} strokeWidth={1.7} /></span>
               <div>
                 <strong>Admin ReogNime</strong>
-                <span>Admin · biasanya online 09.00–22.00</span>
+                <span>Admin · biasanya aktif 09.00–22.00</span>
                 <p>Balasan admin akan muncul di percakapan ini. Percakapan tersimpan di browser selama beberapa hari.</p>
               </div>
             </div>

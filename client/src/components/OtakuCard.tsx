@@ -1,7 +1,7 @@
 import { Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { OtakuCard as OtakuCardType } from '../types';
-import { otakuStatusLabel, seasonName } from '../lib/format';
+import { dayLabel, otakuStatusLabel, seasonName } from '../lib/format';
 import { OtakuPoster } from './OtakuPoster';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export function OtakuCard({ anime, eager = false }: Props) {
   const episodeMeta = anime.status === 'Ongoing'
-    ? anime.episodes ? `Ep. ${anime.episodes}` : anime.releaseDay
+    ? anime.episodes ? `Ep. ${anime.episodes}` : dayLabel(anime.releaseDay)
     : anime.episodes ? `${anime.episodes} ep` : anime.type;
 
   return (
@@ -27,7 +27,7 @@ export function OtakuCard({ anime, eager = false }: Props) {
           <p className="otaku-kicker">
             {anime.type ?? 'Sub Indo'}
             {anime.season ? <span> · {seasonName(anime.season)}</span> : null}
-            {anime.releaseDay && anime.status === 'Ongoing' ? <span> · {anime.releaseDay}</span> : null}
+            {anime.releaseDay && anime.status === 'Ongoing' ? <span> · {dayLabel(anime.releaseDay)}</span> : null}
           </p>
           <h3>{anime.title}</h3>
           <div className="otaku-card-meta">

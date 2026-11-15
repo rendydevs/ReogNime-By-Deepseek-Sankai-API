@@ -33,6 +33,7 @@ import {
   truncate,
 } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
+import { getIndonesianSynopsis } from '../lib/synopsis';
 import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 import { mediaUrl } from '../lib/media';
 import type { Anime, Episode } from '../types';
@@ -205,7 +206,7 @@ export function AnimeDetailPage() {
   useDocumentTitle(anime ? `Nonton ${anime.title} Sub Indo` : 'Anime Sub Indo');
   usePageSeo(anime ? {
     title: `Nonton ${anime.title} Sub Indo — ReogNime`,
-    description: `Sinopsis anime ${anime.title}: ${truncate(anime.synopsis, 100)}`,
+    description: `Sinopsis anime ${anime.title}: ${truncate(getIndonesianSynopsis(anime), 100)}`,
     image: anime.banner || anime.cover,
     type: 'video.tv_show',
     jsonLd: pageGraph(
@@ -213,7 +214,7 @@ export function AnimeDetailPage() {
         '@type': 'TVSeries',
         name: anime.title,
         alternateName: anime.nativeTitle || anime.originalTitle || undefined,
-        description: anime.synopsis.slice(0, 600),
+        description: getIndonesianSynopsis(anime).slice(0, 600),
         image: anime.banner || anime.cover || undefined,
         url: `${SITE_URL}/anime/${anime.id}`,
         genre: anime.genres,
@@ -249,6 +250,7 @@ export function AnimeDetailPage() {
   }
 
   const entry = getEntry(anime.id);
+  const synopsis = getIndonesianSynopsis(anime);
   const progressPercent = anime.episodes ? Math.min(100, (entry?.progress ?? 0) / anime.episodes * 100) : 0;
 
   const handleFavorite = async () => {
@@ -310,7 +312,7 @@ export function AnimeDetailPage() {
                 <span>{anime.season ? `${SEASON_LABELS[anime.season]} ${anime.seasonYear}` : 'Tanggal —'}</span>
               </div>
 
-              <p className="detail-teaser">{anime.synopsis.split('\n')[0]}</p>
+              <p className="detail-teaser">{synopsis.split('\n')[0]}</p>
 
               <div className="detail-genres">
                 {anime.genres.map((genre) => (
@@ -341,8 +343,8 @@ export function AnimeDetailPage() {
                     href={`https://www.youtube.com/watch?v=${anime.trailer.id}`}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Tonton trailer di YouTube"
-                    title="Tonton trailer"
+                    aria-label="Tonton cuplikan di YouTube"
+                    title="Tonton cuplikan"
                   >
                     <Play size={17} />
                   </a>
@@ -366,7 +368,7 @@ export function AnimeDetailPage() {
               </a>
             </div>
             <div className="prose">
-              {anime.synopsis.split('\n').filter(Boolean).map((paragraph, index) => (
+              {synopsis.split('\n').filter(Boolean).map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
@@ -433,7 +435,7 @@ export function AnimeDetailPage() {
                 <div><dt>Episode berikutnya</dt><dd>Ep {anime.nextAiringEpisode.episode} · {formatDate(anime.nextAiringEpisode.airingAt, { month: 'short', day: 'numeric' })}</dd></div>
               )}
               <div><dt>Studio</dt><dd>{anime.studios.join(', ') || 'Tidak diketahui'}</dd></div>
-              <div><dt>Sumber</dt><dd>{({ MANGA: 'Manga', ORIGINAL: 'Karya orisinal', LIGHT_NOVEL: 'Novel ringan', VISUAL_NOVEL: 'Visual novel', VIDEO_GAME: 'Gim', NOVEL: 'Novel', WEB_MANGA: 'Web manga', MUSIC: 'Musik', OTHER: 'Lainnya' }[anime.source] ?? anime.source.replaceAll('_', ' ').toLowerCase())}</dd></div>
+              <div><dt>Sumber</dt><dd>{({ MANGA: 'Manga', ORIGINAL: 'Karya orisinal', LIGHT_NOVEL: 'Novel ringan', VISUAL_NOVEL: 'Novel visual', VIDEO_GAME: 'Gim', NOVEL: 'Novel', WEB_MANGA: 'Komik web', MUSIC: 'Musik', OTHER: 'Lainnya' }[anime.source] ?? anime.source.replaceAll('_', ' ').toLowerCase())}</dd></div>
               <div><dt>Popularitas</dt><dd>{formatCount(anime.popularity)}</dd></div>
               <div><dt>Favorit</dt><dd>{formatCount(anime.favorites)}</dd></div>
             </dl>

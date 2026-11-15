@@ -96,7 +96,7 @@ const ROUTE_META: Record<string, { title: string; description: string; noindex?:
   '/ongoing': {
     title: 'Anime Tayang Sub Indo — ReogNime',
     description:
-      'Daftar anime tayang subtitle Indonesia terbaru. Update episode, poster, jadwal rilis, dan semua mirror streaming di ReogNime.',
+      'Daftar anime tayang subtitle Indonesia terbaru. Pembaruan episode, poster, jadwal rilis, dan semua server tayangan di ReogNime.',
   },
   '/completed': {
     title: 'Anime Tamat Sub Indo — ReogNime',
@@ -111,7 +111,7 @@ const ROUTE_META: Record<string, { title: string; description: string; noindex?:
   '/genres': {
     title: 'Genre Anime Sub Indo — ReogNime',
     description:
-      'Jelajahi genre anime: action, adventure, comedy, drama, fantasy, romance, dan banyak lagi. Nonton sub indo di ReogNime.',
+      'Jelajahi genre anime: aksi, petualangan, komedi, drama, fantasi, romansa, dan banyak lagi. Nonton sub indo di ReogNime.',
   },
   '/all': {
     title: 'Semua Anime A–Z Sub Indo — ReogNime',

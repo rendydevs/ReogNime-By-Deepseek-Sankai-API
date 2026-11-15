@@ -42,21 +42,21 @@ const ENDPOINT_GROUPS: { label: string; note: string; endpoints: Endpoint[] }[] 
     ],
   },
   {
-    label: 'Streaming',
-    note: 'API tontonan langsung dari Otakudesu API. Semua endpoint terhubung ke UI dan dijaga batas permintaannya oleh server ReogNime.',
+    label: 'Tayangan',
+    note: 'API tontonan langsung dari Otakudesu API. Semua titik akhir terhubung ke antarmuka dan dijaga batas permintaannya oleh server ReogNime.',
     endpoints: [
-      { method: 'GET', path: '/otakudesu/home', title: 'Beranda streaming', description: 'Daftar tayang dan tamat plus satu judul tayang unggulan.' },
+      { method: 'GET', path: '/otakudesu/home', title: 'Beranda tayangan', description: 'Daftar tayang dan tamat plus satu judul tayang unggulan.' },
       { method: 'GET', path: '/otakudesu/ongoing', title: 'Anime tayang', description: 'Judul yang sedang tayang dengan halaman. Opsional ?page=1.' },
       { method: 'GET', path: '/otakudesu/completed', title: 'Anime tamat', description: 'Seri selesai dengan halaman. Opsional ?page=1.' },
       { method: 'GET', path: '/otakudesu/schedule', title: 'Jadwal rilis', description: 'Judul tayang dikelompokkan per hari.' },
-      { method: 'GET', path: '/otakudesu/search', title: 'Cari judul streaming', description: 'Cari judul lewat kata kunci. Wajib: ?q=frieren.' },
-      { method: 'GET', path: '/otakudesu/genres', title: 'Genre streaming', description: 'Semua genre streaming beserta slug-nya.' },
+      { method: 'GET', path: '/otakudesu/search', title: 'Cari judul tayangan', description: 'Cari judul lewat kata kunci. Wajib: ?q=frieren.' },
+      { method: 'GET', path: '/otakudesu/genres', title: 'Genre tayangan', description: 'Semua genre tayangan beserta slug-nya.' },
       { method: 'GET', path: '/otakudesu/genres/:slug', title: 'Anime per genre', description: 'Hasil genre dengan halaman. Contoh: /otakudesu/genres/action?page=1.' },
-      { method: 'GET', path: '/otakudesu/anime/:slug', title: 'Detail seri', description: 'Sinopsis, metadata, genre, daftar episode, judul terkait, dan referensi batch.' },
-      { method: 'GET', path: '/otakudesu/episode/:slug', title: 'Episode + mirror', description: 'Server streaming, kualitas unduhan, episode sebelumnya/berikutnya, dan daftar episode.' },
-      { method: 'GET', path: '/otakudesu/batch/:slug', title: 'Unduh batch', description: 'Kualitas batch, ukuran, dan tautan mirror untuk satu seri lengkap.' },
-      { method: 'GET', path: '/otakudesu/server/:serverId', title: 'Resolusi URL embed', description: 'Ubah id server mirror menjadi URL pemutar yang bisa di-embed.' },
-      { method: 'GET', path: '/otakudesu/unlimited', title: 'Semua anime (A–Z)', description: 'Semua judul streaming, dikelompokkan berdasarkan huruf awal.' },
+      { method: 'GET', path: '/otakudesu/anime/:slug', title: 'Detail seri', description: 'Sinopsis, metadata, genre, daftar episode, judul terkait, dan referensi unduhan satu seri.' },
+      { method: 'GET', path: '/otakudesu/episode/:slug', title: 'Episode + server', description: 'Server tayangan, kualitas unduhan, episode sebelumnya/berikutnya, dan daftar episode.' },
+      { method: 'GET', path: '/otakudesu/batch/:slug', title: 'Unduh satu seri', description: 'Kualitas unduhan, ukuran, dan tautan server untuk satu seri lengkap.' },
+      { method: 'GET', path: '/otakudesu/server/:serverId', title: 'Resolusi URL sematan', description: 'Ubah id server menjadi URL pemutar yang bisa disematkan.' },
+      { method: 'GET', path: '/otakudesu/unlimited', title: 'Semua anime (A–Z)', description: 'Semua judul tayangan, dikelompokkan berdasarkan huruf awal.' },
       { method: 'GET', path: '/otakudesu/status', title: 'Status penyedia', description: 'Ukuran cache dan indeks ilustrasi serta sisa jatah permintaan upstream.' },
     ],
   },
@@ -92,7 +92,7 @@ export function ApiPage() {
       setCopied(key);
       window.setTimeout(() => setCopied((current) => (current === key ? null : current)), 1800);
     } catch {
-      notify('Clipboard access was blocked by the browser.', { tone: 'info' });
+      notify('Akses papan klip diblokir oleh peramban.', { tone: 'info' });
     }
   };
 
@@ -102,7 +102,7 @@ curl "${base}/home"
 # Cari dengan filter
 curl "${base}/anime?genre=Drama&sort=score&limit=3"
 
-# Lapisan streaming
+# Lapisan tayangan
 curl "${base}/otakudesu/home"
 curl "${base}/otakudesu/search?q=frieren"
 
@@ -130,8 +130,8 @@ curl -X POST "${base}/library" \\
           <p className="eyebrow">Referensi pengembang / v1</p>
           <h1>Rak ini,<br />sebagai <em>API.</em></h1>
           <p>
-            Katalog yang sama yang menjalankan ReogNime, plus API streaming,
-            tersedia sebagai REST yang ringkas dan mudah ditebak. Tanpa key, SDK, atau ritual.
+            Katalog yang sama yang menjalankan ReogNime, plus API tayangan,
+            tersedia sebagai REST yang ringkas dan mudah ditebak. Tanpa kunci API, SDK, atau ritual.
           </p>
         </div>
         <div className="api-terminal" aria-hidden="true">
@@ -183,7 +183,7 @@ curl -X POST "${base}/library" \\
               <p className="section-index">01</p>
               <div>
                 <h2>Mulai cepat</h2>
-                <p>Semua endpoint GET bersifat publik. Endpoint daftar menulis ke file JSON lokal.</p>
+                <p>Semua titik akhir GET bersifat publik. Titik akhir daftar menulis ke file JSON lokal.</p>
               </div>
             </div>
             <div className="code-block">
@@ -197,10 +197,10 @@ curl -X POST "${base}/library" \\
               <pre><code>{quickStart}</code></pre>
             </div>
             <div className="api-callout">
-              <strong>Integrasi frontend.</strong>
+              <strong>Integrasi antarmuka.</strong>
               <p>
-                Dev server Vite mem-proxy <code>/api</code> ke API di port 8787, jadi fetch relatif bekerja
-                saat pengembangan maupun produksi tanpa base URL:
+                Server pengembangan Vite meneruskan <code>/api</code> ke API di port 8787, jadi permintaan relatif bekerja
+                saat pengembangan maupun produksi tanpa URL dasar:
               </p>
               <pre className="inline-code"><code>{`const res = await fetch('/api/v1/anime?genre=Drama');\nconst { data, meta } = await res.json();`}</code></pre>
             </div>
@@ -211,24 +211,24 @@ curl -X POST "${base}/library" \\
               <p className="section-index">02</p>
               <div>
                 <h2>Konvensi</h2>
-                <p>Kecil dan konsisten, supaya frontend bisa dibangun tanpa menebak.</p>
+                <p>Kecil dan konsisten, supaya antarmuka bisa dibangun tanpa menebak.</p>
               </div>
             </div>
             <div className="convention-grid">
               <div>
                 <h3>Struktur respons</h3>
-                <p>Setiap respons sukses memakai <code>{'{ data }'}</code>. Daftar menambahkan <code>meta</code> berisi pagination dan filter.</p>
+                <p>Setiap respons sukses memakai <code>{'{ data }'}</code>. Daftar menambahkan <code>meta</code> berisi penomoran halaman dan filter.</p>
               </div>
               <div>
-                <h3>Error</h3>
-                <p>Error mengembalikan <code>{'{ error: { code, message } }'}</code> dengan status HTTP dan detail field opsional.</p>
+                <h3>Galat</h3>
+                <p>Galat mengembalikan <code>{'{ error: { code, message } }'}</code> dengan status HTTP dan detail kolom opsional.</p>
               </div>
               <div>
                 <h3>Validasi</h3>
-                <p>Query dan body divalidasi. Input tidak valid mengembalikan <code>422</code> sebelum mencapai lapisan data.</p>
+                <p>Kueri dan isi permintaan divalidasi. Masukan tidak valid mengembalikan <code>422</code> sebelum mencapai lapisan data.</p>
               </div>
               <div>
-                <h3>Pagination</h3>
+                <h3>Penomoran halaman</h3>
                 <p>Gunakan <code>page</code> dan <code>limit</code> (maks 50). Respons selalu menyertakan <code>total</code> dan <code>hasNextPage</code>.</p>
               </div>
             </div>
@@ -293,7 +293,7 @@ curl -X POST "${base}/library" \\
             <ul>
               <li><strong>Sumber data.</strong> Metadata dan artwork diambil dari AniList dan di-cache lokal untuk demo. Semua hak tetap milik pemegangnya.</li>
               <li><strong>Batas permintaan.</strong> 240 permintaan per menit per IP di demo. Respons katalog di-cache di browser dan CDN.</li>
-              <li><strong>Sumber streaming.</strong> Lapisan tontonan memakai Otakudesu API publik, dibatasi 30 permintaan upstream per menit (penyedia mengizinkan 45), dan di-cache. Sebagian mirror pihak ketiga bisa offline; ReogNime tidak pernah menyimpan file video.</li>
+              <li><strong>Sumber tayangan.</strong> Lapisan tontonan memakai Otakudesu API publik, dibatasi 30 permintaan ke penyedia per menit (penyedia mengizinkan 45), dan disimpan sementara. Sebagian server pihak ketiga bisa tidak tersedia; ReogNime tidak pernah menyimpan file video.</li>
               <li><strong>Tanpa autentikasi.</strong> Ini demo lokal satu profil. Jika dipublikasikan, pasang autentikasi untuk rute daftar di reverse proxy.</li>
               <li><strong>Penyimpanan.</strong> Daftar tersimpan di <code>server/data/library.json</code>. Penulisan atomik. Ekspor kapan saja lewat tombol di atas atau <code>/library/export</code>.</li>
             </ul>

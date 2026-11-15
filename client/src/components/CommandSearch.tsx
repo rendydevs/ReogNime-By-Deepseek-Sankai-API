@@ -29,7 +29,7 @@ const QUICK_LINKS = [
   { label: 'Sedang tayang', description: 'Semua seri yang tayang', to: '/ongoing', Icon: Play },
   { label: 'Anime tamat', description: 'Seri yang sudah selesai', to: '/completed', Icon: LayoutGrid },
   { label: 'Genre', description: 'Daftar genre anime', to: '/genres', Icon: Compass },
-  { label: 'Top anime', description: 'Peringkat rating dan paling banyak ditonton', to: '/top', Icon: Trophy },
+  { label: 'Peringkat anime', description: 'Peringkat skor dan paling banyak ditonton', to: '/top', Icon: Trophy },
   { label: 'Semua anime A–Z', description: 'Katalog lengkap', to: '/all', Icon: ListFilter },
   { label: 'Jadwal rilis', description: 'Yang tayang minggu ini', to: '/schedule', Icon: CalendarDays },
   { label: 'Pilihan hari ini', description: 'Rekomendasi dan jadwal hari ini', to: '/hari-ini', Icon: Sparkles },

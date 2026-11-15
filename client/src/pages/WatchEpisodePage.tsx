@@ -96,7 +96,7 @@ export function WatchEpisodePage() {
   usePageSeo({
     title: data ? `Nonton ${data.title} Sub Indo — ReogNime` : 'Tonton episode — ReogNime',
     description: data
-      ? `${data.title} subtitle Indonesia. Pilih mirror video, unduh episode, dan lanjutkan ke episode berikutnya di ReogNime.`
+      ? `${data.title} subtitle Indonesia. Pilih server video, unduh episode, dan lanjutkan ke episode berikutnya di ReogNime.`
       : 'Nonton episode anime subtitle Indonesia di ReogNime.',
     type: 'video.episode',
     jsonLd: data
@@ -177,7 +177,7 @@ export function WatchEpisodePage() {
       })
       .catch((reason: unknown) => {
         if (!active) return;
-        setStreamError(reason instanceof Error ? reason.message : 'Mirror ini tidak tersedia.');
+        setStreamError(reason instanceof Error ? reason.message : 'Server ini tidak tersedia.');
       })
       .finally(() => {
         if (active) setStreamLoading(false);
@@ -206,7 +206,7 @@ export function WatchEpisodePage() {
       <div className="container error-page">
         <p className="eyebrow">ReogNime / tidak ditemukan</p>
         <h1>Episode ini tidak ada.</h1>
-        <p>{episode.error ?? 'Episode tidak bisa dimuat dari sumber streaming.'}</p>
+        <p>{episode.error ?? 'Episode tidak bisa dimuat dari sumber tayangan.'}</p>
         <div className="empty-actions">
           <Link to="/" className="button button-primary"><ArrowLeft size={15} /> Kembali ke beranda</Link>
           <button className="button button-quiet" onClick={episode.reload}>Coba lagi</button>
@@ -276,7 +276,7 @@ export function WatchEpisodePage() {
               {streamLoading ? (
                 <div className="player-placeholder">
                   <LoaderCircle size={24} className="spin" />
-                  <span>Mencari mirror yang berfungsi…</span>
+                  <span>Mencari server yang berfungsi…</span>
                 </div>
               ) : playableUrl ? (
                 <iframe
@@ -290,15 +290,15 @@ export function WatchEpisodePage() {
               ) : (
                 <div className="player-placeholder player-placeholder-error">
                   <AlertCircle size={23} />
-                  <strong>{streamError ? 'Mirror ini gagal dimuat.' : framedBlocked ? 'Mirror ini memblokir pemutaran di halaman.' : offline ? 'Mirror ini sedang offline.' : 'Tidak ada mirror yang bisa diputar.'}</strong>
-                  <span>{streamError ?? (framedBlocked ? 'Pilih mirror VidHide, FileLions, atau Filedon, atau buka mirror ini di tab baru.' : offline ? 'Pilih server lain di bawah atau buka episode di situs sumber.' : 'Coba mirror lain dari daftar di bawah.')}</span>
+                  <strong>{streamError ? 'Server ini gagal dimuat.' : framedBlocked ? 'Server ini memblokir pemutaran di halaman.' : offline ? 'Server ini sedang tidak tersedia.' : 'Tidak ada server yang bisa diputar.'}</strong>
+                  <span>{streamError ?? (framedBlocked ? 'Pilih server VidHide, FileLions, atau Filedon, atau buka server ini di tab baru.' : offline ? 'Pilih server lain di bawah atau buka episode di situs sumber.' : 'Coba server lain dari daftar di bawah.')}</span>
                   <div className="player-placeholder-actions">
                     <button className="button button-paper" onClick={() => setReloadKey((value) => value + 1)}>
                       <RotateCw size={14} /> Coba lagi
                     </button>
                     {streamUrl && (
                       <a href={streamUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost-light">
-                        Buka mirror <ExternalLink size={14} />
+                        Buka server <ExternalLink size={14} />
                       </a>
                     )}
                   </div>
@@ -326,7 +326,7 @@ export function WatchEpisodePage() {
             <div className="player-server-bar">
               <div className="player-server-title">
                 <Play size={14} />
-                <span>Pilih mirror</span>
+                <span>Pilih server</span>
               </div>
               <div className="player-server-groups">
                 {groups.map((group) => (
@@ -344,7 +344,7 @@ export function WatchEpisodePage() {
                     ))}
                   </div>
                 ))}
-                {!groups.length && <span className="player-no-servers">Belum ada mirror.</span>}
+                {!groups.length && <span className="player-no-servers">Belum ada server.</span>}
               </div>
               {playableUrl && (
                 <a className="player-source-link" href={playableUrl} target="_blank" rel="noopener noreferrer">
@@ -353,9 +353,9 @@ export function WatchEpisodePage() {
               )}
             </div>
             <p className="player-disclaimer">
-              Streaming di-embed dari server pihak ketiga. ReogNime tidak menyimpan file video.
-              VidHide dipilih lebih dulu untuk pemutaran yang ramah seluler; semua mirror di atas tetap tersedia, termasuk Mega sebagai cadangan.
-              Iklan di dalam pemutar dikendalikan host video. Untuk pengalaman lebih bersih, gunakan pemblokir iklan seperti uBlock Origin atau Brave, atau coba mirror lain. ReogNime tidak bisa menghapus iklan tanpa merusak pemutar host.
+              Video disematkan dari server pihak ketiga. ReogNime tidak menyimpan file video.
+              VidHide dipilih lebih dulu untuk pemutaran yang ramah seluler; semua server di atas tetap tersedia, termasuk Mega sebagai cadangan.
+              Iklan di dalam pemutar dikendalikan penyedia video. Untuk pengalaman lebih bersih, gunakan pemblokir iklan seperti uBlock Origin atau Brave, atau coba server lain. ReogNime tidak bisa menghapus iklan tanpa merusak pemutar dari penyedia.
             </p>
           </section>
 
@@ -365,7 +365,7 @@ export function WatchEpisodePage() {
                 <div className="section-index">Unduhan</div>
                 <h2>Unduh episode</h2>
               </div>
-              {downloadCount > 0 && <span>{downloadCount} mirror</span>}
+              {downloadCount > 0 && <span>{downloadCount} server</span>}
             </div>
             <DownloadGroups groups={data.downloads} emptyLabel="Unduhan episode belum tersedia." />
           </section>
@@ -379,7 +379,7 @@ export function WatchEpisodePage() {
               <div><dt>Durasi</dt><dd>{formatDurationLabel(data.info.duration)}</dd></div>
               <div><dt>Encoder</dt><dd>{data.info.encoder ?? 'Tidak diketahui'}</dd></div>
               <div><dt>Kredit</dt><dd>{data.info.credit ?? 'Penyedia'}</dd></div>
-              <div><dt>Unduhan</dt><dd>{downloadCount ? `${downloadCount} mirror` : 'Belum tersedia'}</dd></div>
+              <div><dt>Unduhan</dt><dd>{downloadCount ? `${downloadCount} server` : 'Belum tersedia'}</dd></div>
             </dl>
             {data.info.genres.length > 0 && (
               <div className="player-genres">
@@ -392,7 +392,7 @@ export function WatchEpisodePage() {
 
           <div className="watch-side-card player-side-note">
             <div className="watch-source-line"><Subtitles size={14} /><span>Subtitle Indonesia</span></div>
-            <p>Server disediakan oleh penyedia streaming dan bisa berubah atau offline tanpa pemberitahuan.</p>
+            <p>Server disediakan oleh penyedia tayangan dan bisa berubah atau tidak tersedia tanpa pemberitahuan.</p>
             <Link to="/schedule" className="text-link">Jadwal tayang <ArrowRight size={12} /></Link>
           </div>
 

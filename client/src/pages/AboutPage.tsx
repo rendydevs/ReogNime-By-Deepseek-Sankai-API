@@ -50,7 +50,7 @@ export function AboutPage() {
           <h2>Apa itu ReogNime?</h2>
           <p>
             ReogNime membantu kamu menemukan anime, membaca sinopsis, melihat jadwal,
-            dan memilih episode. Video di-embed dari server pihak ketiga; ReogNime tidak
+            dan memilih episode. Video disematkan dari server pihak ketiga; ReogNime tidak
             menghosting atau mengunggah file video.
           </p>
         </section>
@@ -59,8 +59,8 @@ export function AboutPage() {
           <p className="section-index">02 — Sumber data</p>
           <h2>Sumber data.</h2>
           <p>
-            Data streaming berasal dari Otakudesu API. Arsip editorial dan katalog
-            tambahan menggunakan data AniList. Hak atas judul, artwork, dan video tetap
+            Data tayangan berasal dari Otakudesu API. Arsip editorial dan katalog
+            tambahan menggunakan data AniList. Hak atas judul, gambar, dan video tetap
             milik pemegang hak masing-masing.
           </p>
         </section>
@@ -71,7 +71,7 @@ export function AboutPage() {
           <p>
             Daftar tontonan tidak memerlukan akun. Data tersimpan di profil lokal ReogNime
             dan bisa diekspor sebagai JSON. Pada deployment Vercel, profil lokal dapat
-            direset saat instance restart. Analitik situs dapat menggunakan cookie dari
+            direset saat instans server dimulai ulang. Analitik situs dapat menggunakan kuki dari
             Google Tag Manager/GA4.
           </p>
         </section>
@@ -80,7 +80,7 @@ export function AboutPage() {
           <p className="section-index">04 — Koreksi</p>
           <h2>Ada data yang salah?</h2>
           <p>
-            Kalau ada judul, jadwal, mirror, atau informasi yang keliru, sampaikan lewat
+            Kalau ada judul, jadwal, server, atau informasi yang keliru, sampaikan lewat
             chat admin di kanan bawah. Jangan mengirim data pribadi atau sensitif ke chat.
           </p>
           <div className="about-actions">

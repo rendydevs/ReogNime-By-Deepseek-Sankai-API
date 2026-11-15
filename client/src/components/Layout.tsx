@@ -14,7 +14,7 @@ const NAV_ITEMS = [
   { to: '/', label: 'Beranda', end: true },
   { to: '/ongoing', label: 'Tayang' },
   { to: '/completed', label: 'Tamat' },
-  { to: '/top', label: 'Top' },
+  { to: '/top', label: 'Peringkat' },
   { to: '/schedule', label: 'Jadwal' },
   { to: '/genres', label: 'Genre' },
   { to: '/all', label: 'A–Z' },
@@ -180,7 +180,7 @@ export function Layout() {
       {!online && (
         <div className="offline-banner" role="status" aria-live="polite">
           <WifiOff size={14} />
-          <span>Kamu sedang offline. Data yang tersimpan tetap bisa dibuka.</span>
+          <span>Kamu sedang tidak terhubung ke internet. Data yang tersimpan tetap bisa dibuka.</span>
         </div>
       )}
 
@@ -205,7 +205,7 @@ export function Layout() {
           <div className="footer-brand">
             <Logo />
             <p className="footer-made">made by aldi with love</p>
-            <p className="footer-source">Data streaming dari <a href="https://otakudesu.or.at" target="_blank" rel="noreferrer">Otakudesu API</a>.</p>
+            <p className="footer-source">Data tayangan dari <a href="https://otakudesu.or.at" target="_blank" rel="noreferrer">Otakudesu API</a>.</p>
             <FooterCredits />
           </div>
           <div className="footer-links">
@@ -213,7 +213,7 @@ export function Layout() {
               <p className="footer-heading">Tonton</p>
               <Link to="/ongoing">Sedang tayang</Link>
               <Link to="/completed">Tamat</Link>
-              <Link to="/top">Top anime</Link>
+              <Link to="/top">Peringkat anime</Link>
               <Link to="/schedule">Jadwal rilis</Link>
               <Link to="/search">Cari judul</Link>
             </div>
@@ -237,7 +237,7 @@ export function Layout() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>© 2026 ReogNime. Data streaming dari Otakudesu API. Arsip dari AniList.</span>
+          <span>© 2026 ReogNime. Data tayangan dari Otakudesu API. Arsip dari AniList.</span>
           <span className="footer-colophon">Dibuat dengan cinta di Ponorogo.</span>
         </div>
       </footer>

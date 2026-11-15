@@ -129,7 +129,7 @@ export function WatchAnimePage() {
       setBatch(payload.data);
       window.setTimeout(() => document.getElementById('downloads')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
     } catch (reason) {
-      notify(reason instanceof Error ? reason.message : 'Gagal memuat unduhan batch.', { tone: 'error' });
+      notify(reason instanceof Error ? reason.message : 'Gagal memuat unduhan satu seri.', { tone: 'error' });
     } finally {
       setBatchLoading(false);
     }
@@ -142,7 +142,7 @@ export function WatchAnimePage() {
       <div className="container error-page">
         <p className="eyebrow">ReogNime / tidak ditemukan</p>
         <h1>Tayangan itu kosong.</h1>
-        <p>{detail.error ?? 'Seri tidak bisa dimuat dari sumber streaming.'}</p>
+        <p>{detail.error ?? 'Seri tidak bisa dimuat dari sumber tayangan.'}</p>
         <div className="empty-actions">
           <Link to="/" className="button button-primary"><ArrowLeft size={15} /> Kembali ke beranda</Link>
         </div>
@@ -189,7 +189,7 @@ export function WatchAnimePage() {
                 {anime.batch && (
                   <button className="button button-ghost-light" onClick={() => void loadBatch()}>
                     {batchLoading ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                    Unduh batch
+                    Unduh satu seri
                   </button>
                 )}
                 <button
@@ -280,16 +280,16 @@ export function WatchAnimePage() {
               <div className="watch-detail-section-head">
                 <div>
                   <div className="section-index">Unduhan</div>
-                  <h2>Unduh batch</h2>
+                  <h2>Unduh satu seri</h2>
                 </div>
-                {batch && <span>{onlineMirrorCount(batch)} mirror</span>}
+                {batch && <span>{onlineMirrorCount(batch)} server</span>}
               </div>
               {batch ? (
-                <DownloadGroups groups={batch.downloads} emptyLabel="Tautan batch belum tersedia." />
+                <DownloadGroups groups={batch.downloads} emptyLabel="Tautan unduhan satu seri belum tersedia." />
               ) : (
                 <button className="button button-outline" onClick={() => void loadBatch()} disabled={batchLoading}>
                   {batchLoading ? <LoaderCircle size={15} className="spin" /> : <ArrowDown size={15} />}
-                  {batchLoading ? 'Memuat mirror…' : 'Tampilkan tautan batch'}
+                  {batchLoading ? 'Memuat server…' : 'Tampilkan tautan unduhan'}
                 </button>
               )}
             </section>
@@ -330,9 +330,9 @@ export function WatchAnimePage() {
 
           <div className="watch-side-card watch-source-card">
             <p className="watch-side-heading">Sumber</p>
-            <div className="watch-source-line"><CalendarDays size={14} /><span>Sumber data streaming</span></div>
+            <div className="watch-source-line"><CalendarDays size={14} /><span>Sumber data tayangan</span></div>
             <div className="watch-source-line"><Clock3 size={14} /><span>Subtitle Indonesia</span></div>
-            <p>Video di-embed dari server pihak ketiga; ReogNime tidak menyimpan file video.</p>
+            <p>Video disematkan dari server pihak ketiga; ReogNime tidak menyimpan file video.</p>
           </div>
         </aside>
       </div>

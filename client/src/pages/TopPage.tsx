@@ -12,7 +12,7 @@ const RANK_LIMIT = 15;
 type TopSort = 'score' | 'popularity';
 
 const SORT_OPTIONS: { value: TopSort; label: string }[] = [
-  { value: 'score', label: 'Rating tertinggi' },
+  { value: 'score', label: 'Skor tertinggi' },
   { value: 'popularity', label: 'Paling banyak ditonton' },
 ];
 
@@ -39,9 +39,9 @@ export function TopPage() {
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
 
-  useDocumentTitle(selectedLabel ? `Top Anime ${selectedLabel}` : 'Top Anime');
+  useDocumentTitle(selectedLabel ? `Peringkat Anime ${selectedLabel}` : 'Peringkat Anime');
   usePageSeo({
-    title: selectedLabel ? `Top Anime ${selectedLabel} — ReogNime` : 'Top Anime — ReogNime',
+    title: selectedLabel ? `Peringkat Anime ${selectedLabel} — ReogNime` : 'Peringkat Anime — ReogNime',
     description: selectedLabel
       ? `Peringkat anime genre ${selectedLabel} berdasarkan ${sort === 'popularity' ? 'popularitas' : 'skor'} AniList di ReogNime.`
       : 'Peringkat anime berdasarkan skor dan popularitas AniList. Pilih genre untuk peringkat khusus.',
@@ -49,7 +49,7 @@ export function TopPage() {
     jsonLd: pageGraph(
       {
         '@type': 'CollectionPage',
-        name: selectedLabel ? `Top Anime ${selectedLabel}` : 'Top Anime',
+        name: selectedLabel ? `Peringkat Anime ${selectedLabel}` : 'Peringkat Anime',
         description: selectedLabel
           ? `Peringkat anime genre ${selectedLabel} berdasarkan skor dan popularitas AniList.`
           : 'Peringkat anime berdasarkan skor dan popularitas AniList di ReogNime.',
@@ -68,7 +68,7 @@ export function TopPage() {
       },
       breadcrumbJsonLd([
         { name: 'Beranda', path: '/' },
-        { name: 'Top Anime', path: '/top' },
+        { name: 'Peringkat Anime', path: '/top' },
       ]),
     ),
   });
@@ -125,11 +125,11 @@ export function TopPage() {
         </div>
         <div className="top-title-row">
           <div>
-            <p className="section-index">Top anime</p>
+            <p className="section-index">Peringkat anime</p>
             <h1>Peringkat <em>anime.</em></h1>
           </div>
           <p>
-            Diurutkan dari rating atau popularitas AniList. Pilih genre untuk
+            Diurutkan dari skor atau popularitas AniList. Pilih genre untuk
             melihat peringkat khusus genre tersebut.
           </p>
         </div>
@@ -167,7 +167,7 @@ export function TopPage() {
           </span>
         </div>
         <p className="top-source-note">
-          Peringkat rating dan popularitas bersumber dari data AniList.
+          Peringkat skor dan popularitas bersumber dari data AniList.
         </p>
       </header>
 
@@ -207,7 +207,7 @@ export function TopPage() {
               </div>
               <span
                 className="top-banner-score"
-                aria-label={`Rating ${formatScore(feature.score)} dari 10`}
+                aria-label={`Skor ${formatScore(feature.score)} dari 10`}
               >
                 ★ {formatScore(feature.score)}
               </span>
@@ -235,7 +235,7 @@ export function TopPage() {
                     <p className="section-index">Peringkat 02–{String(items.length).padStart(2, '0')}</p>
                     <h2 id="top-list-title">Selanjutnya.</h2>
                   </div>
-                  <span>{selectedLabel ? `Genre ${selectedLabel}` : 'Semua genre'} · {sort === 'popularity' ? 'Paling banyak ditonton' : 'Rating tertinggi'}</span>
+                  <span>{selectedLabel ? `Genre ${selectedLabel}` : 'Semua genre'} · {sort === 'popularity' ? 'Paling banyak ditonton' : 'Skor tertinggi'}</span>
                 </div>
                 <ol className="top-list">
                   {rest.map((anime, index) => {

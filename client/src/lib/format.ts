@@ -24,7 +24,7 @@ export const AIRING_LABELS: Record<AnimeStatus, string> = {
   RELEASING: 'Tayang',
   NOT_YET_RELEASED: 'Segera',
   CANCELLED: 'Dibatalkan',
-  HIATUS: 'Hiatus',
+  HIATUS: 'Jeda',
 };
 
 export const SEASON_LABELS: Record<Season, string> = {
@@ -57,7 +57,7 @@ const GENRE_LABELS: Record<string, string> = {
   Psychological: 'Psikologis',
   Romance: 'Romansa',
   School: 'Sekolah',
-  'Sci-Fi': 'Sci-Fi',
+  'Sci-Fi': 'Fiksi Ilmiah',
   Seinen: 'Seinen',
   Shoujo: 'Shoujo',
   Shounen: 'Shounen',
@@ -66,13 +66,13 @@ const GENRE_LABELS: Record<string, string> = {
   Sports: 'Olahraga',
   'Super Power': 'Kekuatan Super',
   Supernatural: 'Supranatural',
-  Thriller: 'Thriller',
+  Thriller: 'Ketegangan',
   Vampire: 'Vampir',
   'Award Winning': 'Pemenang Penghargaan',
-  'Boys Love': 'Boys Love',
-  'Girls Love': 'Girls Love',
+  'Boys Love': 'Romansa Pria',
+  'Girls Love': 'Romansa Wanita',
   Gourmet: 'Kuliner',
-  'Avant Garde': 'Avant Garde',
+  'Avant Garde': 'Eksperimental',
   Mythology: 'Mitologi',
   Parody: 'Parodi',
   Samurai: 'Samurai',
@@ -91,6 +91,11 @@ export function seasonName(value: string | null | undefined): string {
   const [first, ...rest] = value.trim().split(/\s+/);
   const translated = { WINTER: 'Dingin', SPRING: 'Semi', SUMMER: 'Panas', FALL: 'Gugur' }[first.toUpperCase()];
   return translated ? [translated, ...rest].join(' ') : value;
+}
+
+export function dayLabel(day: string | null | undefined): string {
+  if (!day) return '';
+  return /^random$/i.test(day.trim()) ? 'Acak' : day;
 }
 
 export function otakuStatusLabel(status: string | null | undefined): string {

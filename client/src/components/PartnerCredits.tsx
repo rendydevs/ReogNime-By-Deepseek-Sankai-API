@@ -2,13 +2,13 @@ const PARTNERS = [
   {
     href: 'https://www.deepseek.com/',
     label: 'DeepSeek Harness',
-    prefix: 'Built with',
+    prefix: 'Dibuat dengan',
     logo: '/brand/deepseek.png',
   },
   {
     href: 'https://otakudesu.or.at/',
     label: 'Otakudesu API',
-    prefix: 'Data from',
+    prefix: 'Data dari',
     logo: '/brand/otakudesu.png',
   },
 ];
