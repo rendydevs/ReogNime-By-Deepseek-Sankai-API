@@ -21935,3 +21935,52 @@ body {
     font-size: 17px;
   }
 }
+
+/* Archive detail: a real route into the streaming layer. */
+.episode-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.episode-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  border-radius: 8px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.episode-play:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.episode-play:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.detail-actions .button-primary {
+  min-height: 38px;
+}
+
+@media (max-width: 760px) {
+  .episode-play {
+    min-height: 30px;
+    padding: 0 7px;
+  }
+
+  .episode-play span {
+    display: none;
+  }
+}

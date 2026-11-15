@@ -13,7 +13,7 @@ import {
   Star,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AnimeCard } from '../components/AnimeCard';
 import { useLibraryDialog } from '../components/LibraryDialog';
 import { useLibrary } from '../context/LibraryContext';
@@ -34,6 +34,7 @@ import {
 } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import { getIndonesianSynopsis } from '../lib/synopsis';
+import { resolveStreamingAnime, resolveStreamingEpisode } from '../lib/streamResolver';
 import { SITE_URL, breadcrumbJsonLd, pageGraph, usePageSeo } from '../lib/seo';
 import { mediaUrl } from '../lib/media';
 import type { Anime, Episode } from '../types';
@@ -65,7 +66,9 @@ function EpisodeSection({ anime }: { anime: Anime }) {
   const [hasMore, setHasMore] = useState(false);
   const [nextPage, setNextPage] = useState(2);
   const [busyEpisode, setBusyEpisode] = useState<number | null>(null);
+  const [watchBusyEpisode, setWatchBusyEpisode] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const entry = getEntry(anime.id);
 
   useEffect(() => {
@@ -121,17 +124,39 @@ function EpisodeSection({ anime }: { anime: Anime }) {
     }
   };
 
+  const watchEpisode = async (episode: Episode) => {
+    if (watchBusyEpisode !== null) return;
+    setWatchBusyEpisode(episode.number);
+    try {
+      const match = await resolveStreamingEpisode(anime, episode.number);
+      if (!match) {
+        notify('Versi streaming untuk episode ini belum ditemukan.', { tone: 'error' });
+        return;
+      }
+      if (match.episodeSlug) {
+        navigate(`/watch/episode/${match.episodeSlug}`);
+      } else {
+        notify('Episode belum tersedia di pemutar. Membuka daftar episode seri.');
+        navigate(`/watch/anime/${match.seriesSlug}`);
+      }
+    } catch (reason) {
+      notify(reason instanceof Error ? reason.message : 'Tidak bisa membuka versi streaming.', { tone: 'error' });
+    } finally {
+      setWatchBusyEpisode(null);
+    }
+  };
+
   return (
     <section className="detail-section" id="episodes">
       <div className="detail-section-head">
         <div>
           <p className="section-index">Episode</p>
-          <h2>Catatan episode</h2>
+          <h2>Daftar episode</h2>
         </div>
         <p>
           {entry
-            ? `${entry.progress} dari ${anime.episodes ?? '?'} tercatat. Klik episode untuk mengejar.`
-            : 'Tambahkan judul ini ke daftar untuk menyimpan catatan episode.'}
+            ? `${entry.progress} dari ${anime.episodes ?? '?'} episode tercatat. Tonton langsung atau tandai progresnya.`
+            : 'Tonton versi streaming atau tandai episode yang sudah kamu tonton.'}
         </p>
       </div>
 
@@ -161,21 +186,36 @@ function EpisodeSection({ anime }: { anime: Anime }) {
                     </span>
                   </span>
                   {episode.aired ? (
-                    <button
-                      className={`episode-toggle ${watched ? 'is-watched' : ''}`}
-                      onClick={() => markWatched(episode)}
-                      disabled={busyEpisode === episode.number || watched}
-                      aria-label={watched ? `Episode ${episode.number} sudah ditonton` : `Tandai episode ${episode.number} ditonton`}
-                    >
-                      {busyEpisode === episode.number ? (
-                        <LoaderCircle size={17} className="spin" />
-                      ) : watched ? (
-                        <CheckCircle2 size={17} />
-                      ) : (
-                        <Circle size={17} />
-                      )}
-                      <span>{watched ? 'Sudah' : 'Tandai'}</span>
-                    </button>
+                    <div className="episode-actions">
+                      <button
+                        className="episode-play"
+                        onClick={() => void watchEpisode(episode)}
+                        disabled={watchBusyEpisode === episode.number}
+                        aria-label={`Tonton episode ${episode.number}`}
+                      >
+                        {watchBusyEpisode === episode.number ? (
+                          <LoaderCircle size={17} className="spin" />
+                        ) : (
+                          <Play size={15} fill="currentColor" />
+                        )}
+                        <span>Tonton</span>
+                      </button>
+                      <button
+                        className={`episode-toggle ${watched ? 'is-watched' : ''}`}
+                        onClick={() => markWatched(episode)}
+                        disabled={busyEpisode === episode.number || watched}
+                        aria-label={watched ? `Episode ${episode.number} sudah ditonton` : `Tandai episode ${episode.number} ditonton`}
+                      >
+                        {busyEpisode === episode.number ? (
+                          <LoaderCircle size={17} className="spin" />
+                        ) : watched ? (
+                          <CheckCircle2 size={17} />
+                        ) : (
+                          <Circle size={17} />
+                        )}
+                        <span>{watched ? 'Sudah' : 'Tandai'}</span>
+                      </button>
+                    </div>
                   ) : (
                     <span className="episode-upcoming">Segera</span>
                   )}
@@ -202,6 +242,8 @@ export function AnimeDetailPage() {
   const { open } = useLibraryDialog();
   const { notify } = useToast();
   const [favoriteBusy, setFavoriteBusy] = useState(false);
+  const [watchBusy, setWatchBusy] = useState(false);
+  const navigate = useNavigate();
   const anime = data?.data ?? null;
   useDocumentTitle(anime ? `Nonton ${anime.title} Sub Indo` : 'Anime Sub Indo');
   usePageSeo(anime ? {
@@ -278,6 +320,23 @@ export function AnimeDetailPage() {
     }
   };
 
+  const watchAnime = async () => {
+    if (watchBusy) return;
+    setWatchBusy(true);
+    try {
+      const match = await resolveStreamingAnime(anime);
+      if (!match) {
+        notify('Versi streaming untuk judul ini belum ditemukan.', { tone: 'error' });
+        return;
+      }
+      navigate(`/watch/anime/${match.seriesSlug}`);
+    } catch (reason) {
+      notify(reason instanceof Error ? reason.message : 'Tidak bisa membuka versi streaming.', { tone: 'error' });
+    } finally {
+      setWatchBusy(false);
+    }
+  };
+
   return (
     <div className="detail-page">
       <section className="detail-hero">
@@ -321,6 +380,10 @@ export function AnimeDetailPage() {
               </div>
 
               <div className="detail-actions">
+                <button className="button button-primary" onClick={() => void watchAnime()} disabled={watchBusy}>
+                  {watchBusy ? <LoaderCircle size={16} className="spin" /> : <Play size={16} fill="currentColor" />}
+                  Tonton sekarang
+                </button>
                 <button className="button button-paper" onClick={() => open(anime)}>
                   {entry ? <Check size={16} /> : <Plus size={16} />}
                   {entry ? `Di daftar · ${STATUS_LABELS[entry.status]}` : 'Tambah ke daftar'}
@@ -337,18 +400,6 @@ export function AnimeDetailPage() {
                 <button className="detail-icon-button" onClick={handleShare} aria-label="Salin tautan" title="Salin tautan">
                   <Link2 size={17} />
                 </button>
-                {anime.trailer && (
-                  <a
-                    className="detail-icon-button"
-                    href={`https://www.youtube.com/watch?v=${anime.trailer.id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="Tonton cuplikan di YouTube"
-                    title="Tonton cuplikan"
-                  >
-                    <Play size={17} />
-                  </a>
-                )}
               </div>
             </div>
           </div>
