@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, ChevronRight, Compass, ListFilter, Play, Search, Sparkles, X } from 'lucide-react';
+import { Activity, ArrowRight, CalendarDays, ChevronRight, Clock3, Compass, Database, Gauge, Layers3, ListFilter, Play, Search, Sparkles, X } from 'lucide-react';
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { OtakuCard } from '../components/OtakuCard';
@@ -11,6 +11,7 @@ import { dayLabel, formatRelativeTime, otakuStatusLabel } from '../lib/format';
 import { useApi, useDocumentTitle } from '../lib/hooks';
 import { usePageSeo } from '../lib/seo';
 import { useWatchHistory } from '../lib/watchHistory';
+import type { OtakuServiceStatus } from '../types';
 
 
 const HOME_FAQ = [
@@ -83,6 +84,122 @@ function CatalogHead({
   );
 }
 
+interface ServiceHealth {
+  status: string;
+  service: string;
+  version: string;
+  uptime: number;
+  timestamp: string;
+  catalog: { titles: number; source: string };
+  watch: { source: string; provider: string };
+}
+
+interface ServiceStatusProps {
+  apiStatus: { phase: 'checking' | 'online' | 'offline'; ms: number | null };
+  health: ServiceHealth | null;
+  providerStatus: OtakuServiceStatus | null;
+  lastChecked: Date | null;
+  ongoingCount: number;
+  completedCount: number;
+}
+
+function formatUptime(seconds: number | null | undefined): string {
+  if (!seconds || seconds < 0) return '—';
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  if (hours > 0) return `${hours} jam ${minutes} mnt`;
+  return `${Math.max(1, minutes)} mnt`;
+}
+
+function ServiceStatus({ apiStatus, health, providerStatus, lastChecked, ongoingCount, completedCount }: ServiceStatusProps) {
+  const online = apiStatus.phase === 'online';
+  const checking = apiStatus.phase === 'checking';
+  const liveLabel = checking ? 'Memeriksa API' : online ? 'API normal' : 'API tidak tersambung';
+  const checkedLabel = lastChecked
+    ? new Intl.DateTimeFormat('id-ID', { hour: '2-digit', minute: '2-digit' }).format(lastChecked)
+    : '—';
+  const quotaUsed = providerStatus?.upstreamRequestsLastMinute ?? null;
+  const quotaLimit = providerStatus?.upstreamLimitPerMinute ?? 30;
+  const quotaPercent = quotaUsed === null ? 0 : Math.min(100, quotaUsed / Math.max(1, quotaLimit) * 100);
+  const sourceName = providerStatus?.source.name ?? health?.watch.source ?? 'Otakudesu';
+  const providerName = providerStatus?.source.provider ?? health?.watch.provider ?? 'Sanka Vollerei';
+
+  return (
+    <section className="container home-status" aria-labelledby="service-status-title">
+      <div className="status-head">
+        <div>
+          <p className="section-index">Status layanan</p>
+          <h2 id="service-status-title">API dan data.</h2>
+          <p className="status-intro">Pantau koneksi API, sumber data, dan kuota penyedia secara langsung.</p>
+        </div>
+        <span className={`status-live is-${apiStatus.phase}`} role="status" aria-live="polite">
+          <i aria-hidden="true" />
+          {liveLabel}
+          {online && apiStatus.ms !== null ? <b>{apiStatus.ms} ms</b> : null}
+        </span>
+      </div>
+
+      <div className="status-grid">
+        <div className="status-item">
+          <span className="status-label"><Activity size={13} /> Koneksi API</span>
+          <strong className="status-value">{checking ? 'Memeriksa…' : online ? 'Normal' : 'Gangguan'}</strong>
+          <span className="status-note">{online ? `${apiStatus.ms ?? '—'} ms dari /api/health` : 'Menunggu respons dari server'}</span>
+        </div>
+        <div className="status-item">
+          <span className="status-label"><Database size={13} /> Sumber data</span>
+          <strong className="status-value">{sourceName}</strong>
+          <span className="status-note">{providerName} · data tayangan</span>
+        </div>
+        <div className="status-item">
+          <span className="status-label"><Gauge size={13} /> Kuota penyedia</span>
+          <strong className="status-value">{quotaUsed === null ? '—' : `${quotaUsed} / ${quotaLimit}`}</strong>
+          <span className="status-note">permintaan per menit</span>
+          <span className="status-meter" aria-hidden="true"><span style={{ width: `${quotaPercent}%` }} /></span>
+        </div>
+        <div className="status-item">
+          <span className="status-label"><Layers3 size={13} /> Simpanan</span>
+          <strong className="status-value">{providerStatus ? providerStatus.cacheEntries : '—'}</strong>
+          <span className="status-note">{providerStatus ? `${providerStatus.artworkIndex} indeks gambar` : 'Menunggu status server'}</span>
+        </div>
+        <div className="status-item">
+          <span className="status-label"><ListFilter size={13} /> Katalog</span>
+          <strong className="status-value">{ongoingCount + completedCount} judul</strong>
+          <span className="status-note">{ongoingCount} tayang · {completedCount} tamat{health ? ` · +${health.catalog.titles} arsip` : ''}</span>
+        </div>
+        <div className="status-item">
+          <span className="status-label"><Clock3 size={13} /> Cek terakhir</span>
+          <strong className="status-value">{checkedLabel}</strong>
+          <span className="status-note">Diperbarui otomatis tiap 60 detik</span>
+        </div>
+      </div>
+
+      <details className="status-details">
+        <summary>Rincian sistem</summary>
+        <div className="status-detail-grid">
+          <span><b>Layanan</b> {health ? `${health.service} v${health.version}` : '—'}</span>
+          <span><b>Waktu aktif</b> {health ? formatUptime(health.uptime) : '—'}</span>
+          <span><b>Status API</b> {health ? health.status : '—'}</span>
+          <span><b>Penyedia</b> {providerName}</span>
+          <span><b>Sumber hulu</b> {providerStatus ? providerStatus.source.apiUrl.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : '—'}</span>
+          <span><b>Arsip</b> {health ? `${health.catalog.source} · ${health.catalog.titles} judul` : '—'}</span>
+          <span><b>Simpanan</b> {providerStatus ? `${providerStatus.cacheEntries} entri` : '—'}</span>
+          <span><b>Indeks gambar</b> {providerStatus ? providerStatus.artworkIndex : '—'}</span>
+          <span><b>Pemutar</b> server pihak ketiga</span>
+          <span><b>Akun</b> tidak wajib</span>
+        </div>
+      </details>
+
+      <div className="status-foot">
+        <p>Data dari penyedia bisa berubah sewaktu-waktu. Video tetap disajikan server pihak ketiga.</p>
+        <div className="status-foot-links">
+          <Link to="/developers">Detail API <ArrowRight size={12} /></Link>
+          <Link to="/tentang">Cara kerja <ArrowRight size={12} /></Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function HomePage() {
   useDocumentTitle('Nonton Anime Sub Indo Tanpa Ribet');
   const home = useApi((signal) => api.otaku.home(signal), []);
@@ -91,6 +208,9 @@ export function HomePage() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [apiStatus, setApiStatus] = useState<{ phase: 'checking' | 'online' | 'offline'; ms: number | null }>({ phase: 'checking', ms: null });
+  const [health, setHealth] = useState<ServiceHealth | null>(null);
+  const [providerStatus, setProviderStatus] = useState<OtakuServiceStatus | null>(null);
+  const [lastChecked, setLastChecked] = useState<Date | null>(null);
   const watchHistory = useWatchHistory();
 
   usePageSeo({
@@ -110,20 +230,40 @@ export function HomePage() {
 
   useEffect(() => {
     let active = true;
+    let controller: AbortController | null = null;
+
     const ping = async () => {
+      controller?.abort();
+      controller = new AbortController();
       const startedAt = performance.now();
-      try {
-        const response = await fetch(API_HEALTH_URL, { cache: 'no-store' });
-        const ms = Math.round(performance.now() - startedAt);
-        if (active) setApiStatus({ phase: response.ok ? 'online' : 'offline', ms });
-      } catch {
-        if (active) setApiStatus({ phase: 'offline', ms: null });
-      }
+      const [healthResult, statusResult] = await Promise.allSettled([
+        fetch(API_HEALTH_URL, { cache: 'no-store', signal: controller.signal }).then(async (response) => {
+          if (!response.ok) throw new Error(`Health HTTP ${response.status}`);
+          return (await response.json()) as { data: ServiceHealth };
+        }),
+        api.otaku.status(controller.signal),
+      ]);
+      const ms = Math.round(performance.now() - startedAt);
+      if (!active) return;
+
+      const nextHealth = healthResult.status === 'fulfilled' ? healthResult.value.data : null;
+      const nextProvider = statusResult.status === 'fulfilled' ? statusResult.value.data : null;
+      setHealth(nextHealth);
+      setProviderStatus(nextProvider);
+      setLastChecked(new Date());
+      setApiStatus({
+        phase: nextHealth?.status === 'ok' ? 'online' : 'offline',
+        ms: nextHealth ? ms : null,
+      });
     };
+
     void ping();
+    const initialRefresh = window.setTimeout(ping, 2_500);
     const timer = window.setInterval(ping, 60_000);
     return () => {
       active = false;
+      controller?.abort();
+      window.clearTimeout(initialRefresh);
       window.clearInterval(timer);
     };
   }, []);
@@ -322,6 +462,15 @@ export function HomePage() {
           </Reveal>
         </div>
       ) : null}
+
+      <ServiceStatus
+        apiStatus={apiStatus}
+        health={health}
+        providerStatus={providerStatus}
+        lastChecked={lastChecked}
+        ongoingCount={ongoing.length}
+        completedCount={completed.length}
+      />
 
       <div className="container home-marquee-wrap">
         <TitleMarquee items={ongoing.slice(0, 9)} />

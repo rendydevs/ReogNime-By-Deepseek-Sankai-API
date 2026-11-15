@@ -19,6 +19,7 @@ import type {
   OtakuHome,
   OtakuListMeta,
   OtakuScheduleDay,
+  OtakuServiceStatus,
   OtakuUnlimitedGroup,
   PageMeta,
 } from '../types';
@@ -387,6 +388,10 @@ export const api = {
         {},
         signal,
       );
+    },
+
+    status(signal?: AbortSignal) {
+      return request<{ data: OtakuServiceStatus }>('/otakudesu/status', { signal });
     },
   },
 };

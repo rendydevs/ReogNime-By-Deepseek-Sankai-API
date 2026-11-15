@@ -280,6 +280,20 @@ export interface OtakuServerGroup {
   servers: OtakuEpisodeServer[];
 }
 
+export interface OtakuServiceStatus {
+  upstream: string;
+  artworkIndex: number;
+  cacheEntries: number;
+  upstreamRequestsLastMinute: number;
+  upstreamLimitPerMinute: number;
+  source: {
+    name: string;
+    provider: string;
+    apiUrl: string;
+    siteUrl: string;
+  };
+}
+
 export interface OtakuAnimeDetail extends OtakuCard {
   japanese: string | null;
   producers: string[];

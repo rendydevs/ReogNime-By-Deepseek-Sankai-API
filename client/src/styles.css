@@ -21984,3 +21984,348 @@ body {
     display: none;
   }
 }
+
+/* =========================================================
+   SERVICE STATUS — transparent, compact, not a dashboard
+   ========================================================= */
+
+.home-status {
+  margin-top: 34px;
+  padding: 22px 24px 17px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--bg-elevated);
+  box-shadow: 0 18px 46px rgba(51, 35, 21, 0.06);
+}
+
+.status-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.status-head h2 {
+  margin-top: 5px;
+  font-family: var(--font-display);
+  font-size: clamp(29px, 3.5vw, 42px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.status-intro {
+  max-width: 520px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.status-live {
+  display: inline-flex;
+  min-height: 34px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-live i {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--muted-light);
+}
+
+.status-live.is-online {
+  border-color: color-mix(in srgb, #3c946b 38%, var(--line));
+  color: #2f7d59;
+}
+
+.status-live.is-online i {
+  background: #3c946b;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #3c946b 14%, transparent);
+}
+
+.status-live.is-offline {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  color: var(--accent-deep);
+}
+
+.status-live.is-offline i {
+  background: var(--accent);
+}
+
+.status-live.is-checking i {
+  background: var(--gold);
+}
+
+.status-live b {
+  color: var(--muted-light);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 28px;
+}
+
+.status-item {
+  min-width: 0;
+  padding: 15px 0 13px;
+  border-bottom: 1px solid var(--line);
+}
+
+.status-item:nth-last-child(-n + 3) {
+  border-bottom: 0;
+}
+
+.status-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.status-label svg {
+  color: var(--muted-light);
+}
+
+.status-value {
+  display: block;
+  overflow: hidden;
+  margin-top: 5px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-note {
+  display: block;
+  overflow: hidden;
+  margin-top: 3px;
+  color: var(--muted-light);
+  font-size: 10.5px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-meter {
+  display: block;
+  height: 4px;
+  margin-top: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.status-meter > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+}
+
+.status-details {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.status-details summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 0 3px;
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+}
+
+.status-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.status-details summary::after {
+  margin-left: auto;
+  color: var(--muted-light);
+  content: '+';
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.status-details[open] summary::after {
+  content: '−';
+}
+
+.status-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+  padding: 7px 0 3px;
+}
+
+.status-detail-grid span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--line);
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.4;
+}
+
+.status-detail-grid b {
+  color: var(--ink-soft);
+  font-weight: 500;
+  text-align: right;
+}
+
+.status-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted-light);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.status-foot p {
+  max-width: 650px;
+}
+
+.status-foot-links {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 14px;
+}
+
+.status-foot-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.status-foot-links a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .home-status {
+    margin-top: 28px;
+    padding: 19px 20px 15px;
+  }
+
+  .status-grid {
+    gap: 0 20px;
+  }
+
+  .status-value {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-status {
+    margin-top: 24px;
+    padding: 17px 15px 14px;
+    border-radius: 16px;
+  }
+
+  .status-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 13px;
+  }
+
+  .status-head h2 {
+    font-size: 31px;
+  }
+
+  .status-intro {
+    font-size: 11.5px;
+  }
+
+  .status-live {
+    min-height: 30px;
+    padding: 0 9px;
+    font-size: 9.5px;
+  }
+
+  .status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 15px;
+  }
+
+  .status-item {
+    padding: 12px 0 11px;
+  }
+
+  .status-value {
+    overflow: visible;
+    font-size: 19px;
+    white-space: normal;
+  }
+
+  .status-note {
+    font-size: 9.5px;
+    white-space: normal;
+  }
+
+  .status-label {
+    font-size: 9.5px;
+  }
+
+  .status-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .status-detail-grid span {
+    font-size: 10px;
+  }
+
+  .status-foot {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 10px;
+    font-size: 9.5px;
+  }
+
+  .status-foot-links {
+    gap: 12px;
+  }
+}
